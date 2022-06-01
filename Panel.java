@@ -1,5 +1,5 @@
 
-/* GamePanel class acts as the main "game loop" - continuously runs the game and calls whatever needs to be called
+/* Panel class acts as the main "game loop" - continuously runs the game and calls whatever needs to be called
 
 Child of JPanel because JPanel contains methods for drawing to the screen
 
@@ -12,17 +12,18 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Screen extends JPanel implements Runnable, KeyListener {
+public class Panel extends JPanel implements Runnable, KeyListener {
 
     // dimensions of window
-    public static final int W = 500; // width of window
-    public static final int H = 500; // height of window
+    public static final int W = 1120; // width of window
+    public static final int H = 630; // height of window
 
-    public String currentScreen; // current screen being displayed
+    private Level1 currentScreen; // current screen being displayed
 
-    public Thread gameThread;
+    private Thread gameThread;
 
-    public Screen() {
+    public Panel() {
+        currentScreen = new Level1();
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
         // listen for mouse input.
@@ -60,9 +61,11 @@ public class Screen extends JPanel implements Runnable, KeyListener {
     // call the draw methods in each class to update positions as things move
     public void draw(Graphics g) {
         // draw the background
-        Color bgColor = new Color(52, 211, 153);
+        Color bgColor = new Color(250, 250, 249);
         g.setColor(bgColor);
         g.fillRect(0, 0, W, H);
+
+        currentScreen.draw(g);
 
     }
 
@@ -102,12 +105,13 @@ public class Screen extends JPanel implements Runnable, KeyListener {
     // if a key is pressed, we'll send it over to the player paddle object for
     // processing
     public void keyPressed(KeyEvent e) {
-
+        currentScreen.keyPressed(e);
     }
 
     // if a key is released, we'll send it over to the player paddle object for
     // processing
     public void keyReleased(KeyEvent e) {
+        currentScreen.keyReleased(e);
     }
 
     // left empty because we don't need it; must be here because it is required to

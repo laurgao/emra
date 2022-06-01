@@ -1,5 +1,5 @@
 
-/* Frame class establishes the frame (window) for the game
+/* Frame class establishes the window (frame) for the game
 It is a child of JFrame because JFrame manages frames
 Runs the constructor in GamePanel class
 
@@ -10,7 +10,7 @@ import javax.swing.*;
 public class Frame extends JFrame {
 
     public Frame() {
-        Screen content = new Screen(); // run GamePanel constructor
+        Panel content = new Panel(); // run GamePanel constructor
         this.add(content);
         this.setTitle("Pong"); // set title for frame
         this.setResizable(false); // frame can't change size
