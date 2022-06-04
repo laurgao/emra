@@ -18,12 +18,12 @@ public class Panel extends JPanel implements Runnable, KeyListener {
     public static final int W = 1120; // width of window
     public static final int H = 630; // height of window
 
-    private Level1 currentScreen; // current screen being displayed
+    private Level currentScreen; // current screen being displayed
 
     private Thread gameThread;
 
     public Panel() {
-        currentScreen = new Level1();
+        currentScreen = new Level8();
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
         // listen for mouse input.
@@ -73,7 +73,7 @@ public class Panel extends JPanel implements Runnable, KeyListener {
     // this method is constantly called from run(). By doing this, movements appear
     // fluid and natural.
     public void move() {
-
+        currentScreen.move();
     }
 
     // run() method is what makes the game continue running without end. It calls

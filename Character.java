@@ -6,22 +6,26 @@ child of Rectangle because that makes it easy to draw and check for collision
 import java.awt.*;
 import java.awt.event.*;
 
-public class Character extends Rectangle {
-    public static final int S = 30; // side length of square
-    public static final int SPEED = 5; // velocity of player when moving horizontally
-    public static final double G = 9.8; // gravity
+public class Character extends Block {
+    // Convention for velocity and acceleration: down and right is positive
+    private static final int SPEED = 3; // velocity of player when moving horizontally
+    private static final double G = 9.8; // gravity
+    private static final double fallingYAcceleration = G / 20; // Found experimentally to be a good value for the
+                                                               // acceleration of the character when falling.
 
-    private Color color; // color of character's square
-    private double xVelocity;
-    private double yVelocity;
-    private double yAcceleration;
+    public double xVelocity;
+    public double yVelocity;
+    public boolean isFalling; // if true, yVelocity updates according to fallingYAcceleration
+
+    private boolean isAlive;
 
     // x and y are initial coordinates of character
     public Character(int x, int y, Color color) {
-        super(x, y, S, S);
-        this.color = color;
+        super(x, y, color);
         xVelocity = 0;
         yVelocity = 0;
+        isFalling = false;
+        isAlive = true;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -36,8 +40,10 @@ public class Character extends Rectangle {
             move();
         }
 
-        else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            yAcceleration = -G;
+        else if (e.getKeyCode() == KeyEvent.VK_UP && !isFalling) {
+
+            yVelocity = -G;
+            isFalling = true;
             move();
         }
 
@@ -56,15 +62,28 @@ public class Character extends Rectangle {
     // called frequently from both Paddle class and GamePanel class
     // updates the current location of the paddle
     public void move() {
-        yVelocity += yAcceleration;
+        yVelocity = isFalling ? yVelocity + fallingYAcceleration : 0;
         x += xVelocity;
         y += yVelocity;
     }
 
-    // called frequently from the Screen class
-    // draws the current location of the paddle to the screen
     public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillRect(x, y, width, height);
+        if (isAlive) {
+            super.draw(g);
+        }
+    }
+
+    // returns whether character will intersect rectangle after 1 more move()
+    public boolean willIntersect(Rectangle r) {
+        return x + xVelocity + width > r.x && x + xVelocity < r.x + r.width && y + yVelocity + height > r.y
+                && y + yVelocity < r.y + r.height;
+    }
+
+    public void die() {
+        isAlive = false;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }
