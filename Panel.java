@@ -19,11 +19,18 @@ public class Panel extends JPanel implements Runnable, KeyListener {
     public static final int H = 630; // height of window
 
     private Level currentScreen; // current screen being displayed
+    private Level nextLevel;
 
     private Thread gameThread;
+    private float opacity; // sign dictates whether alpha is going down or up.
 
     public Panel() {
-        currentScreen = new Level7();
+        opacity = 0.0f; // start with alpha at 0 and fade in.
+
+        currentScreen = new Level7(() -> {
+            newLevel(new Level8());
+        });
+        nextLevel = currentScreen;
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
         // listen for mouse input.
@@ -45,17 +52,36 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         gameThread.start();
     }
 
+    private void newLevel(Level level) {
+        opacity = -1.0f;
+        nextLevel = level;
+    }
+
     // paint is a method in java.awt library that we are overriding.
     // It is called automatically in the background in order to update what
     // appears in the window.
     public void paint(Graphics g) {
+        g.clearRect(0, 0, W, H); // clear the screen
+        Graphics2D g2d = (Graphics2D) g;
+        // set the opacity
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.abs(opacity)));
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         // use double buffering - draw images OFF the screen, then move the image on
         // screen
         Image image = createImage(W, H); // draw off screen
         Graphics graphics = image.getGraphics();
         draw(graphics);// update the positions of everything on the screen
-        g.drawImage(image, 0, 0, this); // move the image on the screen
+        g2d.drawImage(image, 0, 0, this); // move the image on the screen
 
+        float increment = 0.01f; // adjust this to change the speed of the fade in/out
+        if (opacity < 1.0f) {
+            opacity = Math.min(opacity + increment, 1.0f);
+            repaint();
+        }
+        if (opacity >= 0.0f && currentScreen != nextLevel) {
+            currentScreen = nextLevel;
+        }
     }
 
     // call the draw methods in each class to update positions as things move
@@ -66,7 +92,6 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         g.fillRect(0, 0, W, H);
 
         currentScreen.draw(g);
-
     }
 
     // call the move methods in other classes to update positions

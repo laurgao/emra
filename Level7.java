@@ -8,8 +8,11 @@ public class Level7 extends Level {
     private Character m; // block representing money
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private int[] camera; // camera represents the top left coords of the screen being displayed.
+    private VoidFunction winCallback;
+    private boolean hasWon = false;
 
-    public Level7() {
+    public Level7(VoidFunction winCallback) {
+        this.winCallback = winCallback;
         camera = new int[] { 0, 0 };
         int cx = Panel.W / 2 - Block.S / 2; // starting x value of character
         int cy = Panel.H - 3 * Block.S;
@@ -69,8 +72,8 @@ public class Level7 extends Level {
     public void draw(Graphics g) {
 
         // draw the characters
-        c.draw(g, -camera[0], -camera[1]);
         m.draw(g, -camera[0], -camera[1]);
+        c.draw(g, -camera[0], -camera[1]);
 
         // draw the floor blocks
         for (Block b : blocks) {
@@ -92,8 +95,9 @@ public class Level7 extends Level {
             resetLevel();
         }
 
-        if (c.intersects(m)) {
-            System.out.println("You win!");
+        if (c.intersects(m) && !hasWon) {
+            winCallback.run();
+            hasWon = true;
         }
 
         // Adjust camera based on character position
