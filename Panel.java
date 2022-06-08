@@ -23,7 +23,7 @@ public class Panel extends JPanel implements Runnable, KeyListener {
     private Thread gameThread;
 
     public Panel() {
-        currentScreen = new Level8();
+        currentScreen = new Level7();
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
         // listen for mouse input.

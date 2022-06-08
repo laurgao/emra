@@ -3,12 +3,12 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Level8 extends Level {
-    Character c; // player-controlled main character
-    Character m; // block representing money
-    Character family1;
-    Character family2;
-    ArrayList<Block> blocks = new ArrayList<Block>();
-    ArrayList<Fire> fires = new ArrayList<Fire>();
+    private Character c; // player-controlled main character
+    private Character m; // block representing money
+    private Character family1;
+    private Character family2;
+    private ArrayList<Block> blocks = new ArrayList<Block>();
+    private ArrayList<Fire> fires = new ArrayList<Fire>();
 
     public Level8() {
         // starting x and y coordinates of main character
@@ -18,7 +18,8 @@ public class Level8 extends Level {
         m = new Character(startingX + 22 * Block.S, startingY, CustomColor.MONEY);
         family1 = new Character(startingX + 15 * Block.S, startingY - 4 * Block.S, CustomColor.CORAL);
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, CustomColor.CORAL); // TODO: get a
-                                                                                                       // 4th colour.
+                                                                                                       // 4th colour
+                                                                                                       // (blue).
 
         // Create fires
         fires.add(new Fire(startingX + 8 * Block.S, startingY - 4 * Block.S));
@@ -37,6 +38,7 @@ public class Level8 extends Level {
         createRectOfBlocks(1, 11, startingX + 23 * Block.S, startingY - 9 * Block.S);
     }
 
+    // reset characters to starting positions.
     private void resetLevel() {
         int startingX = Panel.W / 10 + Block.S;
         int startingY = Panel.H / 2;
