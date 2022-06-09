@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Level8 extends Level {
-    private Character c; // player-controlled main character
     private Character m; // block representing money
     private Character family1;
     private Character family2;
-    private ArrayList<Block> blocks = new ArrayList<Block>();
     private ArrayList<Fire> fires = new ArrayList<Fire>();
 
     public Level8() {
@@ -37,24 +35,13 @@ public class Level8 extends Level {
     }
 
     // reset characters to starting positions.
-    private void resetLevel() {
+    void resetLevel() {
         int startingX = Panel.W / 10 + 5 * Block.S;
         int startingY = Panel.H / 2 + Block.S;
         c = new Character(startingX, startingY, CustomColor.PINK);
         m = new Character(startingX + 21 * Block.S, startingY, CustomColor.MONEY);
         family1 = new Character(startingX + 15 * Block.S, startingY - 4 * Block.S, CustomColor.CORAL);
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
-    }
-
-    // Create a rectangle of blocks with width and height given by number of blocks
-    // and x and y coordinates given by pixel values of the top left corner of
-    // rectangle
-    private void createRectOfBlocks(int w, int h, int startingX, int startingY) {
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                blocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, Color.BLACK));
-            }
-        }
     }
 
     public void draw(Graphics g) {
@@ -91,7 +78,7 @@ public class Level8 extends Level {
     }
 
     public void move() {
-        c.move();
+        super.move();
         family1.move();
         family2.move();
 
@@ -107,14 +94,8 @@ public class Level8 extends Level {
         checkCollisions(family2,
                 extend(blocks, new ArrayList<Block>(family1.isAlive() ? Arrays.asList(c, family1) : Arrays.asList(c))));
 
-        checkDeath(c);
         checkDeath(family1);
         checkDeath(family2);
-
-        // If main character dies, reset the level
-        if (!c.isAlive()) {
-            resetLevel();
-        }
 
         // If main character reaches money after having killed all the family, go to
         // next level
@@ -123,18 +104,18 @@ public class Level8 extends Level {
         }
     }
 
-    private void checkDeath(Character c) {
+    @Override
+    protected void checkDeath(Character c) {
+        super.checkDeath(c);
         for (Fire f : fires) {
             if (f.intersects(c)) {
                 c.die();
             }
         }
-        // if character falls off the screen, the player has died
-        if (c.y > Panel.H * 1.5) {
-            c.die();
-        }
     }
 
+    // Overriding the method in Level class to allow checking collisions with other
+    // characters.
     private void checkCollisions(Character c, ArrayList<Block> blocks) {
         // check collisions
         if (c.isFalling && c.yVelocity > 0) {
@@ -193,13 +174,13 @@ public class Level8 extends Level {
     }
 
     public void keyPressed(KeyEvent e) {
-        c.keyPressed(e);
+        super.keyPressed(e);
         family1.keyPressed(e);
         family2.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {
-        c.keyReleased(e);
+        super.keyPressed(e);
         family1.keyReleased(e);
         family2.keyReleased(e);
     }

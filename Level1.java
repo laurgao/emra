@@ -1,42 +1,51 @@
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Level1 extends Level {
-    Character c; // player-controlled main character
-    Character m; // block representing money
-    ArrayList<Block> blocks = new ArrayList<Block>();
+    // Character c; // player-controlled main character
+    Character family1; 
+    Character family2; 
+    Character family3;
+    Character family4;
+
+    // ArrayList<Block> blocks = new ArrayList<Block>();
 
     public Level1() {
         // starting x and y coordinates of main character
-        int startingX = Panel.W;
         int startingY = Panel.H; 
-        c = new Character(50, (int)(startingY*0.4), CustomColor.PINK);
-        m = new Character(startingX-60, startingY-30, CustomColor.MONEY);
+        c = new Character(190, startingY/2-30, CustomColor.PINK);
+        family1 = new Character(100, startingY/2-30, Color.BLUE);
+        family2 = new Character(225, startingY/2-30, Color.PINK);
+        family3 = new Character(135, startingY/2 -15, 15, Color.GRAY); 
+        family4 = new Character(155, startingY/2 -15, 15, Color.GREEN); 
 
         // Create blocks for the floor
-        createRectOfBlocks(5, 15, 0, (int)(startingY*0.4) + Block.S);
-        createRectOfBlocks(3, 1, (int) (startingX*0.25), (int)(startingY*0.35) + Block.S);
-        createRectOfBlocks(3, 1, (int) (startingX*0.4), (int)(startingY*0.25) + Block.S);  
-        createRectOfBlocks(15, 1, (int) (startingX*0.6), startingY);
+        createRectOfBlocks(12, 1, 0, startingY/2);
+        createRectOfBlocks(13, 1, 0, startingY/2+30);
+        createRectOfBlocks(14, 1, 0, startingY/2+60);
+        createRectOfBlocks(15, 1, 0, startingY/2+90);
+        createRectOfBlocks(75, 15, 0, startingY/2+120);
+
+        // Create blocks for the walls 
+        createRectOfBlocks(1, 3, 60, startingY/2-90);
+        createRectOfBlocks(1, 2, 270 , startingY/2-90);
+
+        // Create blocks for the roof 
+        createRectOfBlocks(2, 1, 30 , startingY/2-120);
+        createRectOfBlocks(2, 1, 270 , startingY/2-120);
+        createRectOfBlocks(2, 1, 60 , startingY/2-150);
+        createRectOfBlocks(2, 1, 240 , startingY/2-150);
+        createRectOfBlocks(2, 1, 90, startingY/2-180);
+        createRectOfBlocks(2, 1, 210, startingY/2-180);
+        createRectOfBlocks(4, 1, 120, startingY/2-210);
     }
 
-    private void resetLevel() {
-        int startingX = Panel.W;
+    void resetLevel() {
         int startingY = Panel.H;
-        c = new Character(50, (int) (startingY*0.4), CustomColor.PINK);
-        m = new Character(startingX-60, startingY-30, CustomColor.MONEY);
-    }
-
-    // Create a rectangle of blocks with width and height given by number of blocks
-    // and x and y coordinates given by pixel values of the top left corner of
-    // rectangle
-    private void createRectOfBlocks(int w, int h, int startingX, int startingY) {
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                blocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, Color.BLACK));
-            }
-        }
+        c = new Character(160, startingY/2-30, CustomColor.PINK);
+        family1 = new Character(120, startingY/2-30, Color.BLUE);
+        family2 = new Character(195, startingY/2-30, Color.YELLOW);
+        family3 = new Character(120, startingY/2 -15, 15, Color.GRAY); 
     }
 
     public void draw(Graphics g) {
@@ -45,8 +54,10 @@ public class Level1 extends Level {
         g.drawString("It is prepared to sacrifice.", 550, 100);
 
         // draw the characters
-        m.draw(g);
         c.draw(g);
+        family1.draw(g);
+        family2.draw(g);
+        family3.draw(g);
 
         // draw the floor blocks
         for (Block b : blocks) {
@@ -54,94 +65,13 @@ public class Level1 extends Level {
         }
     }
 
+    @Override
     public void move() {
-        c.move();
-
-        checkCollisions(c);
-
-        checkDeath(c);
-
-        // If main character dies, reset the level
-        if (!c.isAlive()) {
-            resetLevel();
-        }
-
+        super.move();
         // If main character reaches money after having killed all the family, go to
         // next level
-        if (c.intersects(m)) {
+        if (c.x > Panel.W) {
             System.out.println("You win!");
         }
-    }
-
-    private void checkDeath(Character c) {
-        // if character falls off the screen, the player has died
-        if (c.y > Panel.H * 1.5) {
-            c.die();
-        }
-    }
-
-    private void checkCollisions(Character c) {
-        // check collisions
-        if (c.isFalling && c.yVelocity > 0) {
-            // If the character collides with a block while falling downwards:
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y < b.y) {
-                    c.isFalling = false;
-                    c.y = b.y - c.height;
-                    break;
-                }
-            }
-        } else if (c.isFalling && c.yVelocity < 0) {
-            // if character bumps into a block while going upwards
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y > b.y) {
-                    c.yVelocity = 0;
-                    c.y = b.y + b.height;
-                    break;
-                }
-            }
-        }
-        // If character collides with a block while moving sideways and not falling
-        else if (c.xVelocity > 0) {
-            // character is moving right
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x < b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x - c.width;
-                    break;
-                }
-            }
-        } else if (c.xVelocity < 0) {
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x > b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x + b.width;
-                    break;
-                }
-            }
-        }
-
-        // if the character is not above any block, it is falling
-        if (!characterIsAboveABlock(c)) {
-            c.isFalling = true;
-        }
-
-    }
-
-    private boolean characterIsAboveABlock(Character c) {
-        for (Block b : blocks) {
-            if (c.x + c.width > b.x && c.x < b.x + b.width && c.height + c.y == b.y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void keyPressed(KeyEvent e) {
-        c.keyPressed(e);
-    }
-
-    public void keyReleased(KeyEvent e) {
-        c.keyReleased(e);
     }
 }

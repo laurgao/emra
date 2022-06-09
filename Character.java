@@ -28,6 +28,14 @@ public class Character extends Block {
         isAlive = true;
     }
 
+    public Character(int x, int y, int z, Color color) {
+        super(x, y, z, color);
+        xVelocity = 0;
+        yVelocity = 0;
+        isFalling = false;
+        isAlive = true;
+    }
+
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {

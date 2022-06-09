@@ -16,6 +16,11 @@ public class Block extends Rectangle {
         this.color = color;
     }
 
+    public Block(int x, int y, int z, Color color) {
+        super(x, y, z, z);
+        this.color = color; 
+    }
+
     // called frequently from the Panel class
     // draws the current location of the block to the screen
     public void draw(Graphics g) {
