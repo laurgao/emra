@@ -1,12 +1,8 @@
 import java.awt.Color;
-import java.util.ArrayList;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Level7 extends Level {
-    private Character c; // player-controlled main character
     private Character m; // block representing money
-    private ArrayList<Block> blocks = new ArrayList<Block>();
     private int[] camera; // camera represents the top left coords of the screen being displayed.
     private VoidFunction winCallback;
     private boolean hasWon = false;
@@ -61,7 +57,7 @@ public class Level7 extends Level {
     }
 
     // reset characters to starting positions + reset camera position
-    private void resetLevel() {
+    void resetLevel() {
         camera = new int[] { 0, 0 };
         int cx = Panel.W / 2 - Block.S / 2; // starting x value of character
         int cy = Panel.H - 3 * Block.S;
@@ -87,14 +83,7 @@ public class Level7 extends Level {
     }
 
     public void move() {
-        c.move();
-        checkCollisions(c);
-        checkDeath(c);
-
-        if (!c.isAlive()) {
-            resetLevel();
-        }
-
+       super.move();
         if (c.intersects(m) && !hasWon) {
             winCallback.run();
             hasWon = true;
@@ -113,77 +102,5 @@ public class Level7 extends Level {
             }
             camera[1] = newCameraY;
         }
-    }
-
-    private void checkDeath(Character c) {
-        // if character falls off the screen, the player has died
-        if (c.y > Panel.H * 1.5) {
-            c.die();
-        }
-    }
-
-    public void keyPressed(KeyEvent e) {
-        c.keyPressed(e);
-    }
-
-    public void keyReleased(KeyEvent e) {
-        c.keyReleased(e);
-    }
-
-    private void checkCollisions(Character c) {
-        // check collisions
-        if (c.isFalling && c.yVelocity > 0) {
-            // If the character collides with a block while falling downwards:
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y < b.y) {
-                    c.isFalling = false;
-                    c.y = b.y - c.height;
-                    break;
-                }
-            }
-        } else if (c.isFalling && c.yVelocity < 0) {
-            // if character bumps into a block while going upwards
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y > b.y) {
-                    c.yVelocity = 0;
-                    c.y = b.y + b.height;
-                    break;
-                }
-            }
-        }
-        // If character collides with a block while moving sideways and not falling
-        else if (c.xVelocity > 0) {
-            // character is moving right
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x < b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x - c.width;
-                    break;
-                }
-            }
-        } else if (c.xVelocity < 0) {
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x > b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x + b.width;
-                    break;
-                }
-            }
-        }
-
-        // if the character is not above any block, it is falling
-        if (!characterIsAboveABlock(c)) {
-            c.isFalling = true;
-        }
-
-    }
-
-    private boolean characterIsAboveABlock(Character c) {
-        for (Block b : blocks) {
-            if (c.x + c.width > b.x && c.x < b.x + b.width && c.height + c.y == b.y) {
-                return true;
-            }
-        }
-        return false;
     }
 }
