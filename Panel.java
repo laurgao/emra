@@ -32,11 +32,9 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         playSound("background", true);
         opacity = 0.0f; // start with alpha at 0 and fade in.
 
-        currentScreen = new Level1();
-
-        // currentScreen = new Level7(() -> {
-        //     newLevel(new Level8());
-        // });
+        currentScreen = new Level7(() -> {
+            nextLevel(new Level8());
+        });
         nextLevel = currentScreen;
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
@@ -58,7 +56,7 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         gameThread.start();
     }
 
-    private void newLevel(Level level) {
+    public void nextLevel(Level level) {
         opacity = -1.0f;
         nextLevel = level;
     }
@@ -133,9 +131,10 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void playSound(String audioFile, boolean continuous) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public void playSound(String audioFile, boolean continuous)
+            throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioPlayer ac = new AudioPlayer();
-        ac.playSound(audioFile, continuous); 
+        ac.playSound(audioFile, continuous);
     }
 
     // if a key is pressed, we'll send it over to the player paddle object for

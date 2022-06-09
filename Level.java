@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public abstract class Level {
 
-    protected Character c; 
-    
+    protected Character c; // player-controlled main character
+
     ArrayList<Block> blocks = new ArrayList<Block>();
 
     // // move is constantly called from the Panel class
@@ -20,7 +20,6 @@ public abstract class Level {
 
     // public abstract void keyReleased(KeyEvent e);
 
-    
     // Create a rectangle of blocks with width and height given by number of blocks
     // and x and y coordinates given by pixel values of the top left corner of
     // rectangle
@@ -33,7 +32,7 @@ public abstract class Level {
     }
 
     public void move() {
-        c.move();
+        c.move(blocks);
 
         checkCollisions(c);
 
@@ -59,7 +58,7 @@ public abstract class Level {
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block while falling downwards:
             for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y < b.y) {
+                if (c.willIntersectY(b) && c.y < b.y) {
                     c.isFalling = false;
                     c.y = b.y - c.height;
                     break;
@@ -68,28 +67,9 @@ public abstract class Level {
         } else if (c.isFalling && c.yVelocity < 0) {
             // if character bumps into a block while going upwards
             for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y > b.y) {
+                if (c.willIntersectY(b) && c.y > b.y) {
                     c.yVelocity = 0;
                     c.y = b.y + b.height;
-                    break;
-                }
-            }
-        }
-        // If character collides with a block while moving sideways and not falling
-        else if (c.xVelocity > 0) {
-            // character is moving right
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x < b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x - c.width;
-                    break;
-                }
-            }
-        } else if (c.xVelocity < 0) {
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x > b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x + b.width;
                     break;
                 }
             }
