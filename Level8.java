@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Level8 extends Level {
     private Character c; // player-controlled main character
@@ -12,14 +13,12 @@ public class Level8 extends Level {
 
     public Level8() {
         // starting x and y coordinates of main character
-        int startingX = Panel.W / 10 + Block.S;
-        int startingY = Panel.H / 2;
+        int startingX = Panel.W / 10 + 5 * Block.S;
+        int startingY = Panel.H / 2 + Block.S;
         c = new Character(startingX, startingY, CustomColor.PINK);
-        m = new Character(startingX + 22 * Block.S, startingY, CustomColor.MONEY);
+        m = new Character(startingX + 21 * Block.S, startingY, CustomColor.MONEY);
         family1 = new Character(startingX + 15 * Block.S, startingY - 4 * Block.S, CustomColor.CORAL);
-        family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, CustomColor.CORAL); // TODO: get a
-                                                                                                       // 4th colour
-                                                                                                       // (blue).
+        family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
 
         // Create fires
         fires.add(new Fire(startingX + 8 * Block.S, startingY - 4 * Block.S));
@@ -29,23 +28,22 @@ public class Level8 extends Level {
         createRectOfBlocks(5, 2, startingX - Block.S, startingY + Block.S);
         blocks.add(new Block(startingX + 8 * Block.S, startingY + Block.S, Color.BLACK));
         blocks.add(new Block(startingX + 12 * Block.S, startingY + Block.S, Color.BLACK));
-        createRectOfBlocks(20, 1, startingX + 4 * Block.S, startingY + 6 * Block.S);
-        createRectOfBlocks(5, 6, startingX + 16 * Block.S, startingY + Block.S); // modified to be easier. originally: w
-                                                                                 // = 4, startingx = 17
-        createRectOfBlocks(10, 1, startingX + 8 * Block.S, startingY - 3 * Block.S);
-        createRectOfBlocks(5, 7, startingX + 16 * Block.S, startingY - 9 * Block.S); // other modified one.
-        createRectOfBlocks(2, 1, startingX + 21 * Block.S, startingY + Block.S);
-        createRectOfBlocks(1, 11, startingX + 23 * Block.S, startingY - 9 * Block.S);
+        createRectOfBlocks(30, 10, startingX + 4 * Block.S, startingY + 6 * Block.S);// bottom
+        createRectOfBlocks(5, 6, startingX + 16 * Block.S, startingY + Block.S);
+        createRectOfBlocks(10, 1, startingX + 8 * Block.S, startingY - 3 * Block.S); // floor of coral
+        createRectOfBlocks(5, 17, startingX + 16 * Block.S, startingY - 19 * Block.S); // top
+        createRectOfBlocks(10, 2, startingX + 20 * Block.S, startingY + Block.S); // floor of money
+        createRectOfBlocks(10, 21, startingX + 22 * Block.S, startingY - 19 * Block.S); // top right
     }
 
     // reset characters to starting positions.
     private void resetLevel() {
-        int startingX = Panel.W / 10 + Block.S;
-        int startingY = Panel.H / 2;
+        int startingX = Panel.W / 10 + 5 * Block.S;
+        int startingY = Panel.H / 2 + Block.S;
         c = new Character(startingX, startingY, CustomColor.PINK);
-        m = new Character(startingX + 22 * Block.S, startingY, CustomColor.MONEY);
+        m = new Character(startingX + 21 * Block.S, startingY, CustomColor.MONEY);
         family1 = new Character(startingX + 15 * Block.S, startingY - 4 * Block.S, CustomColor.CORAL);
-        family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, CustomColor.CORAL);
+        family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
     }
 
     // Create a rectangle of blocks with width and height given by number of blocks
@@ -62,7 +60,7 @@ public class Level8 extends Level {
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
-        g.drawString("Reaching my goal was meant to hurt others", 150, 150);
+        g.drawString("Reaching my goal was meant to hurt others.", 150, 150);
 
         // draw the characters
         m.draw(g);
@@ -81,14 +79,33 @@ public class Level8 extends Level {
         }
     }
 
+    private ArrayList<Block> extend(ArrayList<Block> list, ArrayList<Block> list2) {
+        ArrayList<Block> newList = new ArrayList<Block>();
+        for (Block b : list) {
+            newList.add(b);
+        }
+        for (Block b : list2) {
+            newList.add(b);
+        }
+        return newList;
+    }
+
     public void move() {
         c.move();
         family1.move();
         family2.move();
 
-        checkCollisions(c);
-        checkCollisions(family1);
-        checkCollisions(family2);
+        // Check collisions for ea. character with floor blocks and each other alive
+        // character
+        checkCollisions(c,
+                extend(blocks,
+                        new ArrayList<Block>(family1.isAlive() && family2.isAlive() ? Arrays.asList(family1, family2)
+                                : family1.isAlive() ? Arrays.asList(family1)
+                                        : family2.isAlive() ? Arrays.asList(family2) : new ArrayList<Block>())));
+        checkCollisions(family1,
+                extend(blocks, new ArrayList<Block>(family2.isAlive() ? Arrays.asList(c, family2) : Arrays.asList(c))));
+        checkCollisions(family2,
+                extend(blocks, new ArrayList<Block>(family1.isAlive() ? Arrays.asList(c, family1) : Arrays.asList(c))));
 
         checkDeath(c);
         checkDeath(family1);
@@ -118,7 +135,7 @@ public class Level8 extends Level {
         }
     }
 
-    private void checkCollisions(Character c) {
+    private void checkCollisions(Character c, ArrayList<Block> blocks) {
         // check collisions
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block while falling downwards:
@@ -160,13 +177,13 @@ public class Level8 extends Level {
         }
 
         // if the character is not above any block, it is falling
-        if (!characterIsAboveABlock(c)) {
+        if (!characterIsAboveABlock(c, blocks)) {
             c.isFalling = true;
         }
 
     }
 
-    private boolean characterIsAboveABlock(Character c) {
+    private boolean characterIsAboveABlock(Character c, ArrayList<Block> blocks) {
         for (Block b : blocks) {
             if (c.x + c.width > b.x && c.x < b.x + b.width && c.height + c.y == b.y) {
                 return true;

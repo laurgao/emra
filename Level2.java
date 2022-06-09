@@ -6,27 +6,32 @@ public class Level2 extends Level {
     Character c; // player-controlled main character
     Character m; // block representing money
     ArrayList<Block> blocks = new ArrayList<Block>();
+    Panel panel;
+    boolean hasWon;
 
-    public Level2() {
+    public Level2(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
+
         // starting x and y coordinates of main character
         int startingX = Panel.W;
-        int startingY = Panel.H; 
-        c = new Character(50, (int)(startingY*0.4), CustomColor.PINK);
-        m = new Character(startingX-60, startingY-60, CustomColor.MONEY);
+        int startingY = Panel.H;
+        c = new Character(50, (int) (startingY * 0.4), CustomColor.PINK);
+        m = new Character(startingX - 60, startingY - 60, CustomColor.MONEY);
 
         // Create blocks for the floor
-        createRectOfBlocks(5, 15, 0, (int)(startingY*0.4) + Block.S);
-        createRectOfBlocks(3, 1, (int) (startingX*0.25), (int)(startingY*0.35) + Block.S);
-        createRectOfBlocks(3, 1, (int) (startingX*0.4), (int)(startingY*0.25) + Block.S);  
-        createRectOfBlocks(15, 1, (int) (startingX*0.6), startingY);
-        createRectOfBlocks(5,1,(int)(startingX*0.90),startingY-30);
+        createRectOfBlocks(5, 15, 0, (int) (startingY * 0.4) + Block.S);
+        createRectOfBlocks(3, 1, (int) (startingX * 0.25), (int) (startingY * 0.35) + Block.S);
+        createRectOfBlocks(3, 1, (int) (startingX * 0.4), (int) (startingY * 0.25) + Block.S);
+        createRectOfBlocks(15, 1, (int) (startingX * 0.6), startingY);
+        createRectOfBlocks(5, 1, (int) (startingX * 0.90), startingY - 30);
     }
 
     private void resetLevel() {
         int startingX = Panel.W;
         int startingY = Panel.H;
-        c = new Character(50, (int) (startingY*0.4), CustomColor.PINK);
-        m = new Character(startingX-60, startingY-60, CustomColor.MONEY);
+        c = new Character(50, (int) (startingY * 0.4), CustomColor.PINK);
+        m = new Character(startingX - 60, startingY - 60, CustomColor.MONEY);
     }
 
     // Create a rectangle of blocks with width and height given by number of blocks
@@ -69,8 +74,9 @@ public class Level2 extends Level {
 
         // If main character reaches money after having killed all the family, go to
         // next level
-        if (c.intersects(m)) {
-            System.out.println("You win!");
+        if (c.intersects(m) && !hasWon) {
+            hasWon = true;
+            panel.nextLevel(new Level8());
         }
     }
 
