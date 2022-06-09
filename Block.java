@@ -22,4 +22,10 @@ public class Block extends Rectangle {
         g.setColor(color);
         g.fillRect(x, y, width, height);
     }
+
+    // overload veriant that allows the setting of camera.
+    public void draw(Graphics g, int offsetX, int offsetY) {
+        g.setColor(color);
+        g.fillRect(x + offsetX, y + offsetY, width, height);
+    }
 }
