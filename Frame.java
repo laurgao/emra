@@ -5,11 +5,15 @@ Runs the constructor in GamePanel class
 
 */
 import java.awt.*;
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 public class Frame extends JFrame {
 
-    public Frame() {
+    public Frame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Panel content = new Panel(); // run GamePanel constructor
         this.add(content);
         this.setTitle("Pong"); // set title for frame

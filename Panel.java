@@ -10,6 +10,10 @@ Implements Runnable interface to use "threading" - let the game do two things at
 */
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 public class Panel extends JPanel implements Runnable, KeyListener {
@@ -22,14 +26,14 @@ public class Panel extends JPanel implements Runnable, KeyListener {
 
     private Thread gameThread;
 
-    public Panel() {
+    public Panel() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        playSound("background", true);
         currentScreen = new Level8();
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
         // listen for mouse input.
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-
             }
         });
 
@@ -100,6 +104,11 @@ public class Panel extends JPanel implements Runnable, KeyListener {
             }
 
         }
+    }
+
+    public void playSound(String audioFile, boolean continuous) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioPlayer ac = new AudioPlayer();
+        ac.playSound(audioFile, continuous); 
     }
 
     // if a key is pressed, we'll send it over to the player paddle object for
