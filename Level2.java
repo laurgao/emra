@@ -1,11 +1,7 @@
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
 
 public class Level2 extends Level {
-    Character c; // player-controlled main character
     Character m; // block representing money
-    ArrayList<Block> blocks = new ArrayList<Block>();
 
     public Level2() {
         // starting x and y coordinates of main character
