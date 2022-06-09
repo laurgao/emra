@@ -79,8 +79,8 @@ public class Level8 extends Level {
 
     public void move() {
         super.move();
-        family1.move();
-        family2.move();
+        family1.move(blocks);
+        family2.move(blocks);
 
         // Check collisions for ea. character with floor blocks and each other alive
         // character
@@ -121,7 +121,7 @@ public class Level8 extends Level {
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block while falling downwards:
             for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y < b.y) {
+                if (c.willIntersectY(b) && c.y < b.y) {
                     c.isFalling = false;
                     c.y = b.y - c.height;
                     break;
@@ -130,28 +130,9 @@ public class Level8 extends Level {
         } else if (c.isFalling && c.yVelocity < 0) {
             // if character bumps into a block while going upwards
             for (Block b : blocks) {
-                if (c.willIntersect(b) && c.y > b.y) {
+                if (c.willIntersectY(b) && c.y > b.y) {
                     c.yVelocity = 0;
                     c.y = b.y + b.height;
-                    break;
-                }
-            }
-        }
-        // If character collides with a block while moving sideways and not falling
-        else if (c.xVelocity > 0) {
-            // character is moving right
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x < b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x - c.width;
-                    break;
-                }
-            }
-        } else if (c.xVelocity < 0) {
-            for (Block b : blocks) {
-                if (c.willIntersect(b) && c.x > b.x) {
-                    c.xVelocity = 0;
-                    c.x = b.x + b.width;
                     break;
                 }
             }

@@ -5,6 +5,7 @@ child of Rectangle because that makes it easy to draw and check for collision
 */
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Character extends Block {
     // Convention for velocity and acceleration: down and right is positive
@@ -40,19 +41,15 @@ public class Character extends Block {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             xVelocity = SPEED * -1;
-            move();
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             xVelocity = SPEED;
-            move();
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_UP && !isFalling) {
-
             yVelocity = -G;
             isFalling = true;
-            move();
         }
 
     }
@@ -63,15 +60,29 @@ public class Character extends Block {
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
             xVelocity = 0;
-            move();
         }
     }
 
-    // called frequently from both Paddle class and GamePanel class
-    // updates the current location of the paddle
-    public void move() {
+    // called frequently from level classes
+    // updates the current location of the character
+    public void move(ArrayList<Block> blocks) {
+        // Moves in a way to stop when colliding with a block in the x direction.
+        boolean willIntersectX = false;
+        for (Block b : blocks) {
+            boolean isCollidingFromLeft = this.willIntersectX(b) && this.x < b.x && this.xVelocity > 0;
+            boolean isCollidingFromRight = this.willIntersectX(b) && this.x > b.x && this.xVelocity < 0;
+            if (isCollidingFromLeft || isCollidingFromRight) {
+                this.x = isCollidingFromLeft ? b.x - this.width : b.x + b.width;
+                willIntersectX = true;
+                break;
+            }
+        }
+        if (!willIntersectX) {
+            this.x += this.xVelocity;
+        }
+
+        // Move in the y direction.
         yVelocity = isFalling ? yVelocity + fallingYAcceleration : 0;
-        x += xVelocity;
         y += yVelocity;
     }
 
@@ -81,10 +92,14 @@ public class Character extends Block {
         }
     }
 
-    // returns whether character will intersect rectangle after 1 more move()
-    public boolean willIntersect(Rectangle r) {
-        return x + xVelocity + width > r.x && x + xVelocity < r.x + r.width && y + yVelocity + height > r.y
-                && y + yVelocity < r.y + r.height;
+    // returns whether character will intersect rectangle after 1 more move() (but
+    // only according to xVelocity)
+    private boolean willIntersectX(Rectangle r) {
+        return x + xVelocity + width > r.x && x + xVelocity < r.x + r.width && y + height > r.y && y < r.y + r.height;
+    }
+
+    public boolean willIntersectY(Rectangle r) {
+        return x + width > r.x && x < r.x + r.width && y + yVelocity + height > r.y && y + yVelocity < r.y + r.height;
     }
 
     public void die() {
