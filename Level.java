@@ -34,7 +34,7 @@ public abstract class Level {
     public void move() {
         c.move(blocks);
 
-        checkCollisions(c);
+        checkYCollisions(c);
 
         checkDeath(c);
 
@@ -53,7 +53,13 @@ public abstract class Level {
         }
     }
 
-    protected void checkCollisions(Character c) {
+    // Overload variant so that default behavior of this method is to only check
+    // collisions with existing blocks.
+    protected void checkYCollisions(Character c) {
+        checkYCollisions(c, this.blocks);
+    }
+
+    protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
         // check collisions
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block while falling downwards:
@@ -76,13 +82,13 @@ public abstract class Level {
         }
 
         // if the character is not above any block, it is falling
-        if (!characterIsAboveABlock(c)) {
+        if (!characterIsAboveABlock(c, blocks)) {
             c.isFalling = true;
         }
 
     }
 
-    protected boolean characterIsAboveABlock(Character c) {
+    protected boolean characterIsAboveABlock(Character c, ArrayList<Block> blocks) {
         for (Block b : blocks) {
             if (c.x + c.width > b.x && c.x < b.x + b.width && c.height + c.y == b.y) {
                 return true;

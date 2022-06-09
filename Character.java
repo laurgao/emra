@@ -94,12 +94,16 @@ public class Character extends Block {
 
     // returns whether character will intersect rectangle after 1 more move() (but
     // only according to xVelocity)
-    private boolean willIntersectX(Rectangle r) {
+    public boolean willIntersectX(Rectangle r) {
         return x + xVelocity + width > r.x && x + xVelocity < r.x + r.width && y + height > r.y && y < r.y + r.height;
     }
 
     public boolean willIntersectY(Rectangle r) {
         return x + width > r.x && x < r.x + r.width && y + yVelocity + height > r.y && y + yVelocity < r.y + r.height;
+    }
+
+    public boolean intersectsY(Rectangle r) {
+        return y + height > r.y && y < r.y + r.height;
     }
 
     public void die() {
