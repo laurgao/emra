@@ -32,9 +32,7 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         playSound("background", true);
         opacity = 0.0f; // start with alpha at 0 and fade in.
 
-        currentScreen = new Level7(() -> {
-            nextLevel(new Level8());
-        });
+        currentScreen = new Level9(this);
         nextLevel = currentScreen;
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
@@ -56,6 +54,8 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         gameThread.start();
     }
 
+    // call this method to switch to the next level.
+    // it fades out the current level and fades in the next one.
     public void nextLevel(Level level) {
         opacity = -1.0f;
         nextLevel = level;
@@ -66,8 +66,8 @@ public class Panel extends JPanel implements Runnable, KeyListener {
     // appears in the window.
     public void paint(Graphics g) {
         g.clearRect(0, 0, W, H); // clear the screen
+        // Create a graphics 2d object to set the opacity of the entire screen.
         Graphics2D g2d = (Graphics2D) g;
-        // set the opacity
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.abs(opacity)));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -78,6 +78,7 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         draw(graphics);// update the positions of everything on the screen
         g2d.drawImage(image, 0, 0, this); // move the image on the screen
 
+        // When done drawing, increment the opacity for the next call of this method.
         float increment = 0.01f; // adjust this to change the speed of the fade in/out
         if (opacity < 1.0f) {
             opacity = Math.min(opacity + increment, 1.0f);

@@ -35,6 +35,7 @@ public class Level8 extends Level {
     }
 
     // reset characters to starting positions.
+    @Override
     void resetLevel() {
         int startingX = Panel.W / 10 + 5 * Block.S;
         int startingY = Panel.H / 2 + Block.S;
@@ -44,6 +45,7 @@ public class Level8 extends Level {
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
     }
 
+    @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
@@ -66,17 +68,7 @@ public class Level8 extends Level {
         }
     }
 
-    private ArrayList<Block> extend(ArrayList<Block> list, ArrayList<Block> list2) {
-        ArrayList<Block> newList = new ArrayList<Block>();
-        for (Block b : list) {
-            newList.add(b);
-        }
-        for (Block b : list2) {
-            newList.add(b);
-        }
-        return newList;
-    }
-
+    @Override
     public void move() {
         super.move();
         family1.move(blocks);
@@ -84,15 +76,17 @@ public class Level8 extends Level {
 
         // Check collisions for ea. character with floor blocks and each other alive
         // character
-        checkCollisions(c,
-                extend(blocks,
+        checkYCollisions(c,
+                Utils.extend(blocks,
                         new ArrayList<Block>(family1.isAlive() && family2.isAlive() ? Arrays.asList(family1, family2)
                                 : family1.isAlive() ? Arrays.asList(family1)
                                         : family2.isAlive() ? Arrays.asList(family2) : new ArrayList<Block>())));
-        checkCollisions(family1,
-                extend(blocks, new ArrayList<Block>(family2.isAlive() ? Arrays.asList(c, family2) : Arrays.asList(c))));
-        checkCollisions(family2,
-                extend(blocks, new ArrayList<Block>(family1.isAlive() ? Arrays.asList(c, family1) : Arrays.asList(c))));
+        checkYCollisions(family1,
+                Utils.extend(blocks,
+                        new ArrayList<Block>(family2.isAlive() ? Arrays.asList(c, family2) : Arrays.asList(c))));
+        checkYCollisions(family2,
+                Utils.extend(blocks,
+                        new ArrayList<Block>(family1.isAlive() ? Arrays.asList(c, family1) : Arrays.asList(c))));
 
         checkDeath(family1);
         checkDeath(family2);
@@ -114,54 +108,16 @@ public class Level8 extends Level {
         }
     }
 
-    // Overriding the method in Level class to allow checking collisions with other
-    // characters.
-    private void checkCollisions(Character c, ArrayList<Block> blocks) {
-        // check collisions
-        if (c.isFalling && c.yVelocity > 0) {
-            // If the character collides with a block while falling downwards:
-            for (Block b : blocks) {
-                if (c.willIntersectY(b) && c.y < b.y) {
-                    c.isFalling = false;
-                    c.y = b.y - c.height;
-                    break;
-                }
-            }
-        } else if (c.isFalling && c.yVelocity < 0) {
-            // if character bumps into a block while going upwards
-            for (Block b : blocks) {
-                if (c.willIntersectY(b) && c.y > b.y) {
-                    c.yVelocity = 0;
-                    c.y = b.y + b.height;
-                    break;
-                }
-            }
-        }
-
-        // if the character is not above any block, it is falling
-        if (!characterIsAboveABlock(c, blocks)) {
-            c.isFalling = true;
-        }
-
-    }
-
-    private boolean characterIsAboveABlock(Character c, ArrayList<Block> blocks) {
-        for (Block b : blocks) {
-            if (c.x + c.width > b.x && c.x < b.x + b.width && c.height + c.y == b.y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
         family1.keyPressed(e);
         family2.keyPressed(e);
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
-        super.keyPressed(e);
+        super.keyReleased(e);
         family1.keyReleased(e);
         family2.keyReleased(e);
     }
