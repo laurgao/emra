@@ -1,6 +1,10 @@
 import java.awt.*;
+import java.awt.event.*;
 
 public class Level3 extends Level {
+
+    private static final int SPEED = 3; // velocity of player when moving horizontally
+
     Character m; // block representing money
     Character family1;
     Character family2;
@@ -9,25 +13,26 @@ public class Level3 extends Level {
         // starting x and y coordinates of main character
         int startingX = Panel.W;
         int startingY = Panel.H;
-        c = new Character(50, startingY-60, CustomColor.PINK);
-        m = new Character(startingX-50, startingY-60, CustomColor.MONEY);
+        c = new Character(50, startingY-150, CustomColor.PINK);
+        m = new Character(startingX-70, startingY-150, CustomColor.MONEY);
 
         // Create blocks for the floor
-        createRectOfBlocks(6, 15, startingX/2-70, (int)(startingY*0.4));
-        createRectOfBlocks(70, 2, 0, startingY-30 );
+        createRectOfBlocks(6, 15, startingX/2+175, 100);
+        createRectOfBlocks(6, 12, startingX/2-325, 200);
+        createRectOfBlocks(70, 5, 0, startingY-120 );
     }
 
     void resetLevel() {
         int startingX = Panel.W;
         int startingY = Panel.H;
-        c = new Character(50, (int) (startingY*0.9), CustomColor.PINK);
-        m = new Character(startingX-60, (int) (startingY*0.9), CustomColor.MONEY);
+        c = new Character(50, startingY-150, CustomColor.PINK);
+        m = new Character(startingX-70, startingY-150, CustomColor.MONEY);
     }
 
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
-        g.drawString("Climb any challenge...", 150, 150);
+        g.drawString("Climb any challenge...", 350, 100);
 
         // draw the characters
         m.draw(g);
@@ -39,12 +44,35 @@ public class Level3 extends Level {
         }
     }
 
+    public void keyPressed(KeyEvent e) {
+        
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            c.xVelocity =  SPEED* -1;
+        } 
+        
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            c.xVelocity = SPEED;
+        } 
+        
+        else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if(!c.isFalling) {
+                c.yVelocity = -9.8;
+                c.isFalling = true;
+            } 
+            
+            else if (c.isFalling && c.willIntersectX){
+                c.yVelocity = -9.8;
+                c.isFalling = true;
+            }
+        }
+    }
+
     public void move() {
         super.move();
-        // If main character reaches money after having killed all the family, go to
-        // next level
+
         if (c.intersects(m)) {
             System.out.println("You win!");
         }
     }
+
 }
