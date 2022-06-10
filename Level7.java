@@ -15,13 +15,13 @@ public class Level7 extends Level {
         c = new Character(cx, cy, CustomColor.PINK);
 
         // Make floor
-        for (int x = -7; x <= 6; x++) {
+        for (int x = -31; x <= 30; x++) {
             blocks.add(new Block(cx + (x + 1) * Block.S, cy + 1 * Block.S, Color.BLACK));
             blocks.add(new Block(cx + (x + 1) * Block.S, cy + 2 * Block.S, Color.BLACK));
         }
 
         // Make 2 walls
-        for (int x = 5; x <= 6; x++) {
+        for (int x = 5; x <= 30; x++) {
             for (int y = 0; y <= 20; y++) {
                 blocks.add(new Block(cx + (x + 1) * Block.S, cy - y * Block.S, Color.BLACK));
                 blocks.add(new Block(cx - (x) * Block.S, cy - y * Block.S, Color.BLACK));
@@ -81,7 +81,7 @@ public class Level7 extends Level {
         // Add text
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20));
-        g.drawString("To reach the top", 150 - camera[0], 150 - camera[1]);
+        g.drawString("To reach the top.", 150 - camera[0], -100 - camera[1]);
     }
 
     public void move() {

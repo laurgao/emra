@@ -35,6 +35,7 @@ public class Level8 extends Level {
     }
 
     // reset characters to starting positions.
+    @Override
     void resetLevel() {
         int startingX = Panel.W / 10 + 5 * Block.S;
         int startingY = Panel.H / 2 + Block.S;
@@ -44,6 +45,7 @@ public class Level8 extends Level {
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
     }
 
+    @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
@@ -66,6 +68,7 @@ public class Level8 extends Level {
         }
     }
 
+    @Override
     public void move() {
         super.move();
         family1.move(blocks);
@@ -105,14 +108,16 @@ public class Level8 extends Level {
         }
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
         family1.keyPressed(e);
         family2.keyPressed(e);
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
-        super.keyPressed(e);
+        super.keyReleased(e);
         family1.keyReleased(e);
         family2.keyReleased(e);
     }

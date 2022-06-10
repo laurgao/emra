@@ -29,6 +29,7 @@ public class Level6 extends Level {
     }
 
     // reset characters to starting positions.
+    @Override
     void resetLevel() {
         int cx = Panel.W / 2;
         int cy = Panel.H / 2;
@@ -37,6 +38,7 @@ public class Level6 extends Level {
         stool = new Character(cx - (int) (Block.S * 4.5), cy - (int) (Block.S * 3.5), CustomColor.BROWN);
     }
 
+    @Override
     public void draw(Graphics g) {
         // draw the characters
         m.draw(g);
@@ -51,7 +53,7 @@ public class Level6 extends Level {
         // draw the text
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
-        String str = "Use whatever is necessary.";
+        String str = "Use whatever is necessary";
         FontMetrics metrics = g.getFontMetrics();
         g.drawString(str, Panel.W / 2 - metrics.stringWidth(str) / 2, Panel.H / 2 - metrics.getHeight() / 2);
     }

@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public abstract class Level {
 
     protected Character c; // player-controlled main character
-
-    ArrayList<Block> blocks = new ArrayList<Block>();
+    protected ArrayList<Block> blocks = new ArrayList<Block>(); // floor blocks
 
     // // move is constantly called from the Panel class
     // public abstract void move();

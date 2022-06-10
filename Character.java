@@ -9,11 +9,10 @@ import java.util.ArrayList;
 
 public class Character extends Block {
     // Convention for velocity and acceleration: down and right is positive
-    private static final int SPEED = 3; // velocity of player when moving horizontally
-    private static final double G = 9.8; // gravity
+    public static final int SPEED = 3; // velocity of player when moving horizontally
+    public static final double G = 9.8; // gravity
     private static final double fallingYAcceleration = G / 20; // Found experimentally to be a good value for the
                                                                // acceleration of the character when falling.
-
     public double xVelocity;
     public double yVelocity;
     public boolean isFalling; // if true, yVelocity updates according to fallingYAcceleration
@@ -54,8 +53,8 @@ public class Character extends Block {
 
     }
 
-    // called from GamePanel when any key is released
-    // Makes the paddle stop moving in that direction
+    // called from Level classes when any key is released
+    // Makes the character stop moving in that direction
     public void keyReleased(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
