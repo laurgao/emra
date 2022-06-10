@@ -1,12 +1,9 @@
 import java.util.ArrayList;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Level6 extends Level {
-    private Character c; // player-controlled main character
     private Character m; // block representing money
     private Character stool;
-    private ArrayList<Block> blocks = new ArrayList<Block>();
     private Panel panel;
 
     public Level6(Panel panel) {

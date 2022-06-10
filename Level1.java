@@ -28,11 +28,11 @@ public class Level1 extends Level {
         createRectOfBlocks(2, 1, 0,(int)(startingY*0.65)-350);
 
         // Create blocks for the floor
-        createRectOfBlocks(16, 1, 0, (int)(startingY*0.65), Color.BLACK);
-        createRectOfBlocks(17, 1, 0, (int)(startingY*0.65)+30, Color.BLACK);
-        createRectOfBlocks(18, 1, 0, (int)(startingY*0.65)+60, Color.BLACK);
-        createRectOfBlocks(19, 1, 0, (int)(startingY*0.65)+90, Color.BLACK);
-        createRectOfBlocks(75, 15, 0, (int)(startingY*0.65)+120, Color.BLACK);
+        createRectOfBlocks(16, 1, 0, (int)(startingY*0.65));
+        createRectOfBlocks(17, 1, 0, (int)(startingY*0.65)+30);
+        createRectOfBlocks(18, 1, 0, (int)(startingY*0.65)+60);
+        createRectOfBlocks(19, 1, 0, (int)(startingY*0.65)+90);
+        createRectOfBlocks(75, 15, 0, (int)(startingY*0.65)+120);
 
         // Create blocks for the walls 
         createRectOfBlocks(1, 3, 150, (int)(startingY*0.65)-90);
@@ -82,15 +82,6 @@ public class Level1 extends Level {
         // next level
         if (c.x > Panel.W) {
             System.out.println("You win!");
-        }
-    }
-
-    // @Override
-    protected void createRectOfBlocks(int w, int h, int startingX, int startingY, Color color) {
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                blocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, color));
-            }
         }
     }
 }
