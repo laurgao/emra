@@ -18,9 +18,11 @@ public class Character extends Block {
     public double yVelocity;
     public boolean isFalling; // if true, yVelocity updates according to fallingYAcceleration
 
-    private boolean isAlive;
+    protected boolean isAlive;
 
     public boolean willIntersectX;
+
+    protected Color charColor;
 
     // x and y are initial coordinates of character
     public Character(int x, int y, Color color) {
@@ -29,10 +31,19 @@ public class Character extends Block {
         yVelocity = 0;
         isFalling = false;
         isAlive = true;
+        charColor = color; 
     }
 
     public Character(int x, int y, int z, Color color) {
         super(x, y, z, color);
+        xVelocity = 0;
+        yVelocity = 0;
+        isFalling = false;
+        isAlive = true;
+    }
+
+    public Character(int x, int y, int z1, int z2, Color color) {
+        super(x, y, z1, z2, color);
         xVelocity = 0;
         yVelocity = 0;
         isFalling = false;
@@ -92,6 +103,12 @@ public class Character extends Block {
     public void draw(Graphics g) {
         if (isAlive) {
             super.draw(g);
+        }
+    }
+
+    public void draw(Graphics g, int newHeight, int offsetX, int offsetY) {
+        if (isAlive) {
+            super.draw(g, newHeight, offsetX, offsetY);
         }
     }
 

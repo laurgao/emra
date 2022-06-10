@@ -5,9 +5,9 @@ public class Level2 extends Level {
     Panel panel;
     boolean hasWon;
 
-    public Level2(Panel panel) {
-        this.panel = panel;
-        hasWon = false;
+    public Level2() {
+        // this.panel = panel;
+        // hasWon = false;
 
         // starting x and y coordinates of main character
         int startingX = Panel.W;

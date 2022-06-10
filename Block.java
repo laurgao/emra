@@ -21,11 +21,21 @@ public class Block extends Rectangle {
         this.color = color; 
     }
 
+    public Block(int x, int y, int z1, int z2, Color color) {
+        super(x, y, z1, z2);
+        this.color = color; 
+    }
+
     // called frequently from the Panel class
     // draws the current location of the block to the screen
     public void draw(Graphics g) {
         g.setColor(color);
         g.fillRect(x, y, width, height);
+    }
+
+    public void draw(Graphics g, int newHeight, int offsetX, int offsetY) {
+        g.setColor(color);
+        g.fillRect(x + offsetX, y + offsetY, width, newHeight);
     }
 
     // overload veriant that allows the setting of camera.

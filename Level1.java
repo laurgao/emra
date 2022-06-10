@@ -1,13 +1,10 @@
 import java.awt.*;
 
 public class Level1 extends Level {
-    // Character c; // player-controlled main character
     Character family1; 
     Character family2; 
     Character family3;
     Character family4;
-
-    // ArrayList<Block> blocks = new ArrayList<Block>();
 
     public Level1() {
         // starting x and y coordinates of main character
@@ -50,11 +47,11 @@ public class Level1 extends Level {
 
     void resetLevel() {
         int startingY = Panel.H;
-        c = new Character(175, startingY/2-30, CustomColor.PINK);
-        family1 = new Character(100, startingY/2-30, Color.BLUE);
-        family2 = new Character(210, startingY/2-30, Color.PINK);
-        family3 = new Character(135, startingY/2 -15, 15, Color.GRAY); 
-        family4 = new Character(155, startingY/2 -15, 15, Color.GREEN); 
+        c = new Character(265, (int)(startingY*0.65)-30, CustomColor.PINK);
+        family1 = new Character(190, (int)(startingY*0.65)-30, Color.BLUE);
+        family2 = new Character(300, (int)(startingY*0.65)-30, Color.PINK);
+        family3 = new Character(225, (int)(startingY*0.65)-15, 15, Color.GRAY); 
+        family4 = new Character(245, (int)(startingY*0.65)-15, 15, Color.GREEN); 
     }
 
     public void draw(Graphics g) {
