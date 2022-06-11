@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Level10 extends Level {
 
@@ -16,9 +17,11 @@ public class Level10 extends Level {
     // private VoidFunction winCallback;
     // private boolean hasWon = false;
     private boolean pressedButton;
+    // private ArrayList<Block> ledges;
 
     public Level10( ) {
         // this.winCallback = winCallback;
+        // ledges = new ArrayList<Block>();
         pressedButton = false;
         camera = new int[] { 0, 0 };
         int cx = Panel.W / 2 - 125; // starting x value of character
@@ -43,6 +46,10 @@ public class Level10 extends Level {
         createRectOfBlocks(6, 1, UNIT, 8*UNIT, cy -8*UNIT);
         createRectOfBlocks(3, 1, UNIT, 2*UNIT, cy - 6*UNIT);
         createRectOfBlocks(3, 1, UNIT, cx-2*UNIT+5, cy-3*UNIT);
+
+        // Create ledges which are light grey blocks that are 1 way jumps.
+        // for (int i = 0; i < 3; i++)
+        //     ledges.add(new Block(14*UNIT, cy-3*UNIT, 150, Color.LIGHT_GRAY));
 
     }
 
@@ -69,8 +76,12 @@ public class Level10 extends Level {
         retractableWall.draw(g, -camera[0], -camera[1]);
 
         // draw the floor blocks
+        // for (Block b : Utils.extend(blocks, ledges)) {
+        //     b.draw(g);
+        // }
+
         for (Block b : blocks) {
-            b.draw(g, -camera[0], -camera[1]);
+            b.draw(g);
         }
 
         // Add text
@@ -118,7 +129,7 @@ public class Level10 extends Level {
 
         checkButton();
 
-        checkCollisions(c);
+        checkYCollisions(c);
 
         checkDeath(c);
 
