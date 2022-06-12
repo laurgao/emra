@@ -26,6 +26,27 @@ public class Fire {
 
     // helper method to check if a character is touching the fire
     public boolean intersects(Rectangle r) {
-        return r.intersects(x, y, S, S);
+        // Convention: touching != intersecting
+
+        // If the rectangle is not in the same row and column as the fire, it is not
+        // touching it.
+        if (r.y + r.height <= y || r.y >= y + S || r.x + r.width <= x || r.x >= x + S) {
+            return false;
+        }
+        int cx = x + S / 2; // center x coordinate of the fire
+        int rrx = r.x + r.width; // right x coordinate of the rectangle
+        int rby = r.y + r.height; // bottom y coordinate of the rectangle
+
+        // If rectangle is to the left of the triangle, check if the bottom right corner
+        // of the character crosses the right side of the fire. (and vice versa)
+        if (rrx < cx) {
+            int sy = (cx - rrx) * 2 + y; // y-coordinate of the side of the triangle corresponding to the x coordinate
+                                         // of the bottom right corner of the rectangle
+            return rby > sy;
+        } else if (r.x > cx) {
+            int sy = (r.x - cx) * 2 + y;
+            return rby > sy;
+        }
+        return true;
     }
 }
