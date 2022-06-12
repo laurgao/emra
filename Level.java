@@ -9,15 +9,13 @@ public abstract class Level {
     protected Character c; // player-controlled main character
     protected ArrayList<Block> blocks = new ArrayList<Block>(); // floor blocks
 
-    // // move is constantly called from the Panel class
-    // public abstract void move();
-
-    // // move is constantly called from the Panel class after move is called
-    public abstract void draw(Graphics g);
-
-    // public abstract void keyPressed(KeyEvent e);
-
-    // public abstract void keyReleased(KeyEvent e);
+    // draw is constantly called from the Panel class after move is called
+    public void draw(Graphics g) {
+        c.draw(g);
+        for (Block b : blocks) {
+            b.draw(g);
+        }
+    }
 
     // Create a rectangle of blocks with width and height given by number of blocks
     // and x and y coordinates given by pixel values of the top left corner of
@@ -30,6 +28,7 @@ public abstract class Level {
         }
     }
 
+    // move is constantly called from the Panel class
     public void move() {
         c.move(blocks);
 
@@ -41,9 +40,15 @@ public abstract class Level {
         if (!c.isAlive()) {
             resetLevel();
         }
+
+        // checkWin();
     }
 
+    // Called when the player dies
     abstract void resetLevel();
+
+    // Check if the player has won. If so, go to the next level.
+    // protected abstract void checkWin();
 
     protected void checkDeath(Character c) {
         // if character falls off the screen, the player has died
