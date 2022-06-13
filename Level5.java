@@ -6,7 +6,9 @@ public class Level5 extends Level {
     private ArrayList<Fire> fires;
     private Character m;
 
-    public Level5() {
+    public Level5(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
         int sy = 6; // starting y coordinate
         c = new Character(S, (sy + 2) * S, CustomColor.PINK);
         fires = new ArrayList<Fire>();
@@ -60,6 +62,14 @@ public class Level5 extends Level {
             if (f.intersects(c)) {
                 c.die();
             }
+        }
+    }
+
+    @Override
+    protected void checkWin() {
+        if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level6(panel));
+            hasWon = true;
         }
     }
 }

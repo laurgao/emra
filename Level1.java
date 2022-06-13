@@ -6,7 +6,9 @@ public class Level1 extends Level {
     Character family3;
     Character family4;
 
-    public Level1() {
+    public Level1(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
         // starting x and y coordinates of main character
         int startingY = Panel.H; 
         c = new Character(265, (int)(startingY*0.65)-30, CustomColor.PINK);
@@ -73,12 +75,10 @@ public class Level1 extends Level {
     }
 
     @Override
-    public void move() {
-        super.move();
-        // If main character reaches money after having killed all the family, go to
-        // next level
-        if (c.x > Panel.W) {
-            System.out.println("You win!");
+    protected void checkWin() {
+        if (c.x > Panel.W && !hasWon) {
+            panel.nextLevel(new Level2(panel));
+            hasWon = true;
         }
     }
 }

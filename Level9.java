@@ -5,8 +5,6 @@ import java.awt.event.*;
 public class Level9 extends Level {
     private Character m; // block representing money
     private ArrayList<Fire> fires;
-    private Panel panel;
-    private boolean hasWon;
     private ArrayList<Block> ledges; // ledges that are 1 way jumps.
 
     public Level9(Panel panel) {
@@ -110,7 +108,7 @@ public class Level9 extends Level {
 
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
-            panel.nextLevel(new Level10());
+            panel.nextLevel(new Level10(panel));
             hasWon = true;
         }
     }

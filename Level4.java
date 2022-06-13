@@ -6,12 +6,13 @@ public class Level4 extends Level {
     private static final int SPEED = 3; // velocity of player when moving horizontally
 
     Character m; // block representing money
-    Panel panel;
     boolean hasWon;
     boolean isPressedRight;
     boolean isPressedUp;
 
-    public Level4() {
+    public Level4(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
 
         // starting x and y coordinates of main character
         int startingX = Panel.W;
@@ -92,14 +93,14 @@ public class Level4 extends Level {
         if (isPressedRight && isPressedUp) {
             c.xVelocity = SPEED - 0.5;
             c.yVelocity = 0.65;
-            // c.isFalling = false;
         }
+    }
 
-        // If main character reaches money after having killed all the family, go to
-        // next level
+    @Override
+    protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level5(panel));
             hasWon = true;
-            panel.nextLevel(new Level2());
         }
     }
 }

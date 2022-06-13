@@ -13,15 +13,14 @@ public class Level10 extends Level {
     private Character m; // block representing money
 
     private int[] camera; // camera represents the top left coords of the screen being displayed.
-    // private VoidFunction winCallback;
-    // private boolean hasWon = false;
     private boolean pressedButton;
     private ArrayList<Block> ledges;
     private Block button;
     private ArrayList<Block> retractableWall; 
 
-    public Level10( ) {
-        // this.winCallback = winCallback;
+    public Level10(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
         ledges = new ArrayList<Block>();
         retractableWall = new ArrayList<Block>();
         pressedButton = false;
@@ -29,7 +28,7 @@ public class Level10 extends Level {
         int cx = Panel.W / 2 - 125; // starting x value of character
         int cy = Panel.H/3  - 2*Block.S;
         c = new Character(cx, cy, UNIT, CustomColor.PINK);
-        m = new Character(UNIT*21, cy-UNIT, UNIT, CustomColor.MONEY);
+        m = new Character(UNIT*21, cy, UNIT, CustomColor.MONEY);
 
         //create initial red button
         button = new Block(cx-UNIT, cy-4*UNIT+70, UNIT, 150, Color.RED);
@@ -49,7 +48,7 @@ public class Level10 extends Level {
         createRectOfBlocks(5, 10, UNIT, UNIT*24, -5*UNIT);
 
         //create obstacles 
-        createRectOfBlocks(10, 1, UNIT, 14*UNIT, cy);
+        // createRectOfBlocks(10, 1, UNIT, 14*UNIT, cy);
         createRectOfBlocks(2, 1, UNIT, 5*UNIT, cy);
         createRectOfBlocks(3, 5, UNIT, 11*UNIT, cy -4*UNIT);
         createRectOfBlocks(2, 1, UNIT, 9*UNIT, cy-2*UNIT);
@@ -151,9 +150,7 @@ public class Level10 extends Level {
             resetLevel();
         }
 
-        if (c.intersects(m)) {
-            System.out.println("you won!");
-        }
+        checkWin();
         }
 
     public void checkButton() {
@@ -200,6 +197,13 @@ public class Level10 extends Level {
             }
         }
 
+    }
+
+    protected void checkWin() {
+        if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level10(panel));
+            hasWon = true;
+        }
     }
 
     // returns whether character will intersect rectangle after 1 more move() (but

@@ -4,8 +4,6 @@ import java.awt.*;
 public class Level7 extends Level {
     private Character m; // block representing money
     private int[] camera; // camera represents the top left coords of the screen being displayed.
-    private Panel panel;
-    private boolean hasWon = false;
 
     public Level7(Panel panel) {
         this.panel = panel;

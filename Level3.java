@@ -9,7 +9,9 @@ public class Level3 extends Level {
     Character family1;
     Character family2;
 
-    public Level3() {
+    public Level3(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
         // starting x and y coordinates of main character
         int startingX = Panel.W;
         int startingY = Panel.H;
@@ -67,11 +69,11 @@ public class Level3 extends Level {
         }
     }
 
-    public void move() {
-        super.move();
-
-        if (c.intersects(m)) {
-            System.out.println("You win!");
+    @Override
+    protected void checkWin() {
+        if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level4(panel));
+            hasWon = true;
         }
     }
 

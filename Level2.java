@@ -2,12 +2,10 @@ import java.awt.*;
 
 public class Level2 extends Level {
     Character m; // block representing money
-    Panel panel;
-    boolean hasWon;
 
-    public Level2() {
-        // this.panel = panel;
-        // hasWon = false;
+    public Level2(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
 
         // starting x and y coordinates of main character
         int startingX = Panel.W;
@@ -45,14 +43,11 @@ public class Level2 extends Level {
         }
     }
 
-    public void move() {
-        super.move();
-
-        // If main character reaches money after having killed all the family, go to
-        // next level
+    @Override
+    protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level3(panel));
             hasWon = true;
-            panel.nextLevel(new Level3());
         }
     }
 }

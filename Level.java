@@ -8,6 +8,8 @@ public abstract class Level {
 
     protected Character c; // player-controlled main character
     protected ArrayList<Block> blocks = new ArrayList<Block>(); // floor blocks
+    protected Panel panel;
+    protected boolean hasWon = false;
 
     // draw is constantly called from the Panel class after move is called
     public void draw(Graphics g) {
@@ -41,14 +43,14 @@ public abstract class Level {
             resetLevel();
         }
 
-        // checkWin();
+        checkWin();
     }
 
     // Called when the player dies
     abstract void resetLevel();
 
     // Check if the player has won. If so, go to the next level.
-    // protected abstract void checkWin();
+    protected abstract void checkWin();
 
     protected void checkDeath(Character c) {
         // if character falls off the screen, the player has died
