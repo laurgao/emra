@@ -8,8 +8,13 @@ public class Level8 extends Level {
     private Character family1;
     private Character family2;
     private ArrayList<Fire> fires = new ArrayList<Fire>();
+    private Panel panel;
+    private boolean hasWon;
 
-    public Level8() {
+    public Level8(Panel panel) {
+        this.panel = panel;
+        hasWon = false;
+
         // starting x and y coordinates of main character
         int startingX = Panel.W / 10 + 5 * Block.S;
         int startingY = Panel.H / 2 + Block.S;
@@ -70,31 +75,46 @@ public class Level8 extends Level {
 
     @Override
     public void move() {
-        super.move();
-        family1.move(blocks);
-        family2.move(blocks);
+        // The following variables define blocks that each character cannot move
+        // through.
+        ArrayList<Block> cBlocks = Utils.extend(blocks,
+                new ArrayList<Block>(family1.isAlive() && family2.isAlive() ? Arrays.asList(family1, family2)
+                        : family1.isAlive() ? Arrays.asList(family1)
+                                : family2.isAlive() ? Arrays.asList(family2) : new ArrayList<Block>()));
+        ArrayList<Block> f1Blocks = Utils.extend(blocks,
+                new ArrayList<Block>(family2.isAlive() ? Arrays.asList(c, family2) : Arrays.asList(c)));
+        ArrayList<Block> f2Blocks = Utils.extend(blocks,
+                new ArrayList<Block>(family1.isAlive() ? Arrays.asList(c, family1) : Arrays.asList(c)));
+
+        c.move(cBlocks);
+        family1.move(f1Blocks);
+        family2.move(f2Blocks);
 
         // Check collisions for ea. character with floor blocks and each other alive
         // character
-        checkYCollisions(c,
-                Utils.extend(blocks,
-                        new ArrayList<Block>(family1.isAlive() && family2.isAlive() ? Arrays.asList(family1, family2)
-                                : family1.isAlive() ? Arrays.asList(family1)
-                                        : family2.isAlive() ? Arrays.asList(family2) : new ArrayList<Block>())));
-        checkYCollisions(family1,
-                Utils.extend(blocks,
-                        new ArrayList<Block>(family2.isAlive() ? Arrays.asList(c, family2) : Arrays.asList(c))));
-        checkYCollisions(family2,
-                Utils.extend(blocks,
-                        new ArrayList<Block>(family1.isAlive() ? Arrays.asList(c, family1) : Arrays.asList(c))));
+        checkYCollisions(c, cBlocks);
+        checkYCollisions(family1, f1Blocks);
+        checkYCollisions(family2, f2Blocks);
 
+        checkDeath(c);
         checkDeath(family1);
         checkDeath(family2);
 
+        // If main character dies, reset the level
+        if (!c.isAlive()) {
+            resetLevel();
+        }
+
+        checkWin();
+    }
+
+    // @Override
+    protected void checkWin() {
         // If main character reaches money after having killed all the family, go to
         // next level
-        if (!family1.isAlive() && !family2.isAlive() && c.intersects(m)) {
-            System.out.println("You win!");
+        if (!hasWon && !family1.isAlive() && !family2.isAlive() && c.intersects(m)) {
+            panel.nextLevel(new Level9(panel));
+            hasWon = true;
         }
     }
 

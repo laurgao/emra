@@ -93,6 +93,10 @@ public class Level6 extends Level {
         stool.move(blocks);
 
         // Check win condition
+        checkWin();
+    }
+
+    protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
             panel.nextLevel(new Level7(panel));
             hasWon = true;

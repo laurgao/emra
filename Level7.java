@@ -84,12 +84,15 @@ public class Level7 extends Level {
         g.drawString("To reach the top.", 150 - camera[0], -100 - camera[1]);
     }
 
-    public void move() {
-        super.move();
+    protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
-            panel.nextLevel(new Level8());
+            panel.nextLevel(new Level8(panel));
             hasWon = true;
         }
+    }
+
+    public void move() {
+        super.move();
 
         // Adjust camera based on character position
         if (!hasWon) {

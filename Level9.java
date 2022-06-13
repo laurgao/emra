@@ -104,6 +104,15 @@ public class Level9 extends Level {
         if (!c.isAlive()) {
             resetLevel();
         }
+
+        checkWin();
+    }
+
+    protected void checkWin() {
+        if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level10());
+            hasWon = true;
+        }
     }
 
     @Override

@@ -52,7 +52,7 @@ public class Level2 extends Level {
         // next level
         if (c.intersects(m) && !hasWon) {
             hasWon = true;
-            panel.nextLevel(new Level8());
+            panel.nextLevel(new Level3());
         }
     }
 }
