@@ -119,7 +119,7 @@ public class Level10 extends Level {
     public void move() {
 
         boolean willIntersectX = false;
-        for (Block b : Utils.extend(blocks, Utils.extend(ledges, retractableWall))) {
+        for (Block b : Utils.extend(blocks, retractableWall)) {
             boolean isCollidingFromLeft = c.willIntersectX(b) && c.x < b.x && c.xVelocity > 0;
             boolean isCollidingFromRight = c.willIntersectX(b) && c.x > b.x && c.xVelocity < 0;
             if (isCollidingFromLeft || isCollidingFromRight) {
@@ -158,8 +158,6 @@ public class Level10 extends Level {
             pressedButton = true;
         }
     }
-
-    //QUESTION: where in the code does it code for the c's x coord when it is at rest (!isFalling)?
 
     @Override
     protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
