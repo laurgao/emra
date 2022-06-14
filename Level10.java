@@ -201,7 +201,7 @@ public class Level10 extends Level {
 
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
-            panel.nextLevel(new Level10(panel));
+            panel.nextLevel(new Level11(panel));
             hasWon = true;
         }
     }

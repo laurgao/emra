@@ -32,7 +32,7 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         playSound("background", true);
         opacity = 0.0f; // start with alpha at 0 and fade in.
 
-        currentScreen = new Level10(this);
+        currentScreen = new Level9(this);
         nextLevel = currentScreen;
 
         // add the MousePressed method from the MouseAdapter - by doing this we can
