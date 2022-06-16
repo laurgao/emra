@@ -18,7 +18,7 @@ public class Level4 extends Level {
         int startingX = Panel.W;
         int startingY = Panel.H;
         c = new Character(90, (int) (startingY * 0.35) - 30, CustomColor.PINK);
-        m = new Character(startingX - 120, (int) (startingY * 0.75) - 30, CustomColor.MONEY);
+        m = new Money(startingX - 120, (int) (startingY * 0.75) - 30, panel);
 
         // Create blocks for the floor
         createRectOfBlocks(7, 1, 0, (int) (startingY * 0.35));
@@ -29,7 +29,7 @@ public class Level4 extends Level {
         int startingX = Panel.W;
         int startingY = Panel.H;
         c = new Character(90, (int) (startingY * 0.35) - 30, CustomColor.PINK);
-        m = new Character(startingX - 120, (int) (startingY * 0.75) - 30, CustomColor.MONEY);
+        m = new Money(startingX - 120, (int) (startingY * 0.75) - 30, panel);
     }
 
     public void keyPressed(KeyEvent e) {
