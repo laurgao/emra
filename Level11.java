@@ -134,9 +134,9 @@ public class Level11 extends Level {
         //Add text
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
-        g.drawString("I also realized when I turned around...",600-camera[0], 300-camera[1]);
+        g.drawString("When I finally turned around...",600-camera[0], 300-camera[1]);
         g.setColor(Color.WHITE);
-        g.drawString("...just how much I had lost.",320-camera[0], 1250-camera[1]);
+        g.drawString("...I realized just how much I had lost.",350-camera[0], 1250-camera[1]);
         g.drawString("Perhaps my chase for wealth",1300-camera[0], 1250-camera[1]);
         g.drawString("was the beginning of my tragedy.",1400-camera[0], 1300-camera[1]);
 
@@ -181,7 +181,7 @@ public class Level11 extends Level {
     @Override
     protected void checkWin() {
         if (c.intersects(m)&& !hasWon) {
-            panel.nextLevel(new Level11(panel));
+            panel.nextLevel(new Level12(panel));
             hasWon = true;
         }
     }

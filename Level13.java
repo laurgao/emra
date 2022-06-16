@@ -2,14 +2,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Level13 extends Level {
-    private final int S = Block.S;
     private ArrayList<Fire> fires;
     private ArrayList<Block> invisibleObstacles;
 
     public Level13(Panel panel) {
         this.panel = panel;
         hasWon = false;
-        int sy = 6; // starting y coordinate
         invisibleObstacles = new ArrayList<Block>();
         c = new Character(50,270, CustomColor.PINK);
 

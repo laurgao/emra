@@ -49,7 +49,10 @@ public class Level12 extends LevelWithFire {
 
     @Override
     protected void checkWin() {
-
+        if (c.intersects(m) && !hasWon) {
+            panel.nextLevel(new Level13(panel));
+            hasWon = true;
+        }
     }
 
     @Override
