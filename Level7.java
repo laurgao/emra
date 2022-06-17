@@ -52,7 +52,7 @@ public class Level7 extends Level {
             blocks.add(new Block(cx + Block.S * x, cy - 23 * Block.S, Color.BLACK));
 
         // put money on the top of the staircase
-        m = new Character(cx + Block.S * 6, cy - 24 * Block.S, CustomColor.MONEY);
+        m = new Money(cx + Block.S * 6, cy - 24 * Block.S, panel);
 
     }
 
@@ -62,7 +62,7 @@ public class Level7 extends Level {
         int cx = Panel.W / 2 - Block.S / 2; // starting x value of character
         int cy = Panel.H - 3 * Block.S;
         c = new Character(cx, cy, CustomColor.PINK);
-        m = new Character(cx + Block.S * 6, cy - 24 * Block.S, CustomColor.MONEY);
+        m = new Money(cx + Block.S * 6, cy - 24 * Block.S, panel);
     }
 
     public void draw(Graphics g) {

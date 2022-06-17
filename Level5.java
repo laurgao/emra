@@ -34,7 +34,7 @@ public class Level5 extends Level {
         createRectOfBlocks(1, 1, 32 * S, 5 * S);
         createRectOfBlocks(1, 4, 34 * S, 9 * S); // where money stands
 
-        m = new Character(34 * S, 8 * S, CustomColor.MONEY);
+        m = new Money(34 * S, 8 * S, panel);
     }
 
     @Override

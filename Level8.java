@@ -19,7 +19,7 @@ public class Level8 extends Level {
         int startingX = Panel.W / 10 + 5 * Block.S;
         int startingY = Panel.H / 2 + Block.S;
         c = new Character(startingX, startingY, CustomColor.PINK);
-        m = new Character(startingX + 21 * Block.S, startingY, CustomColor.MONEY);
+        m = new Money(startingX + 21 * Block.S, startingY, panel);
         family1 = new Character(startingX + 15 * Block.S, startingY - 4 * Block.S, CustomColor.CORAL);
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
 
@@ -45,7 +45,7 @@ public class Level8 extends Level {
         int startingX = Panel.W / 10 + 5 * Block.S;
         int startingY = Panel.H / 2 + Block.S;
         c = new Character(startingX, startingY, CustomColor.PINK);
-        m = new Character(startingX + 21 * Block.S, startingY, CustomColor.MONEY);
+        m = new Money(startingX + 21 * Block.S, startingY, panel);
         family1 = new Character(startingX + 15 * Block.S, startingY - 4 * Block.S, CustomColor.CORAL);
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
     }

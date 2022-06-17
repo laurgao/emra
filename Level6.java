@@ -24,7 +24,7 @@ public class Level6 extends Level {
         for (int i = 0; i < 4; i++)
             createRectOfBlocks(6 - i, 1, cx + (int) (Block.S * 0.5), cy - (int) (Block.S * (3.5 + i)));
         blocks.add(new Block(cx + (int) (Block.S * 1.5), cy - (int) (Block.S * 7.5), Color.BLACK));
-        m = new Character(cx + (int) (Block.S * 6.5), cy - (int) (Block.S * 3.5), CustomColor.MONEY);
+        m = new Money(cx + (int) (Block.S * 6.5), cy - (int) (Block.S * 3.5), panel);
         stool = new Character(cx - (int) (Block.S * 4.5), cy - (int) (Block.S * 3.5), CustomColor.BROWN);
     }
 
@@ -34,7 +34,7 @@ public class Level6 extends Level {
         int cx = Panel.W / 2;
         int cy = Panel.H / 2;
         c = new Character(cx - (int) (Block.S * 6.5), cy - Block.S * 7 / 2, CustomColor.PINK);
-        m = new Character(cx + (int) (Block.S * 6.5), cy - (int) (Block.S * 3.5), CustomColor.MONEY);
+        m = new Money(cx + (int) (Block.S * 6.5), cy - (int) (Block.S * 3.5), panel);
         stool = new Character(cx - (int) (Block.S * 4.5), cy - (int) (Block.S * 3.5), CustomColor.BROWN);
     }
 

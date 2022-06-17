@@ -11,7 +11,7 @@ public class Level2 extends Level {
         int startingX = Panel.W;
         int startingY = Panel.H;
         c = new Character(50, (int) (startingY * 0.4), CustomColor.PINK);
-        m = new Character(startingX - 60, startingY - 60, CustomColor.MONEY);
+        m = new Money(startingX - 60, startingY - 60, panel);
 
         // Create blocks for the floor
         createRectOfBlocks(5, 15, 0, (int) (startingY * 0.4) + Block.S);
@@ -25,7 +25,7 @@ public class Level2 extends Level {
         int startingX = Panel.W;
         int startingY = Panel.H;
         c = new Character(50, (int) (startingY * 0.4), CustomColor.PINK);
-        m = new Character(startingX - 60, startingY - 60, CustomColor.MONEY);
+        m = new Money(startingX - 60, startingY - 60, panel);
     }
 
     public void draw(Graphics g) {

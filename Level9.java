@@ -13,7 +13,7 @@ public class Level9 extends Level {
 
         int startingY = (Panel.H * 3 / 4) / Block.S * Block.S;
         c = new Character(4 * Block.S, startingY - Block.S, CustomColor.PINK);
-        m = new Character(26 * Block.S, 5 * Block.S, CustomColor.MONEY);
+        m = new Money(26 * Block.S, 5 * Block.S, panel);
         createRectOfBlocks(10, 10, 2 * Block.S, startingY); // starting floor
         createRectOfBlocks(2, Panel.H / Block.S, Panel.W - 2 * Block.S, 0); // left wall
         createRectOfBlocks(2, Panel.H / Block.S, 0, 0); // right wall

@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import org.w3c.dom.events.MouseEvent;
+
 public abstract class Level {
 
     protected Character c; // player-controlled main character
@@ -109,5 +111,9 @@ public abstract class Level {
 
     public void keyReleased(KeyEvent e) {
         c.keyReleased(e);
+    }
+
+    public void mousePressed(MouseEvent e){
+
     }
 }

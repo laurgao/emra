@@ -15,20 +15,20 @@ public class Level3 extends Level {
         // starting x and y coordinates of main character
         int startingX = Panel.W;
         int startingY = Panel.H;
-        c = new Character(50, startingY-150, CustomColor.PINK);
-        m = new Character(startingX-70, startingY-150, CustomColor.MONEY);
+        c = new Character(50, startingY - 150, CustomColor.PINK);
+        m = new Money(startingX - 70, startingY - 150, panel);
 
         // Create blocks for the floor
-        createRectOfBlocks(6, 15, startingX/2+175, 100);
-        createRectOfBlocks(6, 12, startingX/2-325, 200);
-        createRectOfBlocks(70, 5, 0, startingY-120 );
+        createRectOfBlocks(6, 15, startingX / 2 + 175, 100);
+        createRectOfBlocks(6, 12, startingX / 2 - 325, 200);
+        createRectOfBlocks(70, 5, 0, startingY - 120);
     }
 
     void resetLevel() {
         int startingX = Panel.W;
         int startingY = Panel.H;
-        c = new Character(50, startingY-150, CustomColor.PINK);
-        m = new Character(startingX-70, startingY-150, CustomColor.MONEY);
+        c = new Character(50, startingY - 150, CustomColor.PINK);
+        m = new Money(startingX - 70, startingY - 150, panel);
     }
 
     public void draw(Graphics g) {
@@ -47,22 +47,22 @@ public class Level3 extends Level {
     }
 
     public void keyPressed(KeyEvent e) {
-        
+
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            c.xVelocity =  SPEED* -1;
-        } 
-        
+            c.xVelocity = SPEED * -1;
+        }
+
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             c.xVelocity = SPEED;
-        } 
-        
+        }
+
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if(!c.isFalling) {
+            if (!c.isFalling) {
                 c.yVelocity = -9.8;
                 c.isFalling = true;
-            } 
-            
-            else if (c.isFalling && c.willIntersectX){
+            }
+
+            else if (c.isFalling && c.willIntersectX) {
                 c.yVelocity = -9.8;
                 c.isFalling = true;
             }
