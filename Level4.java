@@ -1,3 +1,5 @@
+
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -33,12 +35,6 @@ public class Level4 extends Level {
     }
 
     public void keyPressed(KeyEvent e) {
-
-        // if(e.getKeyCode() == KeyEvent.VK_UP && c.yVelocity >0) {
-        // c.xVelocity = SPEED-1;
-        // c.yVelocity = SPEED * -1;
-        // c.isFalling = false;
-        // }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             c.xVelocity = SPEED * -1;

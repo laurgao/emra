@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 
-import org.w3c.dom.events.MouseEvent;
 
 public class HomeScreen extends Level {
 
@@ -9,32 +8,43 @@ public class HomeScreen extends Level {
 
     public HomeScreen(Panel panel) {
         this.panel = panel;
-        hasWon = false;
-
-        createRectOfBlocks(5,3, (int)(Panel.W/3)-75, (int)(Panel.H*0.75));
+        createRectOfBlocks(6,5, (int)(Panel.W/2)-90, (int)(Panel.H*0.5), CustomColor.PINK);
     }
 
-    public void mousePressed(MouseEvent e) {
-        double mouseX = MouseInfo.getPointerInfo().getLocation().getX();
-        double mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-        if ((mouseX > (int)(Panel.W/3)-75 + 5*30) && (mouseX < (int)(Panel.W/3)-75) &&
-        (mouseY > (int)(Panel.H*0.75) + 3*30) && (mouseY <(int)(Panel.H*0.75))) {
+    public void mouseClicked(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        if ((mouseX < (int)(Panel.W/2)-90 + 6*30) && (mouseX > (int)(Panel.W/2)-90) && (mouseY < (int)(Panel.H*0.5) + 5*30) && (mouseY >(int)(Panel.H*0.5))) {
             panel.nextLevel(new Level1(panel));
-            hasWon = true; 
+            Panel.titlePageDone = true;
         }
     }
 
     public void draw(Graphics g) {
 
+
         for(Block b : blocks) {
             b.draw(g); 
         }
-
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 50)); // TODO: find better font + standardize across all levels.
-        g.drawString("The Hedonic Paradox", 250, 200);
+        g.setFont(new Font("Monospaced", Font.ITALIC, 60)); // TODO: find better font + standardize across all levels.
+        g.drawString("The Hedonic Paradox", 220, 200);
 
-        
+        // int[] xPoints={550, 550, 650};
+        // int[] yPoints={380, 460, 420};
+        int[] xPoints={(int)(Panel.W/2)-90+65, (int)(Panel.W/2)-90+65, (int)(Panel.W/2)-90+120};
+        int[] yPoints={(int)(Panel.H*0.5)+50, (int)(Panel.H*0.5) +100, (int)(Panel.H*0.5)+75};
+        int nPoints=3;
+        g.setColor(Color.WHITE);
+        g.fillPolygon(xPoints, yPoints, nPoints);
+    }
+
+    protected void createRectOfBlocks(int w, int h, int startingX, int startingY, Color color) {
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                blocks.add(new Block(startingX + i * 30, startingY + j * 30, color));
+            }
+        }
     }
 
     @Override

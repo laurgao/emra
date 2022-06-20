@@ -16,11 +16,14 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
-public class Panel extends JPanel implements Runnable, KeyListener {
+
+public class Panel extends JPanel implements Runnable, KeyListener, MouseListener {
 
     // dimensions of window
     public static final int W = 1120; // width of window
     public static final int H = 630; // height of window
+
+    public static boolean titlePageDone;
 
     private Level currentScreen; // current screen being displayed
     private Level nextLevel;
@@ -32,20 +35,15 @@ public class Panel extends JPanel implements Runnable, KeyListener {
         playSound("background", true);
         opacity = 0.0f; // start with alpha at 0 and fade in.
 
+        titlePageDone = false;
+
         currentScreen = new HomeScreen(this);
         nextLevel = currentScreen;
-
-        // add the MousePressed method from the MouseAdapter - by doing this we can
-        // listen for mouse input.
-        addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                
-            }
-        });
-
+        
         this.setPreferredSize(new Dimension(W, H));
         this.setFocusable(true); // make everything in this class appear on the screen
         this.addKeyListener(this); // start listening for keyboard input
+        this.addMouseListener(this);
 
         // make this class run at the same time as other classes (without this each
         // class would "pause" while another class runs). By using threading we can
@@ -155,5 +153,35 @@ public class Panel extends JPanel implements Runnable, KeyListener {
     // be overridded by the KeyListener interface
     public void keyTyped(KeyEvent e) {
 
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(!titlePageDone) {            
+            currentScreen.mouseClicked(e);
+        }        
+    }
+
+    @Override
+    public void mousePressed ( MouseEvent e ) {
+    }
+
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
     }
 }
