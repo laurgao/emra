@@ -6,7 +6,7 @@
 import java.awt.*;
 
 public class Fire {
-    private static final int S = Block.S; // length of width and height
+    public static final int S = Block.S; // length of width and height
     int x;
     int y;
 

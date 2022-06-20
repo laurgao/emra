@@ -9,13 +9,13 @@ public class Level13 extends Level {
         this.panel = panel;
         hasWon = false;
         invisibleObstacles = new ArrayList<Block>();
-        c = new Character(50,270, CustomColor.PINK);
+        c = new Character(50, 270, CustomColor.PINK);
 
         fires = new ArrayList<Fire>();
 
-        //create start and end points
+        // create start and end points
         createRectOfBlocks(7, 1, 0, 300);
-        createRectOfBlocks(7, 1, Panel.W-210, 300);
+        createRectOfBlocks(7, 1, Panel.W - 210, 300);
 
         createRectOfBlocks(invisibleObstacles, 2, 1, 300, 300, Color.BLACK);
         createRectOfBlocks(invisibleObstacles, 1, 1, 350, 300, Color.BLACK);
@@ -26,19 +26,19 @@ public class Level13 extends Level {
         // createRectOfBlocks(invisibleObstacles, 2, 1, 760, 300, Color.BLACK);
         // createRectOfBlocks(invisibleObstacles, 1, 1, 840, 300, Color.BLACK);
 
-        //create fire platform
-        createRectOfBlocks(11, 2, Panel.W/2-180, 500);
+        // create fire platform
+        createRectOfBlocks(11, 2, Panel.W / 2 - 180, 500);
 
-        //add fires
-        for(int i=0;i<11; i++) {
-            fires.add(new Fire(Panel.W/2-180 + i*30,470));
+        // add fires
+        for (int i = 0; i < 11; i++) {
+            fires.add(new Fire(Panel.W / 2 - 180 + i * 30, 470));
         }
 
     }
 
     @Override
     void resetLevel() {
-        c = new Character(50,270, CustomColor.PINK);
+        c = new Character(50, 270, CustomColor.PINK);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class Level13 extends Level {
 
         for (Block b : blocks) {
             b.draw(g);
-        }           
-        
+        }
+
         for (Fire f : fires) {
             f.draw(g);
         }
@@ -61,7 +61,7 @@ public class Level13 extends Level {
     @Override
     protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
         // check collisions
-         // Check y collisions:
+        // Check y collisions:
 
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block or ledge while falling downwards:
@@ -89,7 +89,6 @@ public class Level13 extends Level {
             c.isFalling = true;
         }
 
-
     }
 
     @Override
@@ -105,12 +104,13 @@ public class Level13 extends Level {
     @Override
     protected void checkWin() {
         if (c.x > Panel.W && !hasWon) {
-            panel.nextLevel(new Level13(panel));
+            panel.nextLevel(new Level14(panel));
             hasWon = true;
         }
     }
 
-    protected void createRectOfBlocks(ArrayList<Block> blockArray, int w, int h, int startingX, int startingY, Color color) {
+    protected void createRectOfBlocks(ArrayList<Block> blockArray, int w, int h, int startingX, int startingY,
+            Color color) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 blockArray.add(new Block(startingX + i * Block.S, startingY + j * Block.S, color));
