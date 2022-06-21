@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Level14 extends Level {
     Character m;
@@ -29,6 +30,10 @@ public class Level14 extends Level {
     private int buttonW = 200;
     private int buttonH = 80;
 
+    private ArrayList<Block> goThroughBlocks = new ArrayList<Block>();
+    private ArrayList<Block> invisibleBlocks = new ArrayList<Block>();
+    private boolean isGravityReversed = false;
+
     public Level14(Panel panel) {
         this.panel = panel;
         hasWon = false;
@@ -44,7 +49,7 @@ public class Level14 extends Level {
             createRectOfBlocks(15 - 2 * (i + 1), 1, cx - (int) (Block.S * (6.5 - i)), cy - (int) (Block.S * (3.5 + i)));
 
         // Create blocks for the walls
-        createRectOfBlocks(1, 3, 150 + offsetX, y + 30);
+        createRectOfGoThroughBlocks(1, 2, 150 + offsetX, y + 60);
         createRectOfBlocks(1, 2, 360 + offsetX, y + 60);
 
         // Create blocks for the roof
@@ -56,11 +61,29 @@ public class Level14 extends Level {
         createRectOfBlocks(2, 1, 300 + offsetX, y + 180);
         createRectOfBlocks(4, 1, 210 + offsetX, y + 210);
 
+        createRectOfInvisibleBlocks(5, 1, 60 + offsetX, y + 210);
+
         family1 = new Character(190 + offsetX, y + 30 + Block.S, Color.BLUE);
         family2 = new Character(300 + offsetX, y + 30 + Block.S, Color.PINK);
         family3 = new Character(225 + offsetX, y + 30 + Block.S, 15, Color.GRAY);
         family4 = new Character(245 + offsetX, y + 30 + Block.S, 15, Color.GREEN);
 
+    }
+
+    protected void createRectOfGoThroughBlocks(int w, int h, int startingX, int startingY) {
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                goThroughBlocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, Color.DARK_GRAY));
+            }
+        }
+    }
+
+    protected void createRectOfInvisibleBlocks(int w, int h, int startingX, int startingY) {
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                invisibleBlocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, Color.DARK_GRAY));
+            }
+        }
     }
 
     @Override
@@ -78,6 +101,7 @@ public class Level14 extends Level {
         str2Alpha = 0.0f;
         str3Alpha = 0.0f;
         str4Alpha = 0.0f;
+        isGravityReversed = false;
     }
 
     @Override
@@ -93,6 +117,9 @@ public class Level14 extends Level {
         family3.draw(g);
         family4.draw(g);
         super.draw(g);
+        for (Block b : goThroughBlocks) {
+            b.draw(g);
+        }
 
         g.setColor(Color.WHITE);
         Font font = new Font("Monospaced", Font.ITALIC, 16); // TODO: find better font + standardize across all levels.
@@ -178,13 +205,16 @@ public class Level14 extends Level {
 
     @Override
     public void move() {
-        super.move();
         if (!textHasStarted && c.x > cx) {
             str1 = "All of this was just a hedonic paradox.";
             m.x = 265 + 300;
             m.y = 360 + 30 + Block.S;
             startTime = System.currentTimeMillis();
             textHasStarted = true;
+
+            // Make the invisible blocks disappear so that we can no longer go back to
+            // family
+            invisibleBlocks = new ArrayList<Block>();
         }
         if (textHasStarted && System.currentTimeMillis() - startTime > 3000) {
             str2 = "He who loves money is never satisfied by money, and he who loves wealth is never satisfied by income.";
@@ -197,6 +227,83 @@ public class Level14 extends Level {
         if (textHasStarted && System.currentTimeMillis() - startTime > 9000) {
             str4 = "THE END";
         }
+
+        // Make gravity go reverse on touching the go through blocks
+        for (Block b : goThroughBlocks) {
+            if (b.intersects(c)) {
+                isGravityReversed = true;
+            }
+        }
+
+        if (isGravityReversed) {
+            checkYCollisionsReverse(c, Utils.extend(blocks, invisibleBlocks));
+
+            c.move(Utils.extend(blocks, invisibleBlocks));
+            c.yVelocity = c.isFalling ? c.yVelocity + -2 * c.fallingYAcceleration : 0;
+
+            checkYCollisions(c);
+
+            checkDeath(c);
+
+            // If main character dies, reset the level
+            if (!c.isAlive()) {
+                resetLevel();
+            }
+
+            checkWin();
+        } else {
+            c.move(Utils.extend(blocks, invisibleBlocks));
+
+            checkYCollisions(c, Utils.extend(blocks, invisibleBlocks));
+
+            checkDeath(c);
+
+            // If main character dies, reset the level
+            if (!c.isAlive()) {
+                resetLevel();
+            }
+
+            checkWin();
+
+        }
+    }
+
+    protected void checkYCollisionsReverse(Character c, ArrayList<Block> blocks) {
+        // check collisions
+        if (c.isFalling && c.yVelocity > 0) {
+            // If the character collides with a block while falling downwards:
+            for (Block b : blocks) {
+                if (c.willIntersectY(b) && c.y < b.y) {
+                    c.yVelocity = 0;
+                    c.y = b.y - c.height;
+                    break;
+                }
+            }
+        } else if (c.isFalling && c.yVelocity < 0) {
+            // if character bumps into a block while going upwards
+            for (Block b : blocks) {
+                if (c.willIntersectY(b) && c.y > b.y) {
+                    c.isFalling = false;
+                    c.y = b.y + b.height;
+                    break;
+                }
+            }
+        }
+
+        // if the character is not above any block, it is falling
+        if (!characterIsBelowABlock(c, blocks)) {
+            c.isFalling = true;
+        }
+
+    }
+
+    protected boolean characterIsBelowABlock(Character c, ArrayList<Block> blocks) {
+        for (Block b : blocks) {
+            if (c.x + c.width > b.x && c.x < b.x + b.width && c.height == b.y + b.height) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -205,4 +312,22 @@ public class Level14 extends Level {
             panel.nextLevel(new HomeScreen(panel));
         }
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            c.xVelocity = c.SPEED * -1;
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            c.xVelocity = c.SPEED;
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_UP && !c.isFalling) {
+            c.yVelocity = isGravityReversed ? c.G : -1 * c.G;
+            c.isFalling = true;
+        }
+
+    }
+
 }

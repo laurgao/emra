@@ -11,8 +11,8 @@ public class Character extends Block {
     // Convention for velocity and acceleration: down and right is positive
     public static final int SPEED = 3; // velocity of player when moving horizontally
     public static final double G = 9.8; // gravity
-    private static final double fallingYAcceleration = G / 20; // Found experimentally to be a good value for the
-                                                               // acceleration of the character when falling.
+    public static final double fallingYAcceleration = G / 20; // Found experimentally to be a good value for the
+                                                              // acceleration of the character when falling.
     public double xVelocity;
     public double yVelocity;
     public boolean isFalling; // if true, yVelocity updates according to fallingYAcceleration
@@ -30,10 +30,11 @@ public class Character extends Block {
         yVelocity = 0;
         isFalling = false;
         isAlive = true;
-        charColor = color; 
+        charColor = color;
     }
 
-    // alternate constructor method that allows size of a character to be manipulated
+    // alternate constructor method that allows size of a character to be
+    // manipulated
     public Character(int x, int y, int z, Color color) {
         super(x, y, z, color);
         xVelocity = 0;
@@ -42,7 +43,8 @@ public class Character extends Block {
         isAlive = true;
     }
 
-    // alternate constructor method that allows color and dimensions of a character to be manipulated. 
+    // alternate constructor method that allows color and dimensions of a character
+    // to be manipulated.
     public Character(int x, int y, int z1, int z2, Color color) {
         super(x, y, z1, z2, color);
         xVelocity = 0;
@@ -128,7 +130,7 @@ public class Character extends Block {
         return y + height > r.y && y < r.y + r.height;
     }
 
-    // Sets variable to false, character is dead 
+    // Sets variable to false, character is dead
     public void die() {
         isAlive = false;
     }

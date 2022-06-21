@@ -111,7 +111,7 @@ public abstract class Level {
         c.keyReleased(e);
     }
 
-    public void mouseClicked(MouseEvent e){
+    public void mouseClicked(MouseEvent e) {
 
     }
 

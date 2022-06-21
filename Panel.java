@@ -16,14 +16,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
-
 public class Panel extends JPanel implements Runnable, KeyListener, MouseListener {
 
     // dimensions of window
     public static final int W = 1120; // width of window
     public static final int H = 630; // height of window
 
-    public static boolean titlePageDone;
     public AudioPlayer currentSound;
     public static boolean firstTimeSound;
 
@@ -37,23 +35,25 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
 
     private Image muted;
     private Image unmuted;
+    private Image replay;
     Toolkit t = Toolkit.getDefaultToolkit();
 
     public Panel() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playSound("background", true);
-        opacity = 0.0f; // start with alpha at 0 and fade in.
+        opacity = 1.0f; // start with full opacity.
+        // opacity = 0.0f; // start with alpha at 0 and fade in.
 
-        titlePageDone = false;
         isMuted = false;
         firstTimeSound = true;
-           
-    // Initializes images by accessing files
-        muted =  t.getImage("images/muted.png");
-        unmuted =  t.getImage("images/unmuted.png");
 
-        currentScreen = new HomeScreen(this);
+        // Initializes images by accessing files
+        muted = t.getImage("images/muted.png");
+        unmuted = t.getImage("images/unmuted.png");
+        replay = t.getImage("images/replay.png");
+
+        currentScreen = new Level14(this);
         nextLevel = currentScreen;
-        
+
         this.setPreferredSize(new Dimension(W, H));
         this.setFocusable(true); // make everything in this class appear on the screen
         this.addKeyListener(this); // start listening for keyboard input
@@ -110,18 +110,23 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         g.setColor(bgColor);
         g.fillRect(0, 0, W, H);
 
+        currentScreen.draw(g);
+
+        // Draw menu on top of the level's graphics
+
         // Draw the mute button
         g.setColor(CustomColor.PINK);
         g.fillRect(1000, 0, 80, 80);
-        
-        // Draw mute symbol
-        if(isMuted) {
+        // Draw the mute image
+        if (isMuted) {
             g.drawImage(muted, 1015, 15, this);
-        } else if(!isMuted) {
+        } else if (!isMuted) {
             g.drawImage(unmuted, 1015, 15, this);
         }
-      
-        currentScreen.draw(g);
+
+        // Draw the replay button
+        g.fillRect(900, 0, 80, 80);
+        g.drawImage(replay, 913, 12, this);
     }
 
     // call the move methods in other classes to update positions
@@ -183,56 +188,60 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
 
     }
 
-    // If mouse clicks the sound button, it toggles the mute function. If on HomeScreen and clicks start, will pass MouseEvent to HomeScreen. 
+    // If mouse clicks the sound button, it toggles the mute function. If on
+    // HomeScreen and clicks start, will pass MouseEvent to HomeScreen.
     @Override
     public void mouseClicked(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
-        if (mouseX < 1080 && mouseX > 1000 && mouseY < 80 && mouseY >0) {
-            if(isMuted) {
-                try {
-                    isMuted = false;
-                    playSound("background", true);
-                } catch (UnsupportedAudioFileException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (LineUnavailableException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+        if (mouseY < 80 && mouseY > 0) {
+            if (mouseX < 1080 && mouseX > 1000) {
+                // Mouse clicked the mute button
+                if (isMuted) {
+                    try {
+                        isMuted = false;
+                        playSound("background", true);
+                    } catch (UnsupportedAudioFileException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    } catch (LineUnavailableException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                } else if (!isMuted) {
+                    isMuted = true;
+                    currentSound.mute();
                 }
-            } else if(!isMuted){
-                isMuted = true;
-                currentSound.mute();
+            } else if (mouseX < 980 && mouseX > 900) {
+                // Mouse is in the replay button
+                currentScreen.resetLevel();
             }
         }
-        if(!titlePageDone) {            
-            currentScreen.mouseClicked(e);
-        }        
+        currentScreen.mouseClicked(e);
     }
 
     @Override
-    public void mousePressed ( MouseEvent e ) {
+    public void mousePressed(MouseEvent e) {
     }
-
 
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
-        
+
     }
 }

@@ -55,7 +55,7 @@ public class Level9 extends Level {
         createLedge(Block.S * 29, (int) (9.5 * Block.S));
     }
 
-    public void createLedge(int x, int y) {
+    private void createLedge(int x, int y) {
         for (int i = 0; i < 6; i++)
             ledges.add(new Block(x + i * Block.S / 2, y, 15, Color.LIGHT_GRAY));
     }
