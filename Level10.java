@@ -22,29 +22,21 @@ public class Level10 extends Level {
     private ArrayList<Block> ledges;
     private ArrayList<Block> retractableWall;
 
-    private Image muted;
-    private Image unmuted;
-    Toolkit t = Toolkit.getDefaultToolkit();
-
     // Constructor method, initializes all characters and blocks
     public Level10(Panel panel) {
         this.panel = panel;
         hasWon = false;
-
-        // Initializes images by accessing files
-        muted =  t.getImage("images/muted.png");
-        unmuted =  t.getImage("images/unmuted.png");
 
         ledges = new ArrayList<Block>();
         retractableWall = new ArrayList<Block>();
         pressedButton = false;
         camera = new int[] { 0, 0 };
 
-        // Initializes starting x and y values of character 
-        int cx = Panel.W / 2 - 125; 
+        // Initializes starting x and y values of character
+        int cx = Panel.W / 2 - 125;
         int cy = Panel.H / 3 - 2 * Block.S;
-        
-        // Initializes charcters 
+
+        // Initializes charcters
         c = new Character(cx, cy, UNIT, CustomColor.PINK);
         m = new Money(UNIT * 21, cy, UNIT, panel);
 
@@ -83,13 +75,13 @@ public class Level10 extends Level {
     // Reset characters to starting positions + reset camera position
     void resetLevel() {
         camera = new int[] { 0, 0 };
-        int cx = Panel.W / 2 - 125; 
+        int cx = Panel.W / 2 - 125;
         int cy = Panel.H / 3 - 2 * Block.S;
         c = new Character(cx, cy, UNIT, CustomColor.PINK);
         m = new Money(UNIT * 21, cy, UNIT, panel);
 
-        //Resets retractable wall if button has been pressed priorly 
-        if(pressedButton){
+        // Resets retractable wall if button has been pressed priorly
+        if (pressedButton) {
             for (int i = 0; i < 6; i++) {
                 retractableWall.add(new Block(19 * UNIT, cy - (UNIT * 4 - i * UNIT), UNIT, Color.red));
             }
@@ -100,14 +92,15 @@ public class Level10 extends Level {
         pressedButton = false;
     }
 
-    // Draws all blocks and characters onto the panel 
+    // Draws all blocks and characters onto the panel
     public void draw(Graphics g) {
 
         // Draw the characters
         m.draw(g, -camera[0], -camera[1]);
         c.draw(g, -camera[0], -camera[1]);
 
-        // If button has been pressed, make it smaller and remove the red wall to allow player to get to money 
+        // If button has been pressed, make it smaller and remove the red wall to allow
+        // player to get to money
         if (!pressedButton) {
             button.draw(g, -camera[0], -camera[1]);
             for (Block b : retractableWall) {
@@ -127,17 +120,6 @@ public class Level10 extends Level {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("This is How I saw the World", 300 - camera[0], 50 - camera[1]);
-
-        // Draw the mute button
-        g.setColor(CustomColor.PINK);
-        g.fillRect(1000, 0, 80, 80);
-        
-        // Draw mute symbol
-        if(Panel.isMuted) {
-            g.drawImage(muted, 1015, 15, panel);
-        } else if(!Panel.isMuted) {
-            g.drawImage(unmuted, 1015, 15, panel);
-        }
     }
 
     // Updates the character's x and y velocities after arrow keys are pressed
@@ -159,7 +141,8 @@ public class Level10 extends Level {
 
     }
 
-    // Checks for x/y collisions, checks for button press, updates camera, and checks for win
+    // Checks for x/y collisions, checks for button press, updates camera, and
+    // checks for win
     @Override
     public void move() {
         boolean willIntersectX = false;
@@ -186,7 +169,8 @@ public class Level10 extends Level {
 
         checkDeath(c);
 
-        //Update camera based on character's current position so that it is always centered on the player
+        // Update camera based on character's current position so that it is always
+        // centered on the player
         camera[0] = c.x - 435;
         camera[1] = c.y - 250;
 
@@ -198,17 +182,17 @@ public class Level10 extends Level {
         checkWin();
     }
 
-    // Checks if the button has been pressed 
+    // Checks if the button has been pressed
     public void checkButton() {
         if (c.intersects(button)) {
             pressedButton = true;
         }
     }
 
-    // Checks for y collisions 
+    // Checks for y collisions
     @Override
     protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
-        
+
         if (c.willIntersectY(button) && pressedButton && c.yVelocity > 0) {
             c.isFalling = false;
             c.y = (button.y + 100) - c.height;
@@ -256,7 +240,7 @@ public class Level10 extends Level {
                 && c.y + c.yVelocity < r.y + r.height;
     }
 
-    // Alternative method to create a rectangle 
+    // Alternative method to create a rectangle
     // Can customize the array the blocks are added to and the size of the blocks
     protected void createRectOfBlocks(int w, int h, int z, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {

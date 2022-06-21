@@ -7,18 +7,20 @@ import java.awt.*;
 public class Level1 extends Level {
 
     // Block representing money
-    Character m;
+    private Character m;
     // Blocks representing family members
-    Character family1;
-    Character family2;
-    Character family3;
-    Character family4;
-    private int[] camera; // camera represents the top left coords of the screen being displayed.
+    private Character family1;
+    private Character family2;
+    private Character family3;
+    private Character family4;
+
+    // camera represents the top left coords of the screen being displayed.
+    private int[] camera;
 
     private Image right;
     private Image left;
     private Image up;
-    Toolkit t = Toolkit.getDefaultToolkit();
+    private Toolkit t = Toolkit.getDefaultToolkit();
 
     // Constructor method, initializes all characters and blocks
     public Level1(Panel panel) {
@@ -29,9 +31,9 @@ public class Level1 extends Level {
         int startingY = Panel.H;
 
         // Initializes images by accessing files
-        right =  t.getImage("images/right.png");
-        left =  t.getImage("images/left.png");
-        up =  t.getImage("images/up.png");
+        right = t.getImage("images/right.png");
+        left = t.getImage("images/left.png");
+        up = t.getImage("images/up.png");
 
         // Initialize character positions
         c = new Character(265, (int) (startingY * 0.65) - 30, CustomColor.PINK);
@@ -107,20 +109,21 @@ public class Level1 extends Level {
         m.draw(g, -camera[0], -camera[1]);
 
         // Draw the arrows
-        g.drawImage(right, 280-camera[0], (int) (Panel.H * 0.65) - 110-camera[1], panel);
-        g.drawImage(left, 215-camera[0], (int) (Panel.H * 0.65) - 110-camera[1], panel);
-        g.drawImage(up, Panel.W + 5*30-20-camera[0], (int) (Panel.H * 0.65) + 4 * Block.S - 70-camera[1], panel);
-
+        g.drawImage(right, 280 - camera[0], (int) (Panel.H * 0.65) - 110 - camera[1], panel);
+        g.drawImage(left, 215 - camera[0], (int) (Panel.H * 0.65) - 110 - camera[1], panel);
+        g.drawImage(up, Panel.W + 5 * 30 - 20 - camera[0], (int) (Panel.H * 0.65) + 4 * Block.S - 70 - camera[1],
+                panel);
 
         // Draw the floor blocks
         for (Block b : blocks) {
             b.draw(g, -camera[0], -camera[1]);
         }
 
-        panel.homeCompleted=true;
+        panel.homeCompleted = true;
     }
 
-    // Updates camera position based on character location. Also checks character's x and y collisions
+    // Updates camera position based on character location. Also checks character's
+    // x and y collisions
     @Override
     public void move() {
         super.move();

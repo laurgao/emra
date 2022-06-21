@@ -6,15 +6,15 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Level12 extends LevelWithFire {
-    Character m;
-    long startTime;
-    ArrayList<Character> fallingBlocks;
-    ArrayList<Block> invisibleBlocks;
-    long elapsedMs;
+    private Character m;
+    private long startTime;
+    private ArrayList<Character> fallingBlocks;
+    private ArrayList<Block> invisibleBlocks;
+    private long elapsedMs;
     private final int offsetX = 40;
     private final int offsetY = 40;
 
-    // Constructor method, initialize all characters, fire, and blocks 
+    // Constructor method, initialize all characters, fire, and blocks
     public Level12(Panel panel) {
         this.panel = panel;
 

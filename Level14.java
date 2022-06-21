@@ -9,11 +9,11 @@ import java.util.ArrayList;
 public class Level14 extends Level {
 
     // Initialize characters
-    Character m;
-    Character family1;
-    Character family2;
-    Character family3;
-    Character family4;
+    private Character m;
+    private Character family1;
+    private Character family2;
+    private Character family3;
+    private Character family4;
 
     // center x and y coordinates of screen
     private int cx = Panel.W / 2;
@@ -300,8 +300,8 @@ public class Level14 extends Level {
     public void mouseClicked(MouseEvent e) {
         if (e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY && e.getY() < buttonY + buttonH) {
             panel.nextLevel(new LoadingScreen(panel));
-            panel.loadingCompleted=false;
-            panel.homeCompleted=false;
+            panel.loadingCompleted = false;
+            panel.homeCompleted = false;
         }
     }
 

@@ -7,8 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Level7 extends Level {
-    Character m;
-    Character family;
+    private Character m;
+    private Character family;
     private ArrayList<Block> ledges = new ArrayList<Block>(); // ledges that are 1 way jumps.
 
     // Constructor method, initializes all characters and blocks

@@ -24,7 +24,7 @@ public class Level13 extends Level {
         createRectOfBlocks(7, 1, 0, 300);
         createRectOfBlocks(7, 1, Panel.W - 210, 300);
 
-        // Create invisible obstacles 
+        // Create invisible obstacles
         createRectOfBlocks(invisibleObstacles, 2, 1, 300, 300, Color.BLACK);
         createRectOfBlocks(invisibleObstacles, 1, 1, 350, 300, Color.BLACK);
         createRectOfBlocks(invisibleObstacles, 2, 1, 450, 300, Color.BLACK);
@@ -41,16 +41,16 @@ public class Level13 extends Level {
         }
     }
 
-    // Reset character to starting position 
+    // Reset character to starting position
     @Override
     void resetLevel() {
         c = new Character(50, 270, CustomColor.PINK);
     }
 
-    // Draws all blocks and characters onto the panel 
+    // Draws all blocks and characters onto the panel
     @Override
     public void draw(Graphics g) {
-        
+
         // Draw character
         c.draw(g);
 
@@ -66,11 +66,11 @@ public class Level13 extends Level {
 
         // Draw text
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("I will jump blindly to regain what was lost.", 300, 100);
     }
 
-    // Checks for y collisions 
+    // Checks for collisions in the y direction
     @Override
     protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
 
@@ -112,6 +112,8 @@ public class Level13 extends Level {
         }
     }
 
+    // Overload variant that allows the specification of the colour of blocks and
+    // the array of blocks to add them to.
     protected void createRectOfBlocks(ArrayList<Block> blockArray, int w, int h, int startingX, int startingY,
             Color color) {
         for (int i = 0; i < w; i++) {

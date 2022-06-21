@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Money extends Character {
     private Panel panel;
-    Toolkit t = Toolkit.getDefaultToolkit();
+    private Toolkit t = Toolkit.getDefaultToolkit();
     private Image image;
 
     // Creates a new money character.

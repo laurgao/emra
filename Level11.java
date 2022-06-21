@@ -11,11 +11,11 @@ public class Level11 extends Level {
     private static final double fallingYAcceleration = G / 20;
 
     // Blocks representing family members
-    Character family1;
-    Character family2;
-    Character family3;
-    Character family4;
-    Character m; // Block representing money
+    private Character family1;
+    private Character family2;
+    private Character family3;
+    private Character family4;
+    private Character m; // Block representing money
 
     private int[] camera; // camera represents the top left coords of the screen being displayed.
     private ArrayList<Block> invisibleWall;

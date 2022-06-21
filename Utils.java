@@ -44,8 +44,8 @@ public class Utils {
     }
 
     // Draw text on the center of the screen
-    public static void drawStringCenter(Graphics g, String str, int xPos) {
+    public static void drawStringCenter(Graphics g, String str, int yPos) {
         FontMetrics m = g.getFontMetrics();
-        g.drawString(str, Panel.W / 2 - m.stringWidth(str) / 2, xPos);
+        g.drawString(str, Panel.W / 2 - m.stringWidth(str) / 2, yPos);
     }
 }

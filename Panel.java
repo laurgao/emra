@@ -38,7 +38,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     private Image muted;
     private Image unmuted;
     private Image replay;
-    Toolkit t = Toolkit.getDefaultToolkit();
+    private Toolkit t = Toolkit.getDefaultToolkit();
 
     // Initializes screen, and creates a new instance of the loading screen to be
     // displayed. Basic game functions also initialized
@@ -119,13 +119,12 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         currentScreen.draw(g);
 
         // Draw menu on top of the level's graphics
-
-        // Draw the mute button
-        g.setColor(CustomColor.PINK);
-        g.fillRect(1000, 0, 80, 80);
-
-        // Draw the mute image
         if (loadingCompleted) {
+            // Draw the mute button
+            g.setColor(CustomColor.PINK);
+            g.fillRect(1000, 0, 80, 80);
+
+            // Draw the mute image
             if (isMuted) {
                 g.drawImage(muted, 1015, 15, this);
             } else if (!isMuted) {

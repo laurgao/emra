@@ -9,9 +9,7 @@ public class Level2 extends Level {
 
     private static final int SPEED = 3; // velocity of player when moving horizontally
 
-    Character m; 
-    Character family1;
-    Character family2;
+    private Character m;
 
     // Constructor method, initializes all characters and blocks
     public Level2(Panel panel) {
@@ -21,7 +19,7 @@ public class Level2 extends Level {
         int panelW = Panel.W;
         int panelH = Panel.H;
 
-        // Initializes charcters 
+        // Initializes charcters
         c = new Character(50, panelH - 150, CustomColor.PINK);
         m = new Money(panelW - 70, panelH - 150, panel);
 
@@ -31,7 +29,7 @@ public class Level2 extends Level {
         createRectOfBlocks(70, 5, 0, panelH - 120);
     }
 
-    // Resets all character locations back to initial coordinates 
+    // Resets all character locations back to initial coordinates
     void resetLevel() {
         int panelW = Panel.W;
         int panelH = Panel.H;
@@ -39,12 +37,12 @@ public class Level2 extends Level {
         m = new Money(panelW - 70, panelH - 150, panel);
     }
 
-    // Draws all blocks and characters onto the panel 
+    // Draws all blocks and characters onto the panel
     public void draw(Graphics g) {
 
         // Draw font
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("Climb any challenge...", 350, 100);
 
         // Draw the characters
@@ -57,7 +55,8 @@ public class Level2 extends Level {
         }
     }
 
-    // Allows player to double jump (rock climb) if they press the right/left and up arrow keys
+    // Allows player to double jump (rock climb) if they press the right/left and up
+    // arrow keys
     @Override
     public void keyPressed(KeyEvent e) {
 

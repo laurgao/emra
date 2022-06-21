@@ -9,20 +9,19 @@ public class Level3 extends Level {
 
     private static final int SPEED = 3; // velocity of player when moving horizontally
 
-    Character m; // block representing money
-    boolean hasWon;
-    boolean isPressedRight;
-    boolean isPressedUp;
+    private Character m; // block representing money
+    private boolean isPressedRight;
+    private boolean isPressedUp;
 
-     // Constructor method, initializes all characters and blocks
+    // Constructor method, initializes all characters and blocks
     public Level3(Panel panel) {
         this.panel = panel;
         hasWon = false;
 
         int panelW = Panel.W;
         int panelH = Panel.H;
-        
-        // Initializes charcters 
+
+        // Initializes charcters
         c = new Character(90, (int) (panelH * 0.35) - 30, CustomColor.PINK);
         m = new Money(panelW - 120, (int) (panelH * 0.75) - 30, panel);
 
@@ -31,7 +30,7 @@ public class Level3 extends Level {
         createRectOfBlocks(7, 15, panelW - 210, (int) (panelH * 0.75));
     }
 
-    // Resets all character locations back to initial coordinates 
+    // Resets all character locations back to initial coordinates
     void resetLevel() {
         int panelW = Panel.W;
         int panelH = Panel.H;
@@ -39,7 +38,8 @@ public class Level3 extends Level {
         m = new Money(panelW - 120, (int) (panelH * 0.75) - 30, panel);
     }
 
-    // Allows player to air glide if right and up arrow keys are pressed. Updates booleans to true if right or up arrow key is pressed. 
+    // Allows player to air glide if right and up arrow keys are pressed. Updates
+    // booleans to true if right or up arrow key is pressed.
     @Override
     public void keyPressed(KeyEvent e) {
 
@@ -62,7 +62,7 @@ public class Level3 extends Level {
         }
     }
 
-    // Updates booleans that check if right and up arrow keys are pressed to false. 
+    // Updates booleans that check if right and up arrow keys are pressed to false.
     public void keyReleased(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -76,7 +76,7 @@ public class Level3 extends Level {
         }
     }
 
-    // Draws all blocks and characters onto the panel 
+    // Draws all blocks and characters onto the panel
     public void draw(Graphics g) {
 
         // Draw font
@@ -94,7 +94,8 @@ public class Level3 extends Level {
         }
     }
 
-    // Sets the player's x and y velocities to constant numbers for air gliding effect. 
+    // Sets the player's x and y velocities to constant numbers for air gliding
+    // effect.
     @Override
     public void move() {
         super.move();
