@@ -6,10 +6,17 @@ public class Level9 extends Level {
     private Character m; // block representing money
     private ArrayList<Fire> fires;
     private ArrayList<Block> ledges; // ledges that are 1 way jumps.
+    private Image muted;
+    private Image unmuted;
+    Toolkit t = Toolkit.getDefaultToolkit();
 
     public Level9(Panel panel) {
         this.panel = panel;
         hasWon = false;
+
+         // Initializes images by accessing files
+         muted =  t.getImage("images/muted.png");
+         unmuted =  t.getImage("images/unmuted.png");
 
         int startingY = (Panel.H * 3 / 4) / Block.S * Block.S;
         c = new Character(4 * Block.S, startingY - Block.S, CustomColor.PINK);
@@ -122,6 +129,17 @@ public class Level9 extends Level {
         }
         for (Fire f : fires) {
             f.draw(g);
+        }
+
+        // Draw the mute button
+        g.setColor(CustomColor.PINK);
+        g.fillRect(1000, 0, 80, 80);
+        
+        // Draw mute symbol
+        if(Panel.isMuted) {
+            g.drawImage(muted, 1015, 15, panel);
+        } else if(!Panel.isMuted) {
+            g.drawImage(unmuted, 1015, 15, panel);
         }
     }
 

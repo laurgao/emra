@@ -31,7 +31,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     private Thread gameThread;
     private float opacity; // sign dictates whether alpha is going down or up.
 
-    private boolean isMuted;
+    public static boolean isMuted;
 
     private Image muted;
     private Image unmuted;

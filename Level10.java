@@ -22,10 +22,18 @@ public class Level10 extends Level {
     private ArrayList<Block> ledges;
     private ArrayList<Block> retractableWall;
 
+    private Image muted;
+    private Image unmuted;
+    Toolkit t = Toolkit.getDefaultToolkit();
+
     // Constructor method, initializes all characters and blocks
     public Level10(Panel panel) {
         this.panel = panel;
         hasWon = false;
+
+        // Initializes images by accessing files
+        muted =  t.getImage("images/muted.png");
+        unmuted =  t.getImage("images/unmuted.png");
 
         ledges = new ArrayList<Block>();
         retractableWall = new ArrayList<Block>();
@@ -90,7 +98,6 @@ public class Level10 extends Level {
         // Resets button to full height
         button = new Block(cx - UNIT, cy - 4 * UNIT + 70, UNIT, 150, Color.RED);
         pressedButton = false;
-        
     }
 
     // Draws all blocks and characters onto the panel 
@@ -120,6 +127,17 @@ public class Level10 extends Level {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("This is How I saw the World", 300 - camera[0], 50 - camera[1]);
+
+        // Draw the mute button
+        g.setColor(CustomColor.PINK);
+        g.fillRect(1000, 0, 80, 80);
+        
+        // Draw mute symbol
+        if(Panel.isMuted) {
+            g.drawImage(muted, 1015, 15, panel);
+        } else if(!Panel.isMuted) {
+            g.drawImage(unmuted, 1015, 15, panel);
+        }
     }
 
     // Updates the character's x and y velocities after arrow keys are pressed
