@@ -4,8 +4,6 @@ import java.awt.*;
 public class LoadingScreen extends Level {
     private long startTime;
 
-    public static boolean loadingComplete = false;
-
     public LoadingScreen(Panel panel) {
         this.panel = panel;
         startTime = System.currentTimeMillis();

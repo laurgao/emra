@@ -129,7 +129,7 @@ public class Level14 extends Level {
         }
 
         g.setColor(Color.WHITE);
-        Font font = new Font("Monospaced", Font.ITALIC, 20); // TODO: find better font + standardize across all levels.
+        Font font = new Font("Monospaced", Font.ITALIC, 16);
         g.setFont(font);
         FontMetrics metrics = g.getFontMetrics(font);
 
@@ -300,7 +300,8 @@ public class Level14 extends Level {
     public void mouseClicked(MouseEvent e) {
         if (e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY && e.getY() < buttonY + buttonH) {
             panel.nextLevel(new LoadingScreen(panel));
-            HomeScreen.completed = false;
+            panel.loadingCompleted=false;
+            panel.homeCompleted=false;
         }
     }
 

@@ -32,6 +32,8 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     private float opacity; // sign dictates whether alpha is going down or up.
 
     public static boolean isMuted;
+    public boolean homeCompleted;
+    public boolean loadingCompleted;
 
     private Image muted;
     private Image unmuted;
@@ -46,6 +48,8 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
 
         isMuted = false;
         firstTimeSound = true;
+        homeCompleted = false;
+        loadingCompleted = false;
 
         // Initializes images by accessing files
         muted = t.getImage("images/muted.png");
@@ -53,7 +57,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         replay = t.getImage("images/replay.png");
 
         // Initialize the game with the loading screen.
-        currentScreen = new Level14(this);
+        currentScreen = new LoadingScreen(this);
         nextLevel = currentScreen;
 
         this.setPreferredSize(new Dimension(W, H));
@@ -121,7 +125,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         g.fillRect(1000, 0, 80, 80);
 
         // Draw the mute image
-        if (LoadingScreen.loadingComplete) {
+        if (loadingCompleted) {
             if (isMuted) {
                 g.drawImage(muted, 1015, 15, this);
             } else if (!isMuted) {
@@ -129,7 +133,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
             }
         }
 
-        if (HomeScreen.completed || LoadingScreen.loadingComplete) {
+        if (homeCompleted && loadingCompleted) {
             // Draw the replay button
             g.fillRect(900, 0, 80, 80);
             g.drawImage(replay, 913, 12, this);
@@ -209,13 +213,13 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
                         isMuted = false;
                         playSound("background", true);
                     } catch (UnsupportedAudioFileException e1) {
-                        // TODO Auto-generated catch block
+                        // Auto-generated catch block
                         e1.printStackTrace();
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
+                        // Auto-generated catch block
                         e1.printStackTrace();
                     } catch (LineUnavailableException e1) {
-                        // TODO Auto-generated catch block
+                        // Auto-generated catch block
                         e1.printStackTrace();
                     }
                 } else if (!isMuted) {
@@ -238,21 +242,18 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     // Empty method
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     // Empty method
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     // Empty method
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 }

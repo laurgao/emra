@@ -58,7 +58,7 @@ public class Level4 extends Level {
         }
 
         g.setColor(Color.WHITE);
-        Font font = new Font("Monospaced", Font.ITALIC, 20); // TODO: find better font + standardize across all levels.
+        Font font = new Font("Monospaced", Font.ITALIC, 20); 
         FontMetrics metrics = g.getFontMetrics(font);
         g.setFont(font);
 
