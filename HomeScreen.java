@@ -20,7 +20,7 @@ public class HomeScreen extends Level {
         int mouseY = e.getY();
         if ((mouseX < (int) (Panel.W / 2) - 90 + 6 * 30) && (mouseX > (int) (Panel.W / 2) - 90)
                 && (mouseY < (int) (Panel.H * 0.5) + 5 * 30) && (mouseY > (int) (Panel.H * 0.5))) {
-            panel.nextLevel(new Level111(panel));
+            panel.nextLevel(new Level1(panel));
         }
     }
 

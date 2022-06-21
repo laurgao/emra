@@ -1,55 +1,51 @@
-/* Level2 class introduces up movement key and establishes objective of each level (money)
- * Main message: Pink block is willing to take huge risks to get money.
+/* Level3 class introduces special feature of "rock climbing". Player gains the ability to scale tall walls for this level. 
+ * Main message: Pink block is undeterred by challenges to get money. 
 */
 
 import java.awt.*;
+import java.awt.event.*;
 
 public class Level2 extends Level {
 
-    Character m; // Block representing money 
+    private static final int SPEED = 3; // velocity of player when moving horizontally
 
-    // Image for up arrow
-    private Image up;
-    Toolkit t = Toolkit.getDefaultToolkit();
+    Character m; 
+    Character family1;
+    Character family2;
 
     // Constructor method, initializes all characters and blocks
     public Level2(Panel panel) {
         this.panel = panel;
         hasWon = false;
 
-        // Initializes image by accessing the file
-        up =  t.getImage("images/up.png");
-
         int panelW = Panel.W;
         int panelH = Panel.H;
 
-        // Initialize characters
-        c = new Character(50, (int) (panelH * 0.4), CustomColor.PINK);
-        m = new Money(panelW - 60, panelH - 60, panel);
+        // Initializes charcters 
+        c = new Character(50, panelH - 150, CustomColor.PINK);
+        m = new Money(panelW - 70, panelH - 150, panel);
 
         // Create blocks for the floor
-        createRectOfBlocks(5, 15, 0, (int) (panelH * 0.4) + Block.S);
-        createRectOfBlocks(3, 1, (int) (panelW * 0.25), (int) (panelH * 0.35) + Block.S);
-        createRectOfBlocks(3, 1, (int) (panelW * 0.4), (int) (panelH * 0.25) + Block.S);
-        createRectOfBlocks(15, 1, (int) (panelW * 0.6), panelH);
-        createRectOfBlocks(5, 1, (int) (panelW * 0.90), panelH - 30);
+        createRectOfBlocks(6, 15, panelW / 2 + 175, 100);
+        createRectOfBlocks(6, 12, panelW / 2 - 325, 200);
+        createRectOfBlocks(70, 5, 0, panelH - 120);
     }
 
     // Resets all character locations back to initial coordinates 
     void resetLevel() {
         int panelW = Panel.W;
         int panelH = Panel.H;
-        c = new Character(50, (int) (panelH * 0.4), CustomColor.PINK);
-        m = new Money(panelW - 60, panelH - 60, panel);
+        c = new Character(50, panelH - 150, CustomColor.PINK);
+        m = new Money(panelW - 70, panelH - 150, panel);
     }
 
     // Draws all blocks and characters onto the panel 
     public void draw(Graphics g) {
 
-        // Draw the font
+        // Draw font
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
-        g.drawString("It is prepared to sacrifice.", 550, 100);
+        g.drawString("Climb any challenge...", 350, 100);
 
         // Draw the characters
         m.draw(g);
@@ -59,12 +55,33 @@ public class Level2 extends Level {
         for (Block b : blocks) {
             b.draw(g);
         }
-
-        // Draw up arrow
-        g.drawImage(up, 95, (int) (Panel.H * 0.4) + Block.S -75, panel);
-
     }
-    
+
+    // Allows player to double jump (rock climb) if they press the right/left and up arrow keys
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            c.xVelocity = SPEED * -1;
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            c.xVelocity = SPEED;
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (!c.isFalling) {
+                c.yVelocity = -9.8;
+                c.isFalling = true;
+            }
+
+            else if (c.isFalling && c.willIntersectX) {
+                c.yVelocity = -9.8;
+                c.isFalling = true;
+            }
+        }
+    }
+
     // Specifies end level conditions
     // If the player touches the money block, start Level 3
     @Override
@@ -74,4 +91,5 @@ public class Level2 extends Level {
             hasWon = true;
         }
     }
+
 }
