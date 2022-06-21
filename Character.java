@@ -21,8 +21,6 @@ public class Character extends Block {
 
     public boolean willIntersectX;
 
-    protected Color charColor;
-
     // x and y are initial coordinates of character
     public Character(int x, int y, Color color) {
         super(x, y, color);
@@ -30,23 +28,22 @@ public class Character extends Block {
         yVelocity = 0;
         isFalling = false;
         isAlive = true;
-        charColor = color;
     }
 
     // alternate constructor method that allows size of a character to be
     // manipulated
-    public Character(int x, int y, int z, Color color) {
-        super(x, y, z, color);
+    public Character(int x, int y, int size, Color color) {
+        super(x, y, size, color);
         xVelocity = 0;
         yVelocity = 0;
         isFalling = false;
         isAlive = true;
     }
 
-    // alternate constructor method that allows color and dimensions of a character
+    // alternate constructor method that allows width and height of a character
     // to be manipulated.
-    public Character(int x, int y, int z1, int z2, Color color) {
-        super(x, y, z1, z2, color);
+    public Character(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
         xVelocity = 0;
         yVelocity = 0;
         isFalling = false;
@@ -102,12 +99,16 @@ public class Character extends Block {
         y += yVelocity;
     }
 
+    // Called from the level classes to draw the character to the screen.
     public void draw(Graphics g) {
         if (isAlive) {
             super.draw(g);
         }
     }
 
+    // Called from level classes to draw the character to the screen
+    // Alternate method to account for offsets in the character's position due to
+    // camera position.
     public void draw(Graphics g, int newHeight, int offsetX, int offsetY) {
         if (isAlive) {
             super.draw(g, newHeight, offsetX, offsetY);
@@ -126,16 +127,18 @@ public class Character extends Block {
         return x + width > r.x && x < r.x + r.width && y + yVelocity + height > r.y && y + yVelocity < r.y + r.height;
     }
 
+    // returns whether character and rectangle are in the same "column" on the
+    // screen (whether they intersect in the y-direction)
     public boolean intersectsY(Rectangle r) {
         return y + height > r.y && y < r.y + r.height;
     }
 
-    // Sets variable to false, character is dead
+    // Sets character to be dead and no longer visible on the screen.
     public void die() {
         isAlive = false;
     }
 
-    // Sets variable to true, character is alive
+    // Returns whether character is alive or not.
     public boolean isAlive() {
         return isAlive;
     }

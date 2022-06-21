@@ -38,7 +38,8 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     private Image replay;
     Toolkit t = Toolkit.getDefaultToolkit();
 
-    // Initializes screen, and creates a new instance of the loading screen to be displayed. Basic game functions also initialized 
+    // Initializes screen, and creates a new instance of the loading screen to be
+    // displayed. Basic game functions also initialized
     public Panel() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playSound("background", true);
         opacity = 1.0f; // start with full opacity.
@@ -51,6 +52,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         unmuted = t.getImage("images/unmuted.png");
         replay = t.getImage("images/replay.png");
 
+        // Initialize the game with the loading screen.
         currentScreen = new LoadingScreen(this);
         nextLevel = currentScreen;
 
@@ -119,7 +121,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         g.fillRect(1000, 0, 80, 80);
 
         // Draw the mute image
-        if(LoadingScreen.loadingComplete) {
+        if (LoadingScreen.loadingComplete) {
             if (isMuted) {
                 g.drawImage(muted, 1015, 15, this);
             } else if (!isMuted) {
@@ -127,7 +129,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
             }
         }
 
-        if(HomeScreen.completed) {
+        if (HomeScreen.completed) {
             // Draw the replay button
             g.fillRect(900, 0, 80, 80);
             g.drawImage(replay, 913, 12, this);

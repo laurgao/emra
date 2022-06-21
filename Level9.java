@@ -1,3 +1,7 @@
+/* Level9 features rotated controls. This shows the character being
+ * confused and delusional.
+ */
+
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
@@ -6,17 +10,11 @@ public class Level9 extends Level {
     private Character m; // block representing money
     private ArrayList<Fire> fires;
     private ArrayList<Block> ledges; // ledges that are 1 way jumps.
-    private Image muted;
-    private Image unmuted;
     Toolkit t = Toolkit.getDefaultToolkit();
 
     public Level9(Panel panel) {
         this.panel = panel;
         hasWon = false;
-
-         // Initializes images by accessing files
-         muted =  t.getImage("images/muted.png");
-         unmuted =  t.getImage("images/unmuted.png");
 
         int startingY = (Panel.H * 3 / 4) / Block.S * Block.S;
         c = new Character(4 * Block.S, startingY - Block.S, CustomColor.PINK);
@@ -131,21 +129,12 @@ public class Level9 extends Level {
             f.draw(g);
         }
 
-        // Draw the mute button
-        g.setColor(CustomColor.PINK);
-        g.fillRect(1000, 0, 80, 80);
-        
-        // Draw mute symbol
-        if(Panel.isMuted) {
-            g.drawImage(muted, 1015, 15, panel);
-        } else if(!Panel.isMuted) {
-            g.drawImage(unmuted, 1015, 15, panel);
-        }
-
-        // Draw font
+        // Draw text
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
-        g.drawString("I became delusional in my pursuit for grandeur", 100, 40);
+        Font font = new Font("Monospaced", Font.ITALIC, 20);
+        g.setFont(font);
+        FontMetrics m = g.getFontMetrics(font);
+        Utils.drawStringWrap(g, "I realized I became delusional in my pursuit of grandeur.", m, 100, 300, 250);
     }
 
     @Override

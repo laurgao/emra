@@ -77,7 +77,7 @@ public class Level14 extends Level {
 
     }
 
-    // Alternate method to create rectangles that can be passed through 
+    // Alternate method to create rectangles that can be passed through
     protected void createRectOfGoThroughBlocks(int w, int h, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
@@ -86,7 +86,8 @@ public class Level14 extends Level {
         }
     }
 
-    // Alternate method to create rectangles that cannot be seen or travelled through
+    // Alternate method to create rectangles that cannot be seen or travelled
+    // through
     protected void createRectOfInvisibleBlocks(int w, int h, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
@@ -128,7 +129,7 @@ public class Level14 extends Level {
         }
 
         g.setColor(Color.WHITE);
-        Font font = new Font("Monospaced", Font.ITALIC, 16); // TODO: find better font + standardize across all levels.
+        Font font = new Font("Monospaced", Font.ITALIC, 20); // TODO: find better font + standardize across all levels.
         g.setFont(font);
         FontMetrics metrics = g.getFontMetrics(font);
 
@@ -136,12 +137,12 @@ public class Level14 extends Level {
         int marginY = 20; // space between lines
 
         float increment = 0.01f; // adjust this to change the speed of the fade in/out
-        y = drawStringWrap(g, "But it was too late.", metrics, cx - 85, y, 170);
+        y = Utils.drawStringWrap(g, "But it was too late.", metrics, cx - 85, y, 170);
         Graphics2D g2d = (Graphics2D) g;
         if (str1 != "") {
             str1Alpha = Math.min(str1Alpha + increment, 1.0f);
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, str1Alpha));
-            y = drawStringWrap(g2d, str1, metrics, cx - 125, y + marginY, 250);
+            y = Utils.drawStringWrap(g2d, str1, metrics, cx - 125, y + marginY, 250);
 
         }
 
@@ -149,7 +150,7 @@ public class Level14 extends Level {
             str2Alpha = Math.min(str2Alpha + increment, 1.0f);
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, str2Alpha));
 
-            y = drawStringWrap(g2d, str2, metrics, cx - 170, y + marginY, 340);
+            y = Utils.drawStringWrap(g2d, str2, metrics, cx - 170, y + marginY, 340);
         }
 
         Font font2 = new Font("Monospaced", Font.ITALIC, 12);
@@ -186,30 +187,8 @@ public class Level14 extends Level {
         g2d.dispose();
     }
 
-    // Helper method to draw a string with word wrapping.
-    // Returns the y position of the bottom of the last line.
-    private int drawStringWrap(Graphics g, String str, FontMetrics metrics, int initialX, int initialY, int width) {
-        final double lineHeightFactor = 0.9;
-        String[] words = str.split(" ");
-        int lineHeight = (int) (lineHeightFactor * metrics.getHeight());
-
-        String currLine = "";
-        int y = initialY;
-        for (String word : words) {
-            int wordWidth = metrics.stringWidth(word);
-            // If adding this word would make the line overflow, draw the current line.
-            if (wordWidth + metrics.stringWidth(currLine) > width) {
-                g.drawString(currLine, initialX + (width - metrics.stringWidth(currLine)) / 2, y);
-                currLine = "";
-                y += lineHeight;
-            }
-            currLine += word + " ";
-        }
-        g.drawString(currLine, initialX + (width - metrics.stringWidth(currLine)) / 2, y);
-        return y + lineHeight;
-    }
-
-    // Allows character to move, has time function that makes text show up with time delays 
+    // Allows character to move, has time function that makes text show up with time
+    // delays
     @Override
     public void move() {
         if (!textHasStarted && c.x > cx) {
@@ -315,7 +294,8 @@ public class Level14 extends Level {
         return false;
     }
 
-    // If user clicks button to return to home screen, redirect them to the loading screen
+    // If user clicks button to return to home screen, redirect them to the loading
+    // screen
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY && e.getY() < buttonY + buttonH) {
@@ -324,9 +304,9 @@ public class Level14 extends Level {
         }
     }
 
-    // Empty method 
+    // Empty method
     @Override
-    protected void checkWin() { 
+    protected void checkWin() {
     }
 
 }

@@ -1,3 +1,7 @@
+/* Level12 uses timing features to make the blocks fall every few seconds.
+ * Main point: the character's life is falling apart but she still continues to chase money desperately.
+ */
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -27,12 +31,15 @@ public class Level12 extends LevelWithFire {
 
     }
 
+    // Creates a falling block and an invisible block beneath it.
     protected void createFallingBlock(int startingX, int startingY) {
         fallingBlocks.add(new Character(startingX, startingY, Color.BLACK));
         invisibleBlocks.add(new Block(startingX, startingY + Block.S, Color.WHITE)); // add invisible block beneath
                                                                                      // falling block.
     }
 
+    // This method resets the character's and each of the falling blocks' positions
+    // to their initial values.
     @Override
     protected void resetLevel() {
         fallingBlocks = new ArrayList<Character>();
@@ -52,6 +59,7 @@ public class Level12 extends LevelWithFire {
         createFallingBlock(780 + offsetX, 270 + offsetY);
     }
 
+    // Move on to the next level if the character touches money.
     @Override
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
@@ -75,6 +83,8 @@ public class Level12 extends LevelWithFire {
 
     }
 
+    // Utility method to combine an arraylist of blocks and an arraylist of
+    // characters into one arraylist of blocks.
     private static ArrayList<Block> extend(ArrayList<Block> list, ArrayList<Character> list2) {
         ArrayList<Block> newList = new ArrayList<Block>();
         for (Block b : list) {

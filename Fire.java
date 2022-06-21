@@ -10,8 +10,8 @@ public class Fire {
     int x;
     int y;
 
-    // x and y are coordinates of the top left corner of the imaginary square that
-    // encloses the triangle-shaped fire
+    // creates a new Fire with x and y coordinates as the positions of the top left
+    // corner of the imaginary square that encloses the triangle-shaped fire
     public Fire(int x, int y) {
         this.x = x;
         this.y = y;
