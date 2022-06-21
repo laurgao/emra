@@ -168,16 +168,16 @@ public class Level7 extends Level {
     private void characterKeyPressed(KeyEvent e, Character c, Character other) {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            c.xVelocity = c.SPEED * -1;
+            c.xVelocity = Character.SPEED * -1;
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            c.xVelocity = c.SPEED;
+            c.xVelocity = Character.SPEED;
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_UP
                 && (!c.isFalling || (characterIsAboveOtherCharacter(c, other) && other.isFalling))) {
-            c.yVelocity = -c.G;
+            c.yVelocity = -Character.G;
             c.isFalling = true;
         }
 

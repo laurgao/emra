@@ -246,7 +246,7 @@ public class Level14 extends Level {
             checkYCollisionsReverse(c, Utils.extend(blocks, invisibleBlocks));
 
             c.move(Utils.extend(blocks, invisibleBlocks));
-            c.yVelocity = c.isFalling ? c.yVelocity + -2 * c.fallingYAcceleration : 0;
+            c.yVelocity = c.isFalling ? c.yVelocity + -2 * Character.fallingYAcceleration : 0;
 
             checkYCollisions(c);
 
