@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Level9 extends Level {
+public class Level9 extends LevelWithFire {
     private Character m; // block representing money
-    private ArrayList<Fire> fires;
     private ArrayList<Block> ledges; // ledges that are 1 way jumps.
 
     // Constructor method, initializes all characters, blocks, and fire
@@ -60,8 +59,8 @@ public class Level9 extends Level {
         createLedge(Block.S * 29, (int) (9.5 * Block.S));
     }
 
-    // Creates a x by y sized rectangle that is one way: you can jump through it but
-    // cannot fall through it
+    // Creates a rectangle with top left coordinates x and y that is one way: you
+    // can jump through it but cannot fall through it
     private void createLedge(int x, int y) {
         for (int i = 0; i < 6; i++)
             ledges.add(new Block(x + i * Block.S / 2, y, 15, Color.LIGHT_GRAY));
@@ -141,17 +140,6 @@ public class Level9 extends Level {
         g.setFont(font);
         FontMetrics m = g.getFontMetrics(font);
         Utils.drawStringWrap(g, "I realized I became delusional in my pursuit of grandeur.", m, 100, 300, 250);
-    }
-
-    // Checks if the character has touched fire. If yes, the level is reset
-    @Override
-    protected void checkDeath(Character c) {
-        super.checkDeath(c);
-        for (Fire f : fires) {
-            if (f.intersects(c)) {
-                c.die();
-            }
-        }
     }
 
     @Override

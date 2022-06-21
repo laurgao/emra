@@ -7,11 +7,10 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Level8 extends Level {
+public class Level8 extends LevelWithFire {
     private Character m; // block representing money
     private Character family1;
     private Character family2;
-    private ArrayList<Fire> fires = new ArrayList<Fire>();
     private Panel panel;
     private boolean hasWon;
 
@@ -29,6 +28,7 @@ public class Level8 extends Level {
         family2 = new Character(startingX + 15 * Block.S, startingY + 5 * Block.S, Color.BLUE);
 
         // Create fires
+        fires = new ArrayList<Fire>();
         fires.add(new Fire(startingX + 8 * Block.S, startingY - 4 * Block.S));
         fires.add(new Fire(startingX + 8 * Block.S, startingY + 5 * Block.S));
 
@@ -65,17 +65,8 @@ public class Level8 extends Level {
         m.draw(g);
         family1.draw(g);
         family2.draw(g);
-        c.draw(g);
 
-        // draw the fires
-        for (Fire f : fires) {
-            f.draw(g);
-        }
-
-        // draw the floor blocks
-        for (Block b : blocks) {
-            b.draw(g);
-        }
+        super.draw(g);
     }
 
     @Override
@@ -113,24 +104,13 @@ public class Level8 extends Level {
         checkWin();
     }
 
-    // @Override
+    @Override
     protected void checkWin() {
         // If main character reaches money after having killed all the family, go to
         // next level
         if (!hasWon && !family1.isAlive() && !family2.isAlive() && c.intersects(m)) {
             panel.nextLevel(new Level9(panel));
             hasWon = true;
-        }
-    }
-
-    // Check if character has died
-    @Override
-    protected void checkDeath(Character c) {
-        super.checkDeath(c);
-        for (Fire f : fires) {
-            if (f.intersects(c)) {
-                c.die();
-            }
         }
     }
 

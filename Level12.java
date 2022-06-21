@@ -80,7 +80,7 @@ public class Level12 extends LevelWithFire {
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20));
-        g.drawString("Even as the world is crumbling", 135, 100);
+        g.drawString("Even as the world is crumbling...", 135, 100);
 
     }
 

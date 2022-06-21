@@ -57,7 +57,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         replay = t.getImage("images/replay.png");
 
         // Initialize the game with the loading screen.
-        currentScreen = new LoadingScreen(this);
+        currentScreen = new Level14(this);
         nextLevel = currentScreen;
 
         this.setPreferredSize(new Dimension(W, H));

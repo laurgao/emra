@@ -5,9 +5,8 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Level13 extends Level {
+public class Level13 extends LevelWithFire {
 
-    private ArrayList<Fire> fires;
     private ArrayList<Block> invisibleObstacles;
 
     public Level13(Panel panel) {
@@ -50,19 +49,7 @@ public class Level13 extends Level {
     // Draws all blocks and characters onto the panel
     @Override
     public void draw(Graphics g) {
-
-        // Draw character
-        c.draw(g);
-
-        // Draw all blocks
-        for (Block b : blocks) {
-            b.draw(g);
-        }
-
-        // Draws fire
-        for (Fire f : fires) {
-            f.draw(g);
-        }
+        super.draw(g);
 
         // Draw text
         g.setColor(Color.BLACK);
@@ -98,17 +85,6 @@ public class Level13 extends Level {
         // If the character is not above any block, it is falling
         if (!characterIsAboveABlock(c, Utils.extend(blocks, invisibleObstacles))) {
             c.isFalling = true;
-        }
-    }
-
-    // If player touches fire, the player dies
-    @Override
-    protected void checkDeath(Character c) {
-        super.checkDeath(c);
-        for (Fire f : fires) {
-            if (f.intersects(c)) {
-                c.die();
-            }
         }
     }
 

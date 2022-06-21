@@ -12,12 +12,14 @@ abstract public class LevelWithFire extends Level {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
+
+        // Draws fires
         for (Fire f : fires) {
             f.draw(g);
         }
     }
 
-    // Cause the character to die if it touches any fire.
+    // Kill the character if it touches any fire.
     @Override
     protected void checkDeath(Character c) {
         super.checkDeath(c);

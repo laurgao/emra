@@ -5,9 +5,8 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Level4 extends Level {
+public class Level4 extends LevelWithFire {
     private final int S = Block.S;
-    private ArrayList<Fire> fires;
     private Character m;
 
     // Constructor method, initializes all characters and blocks
@@ -42,7 +41,7 @@ public class Level4 extends Level {
         m = new Money(34 * S, 8 * S, panel);
     }
 
-    // Resets character positions to starting positions 
+    // Resets character positions to starting positions
     @Override
     void resetLevel() {
         c = new Character(S, 8 * S, CustomColor.PINK);
@@ -53,12 +52,9 @@ public class Level4 extends Level {
     public void draw(Graphics g) {
         m.draw(g);
         super.draw(g);
-        for (Fire f : fires) {
-            f.draw(g);
-        }
 
         g.setColor(Color.WHITE);
-        Font font = new Font("Monospaced", Font.ITALIC, 20); 
+        Font font = new Font("Monospaced", Font.ITALIC, 20);
         FontMetrics metrics = g.getFontMetrics(font);
         g.setFont(font);
 
@@ -67,17 +63,6 @@ public class Level4 extends Level {
         int x = 240;
         g.drawString("Dodge any", x + (w - metrics.stringWidth("Dodge any")) / 2, 250);
         g.drawString("hardship.", x + (w - metrics.stringWidth("hardship")) / 2, 280);
-    }
-
-    // Checks if the player has touched fire. If yes, the player has died and the level is reset. 
-    @Override
-    protected void checkDeath(Character c) {
-        super.checkDeath(c);
-        for (Fire f : fires) {
-            if (f.intersects(c)) {
-                c.die();
-            }
-        }
     }
 
     // Specifies end level conditions
