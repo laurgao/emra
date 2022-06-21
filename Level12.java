@@ -80,7 +80,6 @@ public class Level12 extends LevelWithFire {
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20));
-        // g.drawString("Even as the world is crumbling", 180, 100);
         g.drawString("Even as the world is crumbling", 135, 100);
 
     }
@@ -98,6 +97,8 @@ public class Level12 extends LevelWithFire {
         return newList;
     }
 
+    // Moves the character and the falling blocks according to time elapsed since
+    // the level started.
     @Override
     public void move() {
         c.move(extend(blocks, fallingBlocks));
@@ -119,6 +120,8 @@ public class Level12 extends LevelWithFire {
         long newElapsedMs = System.currentTimeMillis() - startTime; // time elapsed in milliseconds
         final int interval = 1000; // make a block fall every this many ms.
         if (newElapsedMs % interval < elapsedMs % interval && invisibleBlocks.size() > 0) {
+            // Removing the first invisible block in the arraylist causes the leftmost
+            // falling block to fall.
             invisibleBlocks.remove(0);
         }
         elapsedMs = newElapsedMs;

@@ -1,3 +1,7 @@
+/* Level8 uses multiple characters and fires. It is meant to be a difficult and fun puzzle 
+ * for the player to figure out how to kill both family members and still reach the money.
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -10,17 +14,11 @@ public class Level8 extends Level {
     private ArrayList<Fire> fires = new ArrayList<Fire>();
     private Panel panel;
     private boolean hasWon;
-    private Image muted;
-    private Image unmuted;
-    Toolkit t = Toolkit.getDefaultToolkit();
 
+    // Initializes the level by creating characters, blocks, and fires.
     public Level8(Panel panel) {
         this.panel = panel;
         hasWon = false;
-
-        // Initializes images by accessing files
-        muted =  t.getImage("images/muted.png");
-        unmuted =  t.getImage("images/unmuted.png");
 
         // starting x and y coordinates of main character
         int startingX = Panel.W / 10 + 5 * Block.S;
@@ -60,7 +58,7 @@ public class Level8 extends Level {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("Reaching my goal was meant to hurt others.", 150, 150);
 
         // draw the characters
@@ -77,17 +75,6 @@ public class Level8 extends Level {
         // draw the floor blocks
         for (Block b : blocks) {
             b.draw(g);
-        }
-
-        // Draw the mute button
-        g.setColor(CustomColor.PINK);
-        g.fillRect(1000, 0, 80, 80);
-        
-        // Draw mute symbol
-        if(Panel.isMuted) {
-            g.drawImage(muted, 1015, 15, panel);
-        } else if(!Panel.isMuted) {
-            g.drawImage(unmuted, 1015, 15, panel);
         }
     }
 
@@ -136,6 +123,7 @@ public class Level8 extends Level {
         }
     }
 
+    // Check if character has died
     @Override
     protected void checkDeath(Character c) {
         super.checkDeath(c);
@@ -146,6 +134,8 @@ public class Level8 extends Level {
         }
     }
 
+    // Gets the main and family characters to all move together when arrow keys are
+    // pressed.
     @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
@@ -153,6 +143,8 @@ public class Level8 extends Level {
         family2.keyPressed(e);
     }
 
+    // Stops both the main and family characters from moving when arrow keys are
+    // released.
     @Override
     public void keyReleased(KeyEvent e) {
         super.keyReleased(e);

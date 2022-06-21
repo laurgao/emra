@@ -25,13 +25,14 @@ public class Level7 extends Level {
         createRectOfBlocks(3, 1, Panel.W - 11 * Block.S, 330); // Ledge for money to stand on
     }
 
-    // Creates an x by y sized rectangle that is one way: you can jump through it but cannot fall through it 
+    // Creates an x by y sized rectangle that is one way: you can jump through it
+    // but cannot fall through it
     private void createLedge(int x, int y) {
         for (int i = 0; i < 6; i++)
             ledges.add(new Block(x + i * Block.S / 2, y, 15, Color.LIGHT_GRAY));
     }
 
-    // Resets character positions 
+    // Resets character positions
     @Override
     public void resetLevel() {
         c = new Character(12 * Block.S, 360, CustomColor.PINK);
@@ -56,7 +57,8 @@ public class Level7 extends Level {
         g.drawString(str, Panel.W / 2 - m.stringWidth(str) / 2, 100);
     }
 
-    // Checks if character has touched money. If yes, the character has won and is moved to the next level.
+    // Checks if character has touched money. If yes, the character has won and is
+    // moved to the next level.
     @Override
     protected void checkWin() {
         if (m.intersects(c) && !hasWon) {
@@ -65,7 +67,8 @@ public class Level7 extends Level {
         }
     }
 
-    // Specifies movement for when the character lands on a block or hits a block going up
+    // Specifies movement for when the character lands on a block or hits a block
+    // going up
     protected void checkYCollisions(Character c, Character other) {
         ArrayList<Block> downwardBlocks = Utils.extend(blocks, ledges);
         ArrayList<Block> upwardBlocks = blocks;
@@ -106,7 +109,7 @@ public class Level7 extends Level {
     }
 
     // Returns whether character will intersect rectangle after 1 more move()
-    // Results only according to yVelocity 
+    // Results only according to yVelocity
     private boolean willIntersectY(Character c, Character other) {
         return c.x + c.width > other.x && c.x < other.x + other.width
                 && c.y + c.yVelocity + c.height > other.y + other.yVelocity
@@ -136,7 +139,8 @@ public class Level7 extends Level {
         }
     }
 
-    // Checks for x/y collisions with blocks and characters, checks win/death of pink block, checks if family characters have died
+    // Checks for x/y collisions with blocks and characters, checks win/death of
+    // pink block, checks if family characters have died
     @Override
     public void move() {
         checkCharacterXCollisions(c, family);
@@ -158,13 +162,16 @@ public class Level7 extends Level {
         checkWin();
     }
 
+    // Gets the character and the family to both move together when arrow keys are
+    // pressed.
     @Override
     public void keyPressed(KeyEvent e) {
         characterKeyPressed(e, c, family);
         characterKeyPressed(e, family, c);
-
     }
 
+    // Helper method to be called on each character when the key is pressed to
+    // allow it to jump when it's on another character.
     private void characterKeyPressed(KeyEvent e, Character c, Character other) {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -183,6 +190,8 @@ public class Level7 extends Level {
 
     }
 
+    // Stops both the character and the family from moving when arrow keys are
+    // released.
     @Override
     public void keyReleased(KeyEvent e) {
         super.keyReleased(e);
