@@ -121,7 +121,8 @@ public abstract class Level {
     }
 
     // Empty method used as a template for individual levels to implement if they
-    // have buttons that require mouse event listening.
+    // have buttons that require mouse event listening. Left blank if a level does
+    // not require mouse events.
     public void mouseClicked(MouseEvent e) {
 
     }
