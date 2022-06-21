@@ -16,7 +16,7 @@ public class Frame extends JFrame {
     public Frame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Panel content = new Panel(); // run GamePanel constructor
         this.add(content);
-        this.setTitle("Pong"); // set title for frame
+        this.setTitle("The Hedonic Paradox"); // set title for frame
         this.setResizable(false); // frame can't change size
         this.setBackground(Color.white);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X button will stop program execution

@@ -14,6 +14,7 @@ public class Level12 extends LevelWithFire {
     private final int offsetX = 40;
     private final int offsetY = 40;
 
+    // Constructor method, initialize all characters, fire, and blocks 
     public Level12(Panel panel) {
         this.panel = panel;
 
@@ -68,6 +69,7 @@ public class Level12 extends LevelWithFire {
         }
     }
 
+    // Draws characters, blocks, and font
     @Override
     public void draw(Graphics g) {
         m.draw(g);

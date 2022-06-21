@@ -12,6 +12,7 @@ public class Level9 extends Level {
     private ArrayList<Block> ledges; // ledges that are 1 way jumps.
     Toolkit t = Toolkit.getDefaultToolkit();
 
+    // Constructor method, initializes all characters,  blocks, and fire
     public Level9(Panel panel) {
         this.panel = panel;
         hasWon = false;
@@ -60,17 +61,20 @@ public class Level9 extends Level {
         createLedge(Block.S * 29, (int) (9.5 * Block.S));
     }
 
+    // Creates a x by y sized rectangle that is one way: you can jump through it but cannot fall through it
     private void createLedge(int x, int y) {
         for (int i = 0; i < 6; i++)
             ledges.add(new Block(x + i * Block.S / 2, y, 15, Color.LIGHT_GRAY));
     }
 
+    // Resets characters to starting positions
     @Override
     public void resetLevel() {
         int startingY = (Panel.H * 3 / 4) / Block.S * Block.S;
         c = new Character(4 * Block.S, startingY - Block.S, CustomColor.PINK);
     }
 
+    //  Checks x and y collisions of pink block
     @Override
     public void move() {
         c.move(blocks);
@@ -111,6 +115,7 @@ public class Level9 extends Level {
         checkWin();
     }
 
+    // Checks if the character touches the money, if yes, move player to next level
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
             panel.nextLevel(new Level10(panel));
@@ -118,6 +123,7 @@ public class Level9 extends Level {
         }
     }
 
+    // Draws fires, blocks, text, and characters
     @Override
     public void draw(Graphics g) {
         m.draw(g);
@@ -137,6 +143,7 @@ public class Level9 extends Level {
         Utils.drawStringWrap(g, "I realized I became delusional in my pursuit of grandeur.", m, 100, 300, 250);
     }
 
+    // Checks if the character has touched fire. If yes, the level is reset
     @Override
     protected void checkDeath(Character c) {
         super.checkDeath(c);
@@ -163,6 +170,8 @@ public class Level9 extends Level {
         }
     }
 
+    // Because left and down arrow keys control left and right movements,
+    // stop the player from moving in the x direction when up and down keys are released.
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
