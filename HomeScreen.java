@@ -5,8 +5,6 @@ import java.awt.event.*;
 
 public class HomeScreen extends Level {
 
-    public static boolean completed = false;
-
     // Constructor method that intializes button (rectangle)
     public HomeScreen(Panel panel) {
         this.panel = panel;
@@ -48,7 +46,7 @@ public class HomeScreen extends Level {
         g.setFont(new Font("Monospaced", Font.ITALIC, 60));
         Utils.drawStringCenter(g, "The Hedonic Paradox", 200);
 
-        LoadingScreen.loadingComplete = true;
+        panel.loadingCompleted=true;
     }
 
     // Alternative method to create a rectangle

@@ -50,7 +50,7 @@ public class Level7 extends Level {
         }
 
         g.setColor(Color.BLACK);
-        Font font = new Font("Monospaced", Font.ITALIC, 16);
+        Font font = new Font("Monospaced", Font.ITALIC, 20);
         g.setFont(font);
         FontMetrics m = g.getFontMetrics(font);
         String str = "I would step on my family just to get to money.";

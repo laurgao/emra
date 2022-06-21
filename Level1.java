@@ -117,7 +117,7 @@ public class Level1 extends Level {
             b.draw(g, -camera[0], -camera[1]);
         }
 
-        HomeScreen.completed = true;
+        panel.homeCompleted=true;
     }
 
     // Updates camera position based on character location. Also checks character's x and y collisions

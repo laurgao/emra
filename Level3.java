@@ -81,7 +81,7 @@ public class Level3 extends Level {
 
         // Draw font
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("Take any leaps of faith...", 450, 140);
 
         // Draw the characters
