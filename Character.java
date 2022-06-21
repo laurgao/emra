@@ -33,6 +33,7 @@ public class Character extends Block {
         charColor = color; 
     }
 
+    // alternate constructor method that allows size of a character to be manipulated
     public Character(int x, int y, int z, Color color) {
         super(x, y, z, color);
         xVelocity = 0;
@@ -41,6 +42,7 @@ public class Character extends Block {
         isAlive = true;
     }
 
+    // alternate constructor method that allows color and dimensions of a character to be manipulated. 
     public Character(int x, int y, int z1, int z2, Color color) {
         super(x, y, z1, z2, color);
         xVelocity = 0;
@@ -49,8 +51,8 @@ public class Character extends Block {
         isAlive = true;
     }
 
+    // called from Level classes when any key is pressed
     public void keyPressed(KeyEvent e) {
-
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             xVelocity = SPEED * -1;
         }
@@ -63,7 +65,6 @@ public class Character extends Block {
             yVelocity = -G;
             isFalling = true;
         }
-
     }
 
     // called from Level classes when any key is released
@@ -78,8 +79,8 @@ public class Character extends Block {
     // called frequently from level classes
     // updates the current location of the character
     public void move(ArrayList<Block> blocks) {
+
         // Moves in a way to stop when colliding with a block in the x direction.
-        
         willIntersectX = false;
         for (Block b : blocks) {
             boolean isCollidingFromLeft = this.willIntersectX(b) && this.x < b.x && this.xVelocity > 0;
@@ -117,6 +118,8 @@ public class Character extends Block {
         return x + xVelocity + width > r.x && x + xVelocity < r.x + r.width && y + height > r.y && y < r.y + r.height;
     }
 
+    // returns whether character will intersect rectangle after 1 more move() (but
+    // only according to yVelocity)
     public boolean willIntersectY(Rectangle r) {
         return x + width > r.x && x < r.x + r.width && y + yVelocity + height > r.y && y + yVelocity < r.y + r.height;
     }
@@ -125,10 +128,12 @@ public class Character extends Block {
         return y + height > r.y && y < r.y + r.height;
     }
 
+    // Sets variable to false, character is dead 
     public void die() {
         isAlive = false;
     }
 
+    // Sets variable to true, character is alive
     public boolean isAlive() {
         return isAlive;
     }

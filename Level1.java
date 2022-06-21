@@ -12,10 +12,19 @@ public class Level1 extends Level {
     Character family3;
     Character family4;
 
+    // Images for arrow keys 
+    private Image right;
+    private Image left;
+    Toolkit t = Toolkit.getDefaultToolkit();
+
     // Constructor method, initializes all characters and blocks 
     public Level1(Panel panel) {
         this.panel = panel;
         hasWon = false;
+
+        // Initializes images by accessing files
+        right =  t.getImage("images/right.png");
+        left =  t.getImage("images/left.png");
         
         // Initializes characters
         int startingY = Panel.H; 
@@ -84,6 +93,10 @@ public class Level1 extends Level {
         for (Block b : blocks) {
             b.draw(g);
         }
+
+        // Draw arrow keys
+        g.drawImage(left, 215, (int)(panel.H*0.65) - 100, panel);
+        g.drawImage(right, 275, (int)(panel.H*0.65) - 100, panel);
     }
 
     // Specifies end level conditions

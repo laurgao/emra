@@ -9,47 +9,56 @@ public class Level3 extends Level {
 
     private static final int SPEED = 3; // velocity of player when moving horizontally
 
-    Character m; // block representing money
+    Character m; 
     Character family1;
     Character family2;
 
+    // Constructor method, initializes all characters and blocks
     public Level3(Panel panel) {
         this.panel = panel;
         hasWon = false;
-        // starting x and y coordinates of main character
-        int startingX = Panel.W;
-        int startingY = Panel.H;
-        c = new Character(50, startingY - 150, CustomColor.PINK);
-        m = new Money(startingX - 70, startingY - 150, panel);
+
+        int panelW = Panel.W;
+        int panelH = Panel.H;
+
+        // Initializes charcters 
+        c = new Character(50, panelH - 150, CustomColor.PINK);
+        m = new Money(panelW - 70, panelH - 150, panel);
 
         // Create blocks for the floor
-        createRectOfBlocks(6, 15, startingX / 2 + 175, 100);
-        createRectOfBlocks(6, 12, startingX / 2 - 325, 200);
-        createRectOfBlocks(70, 5, 0, startingY - 120);
+        createRectOfBlocks(6, 15, panelW / 2 + 175, 100);
+        createRectOfBlocks(6, 12, panelW / 2 - 325, 200);
+        createRectOfBlocks(70, 5, 0, panelH - 120);
     }
 
+    // Resets all character locations back to initial coordinates 
     void resetLevel() {
-        int startingX = Panel.W;
-        int startingY = Panel.H;
-        c = new Character(50, startingY - 150, CustomColor.PINK);
-        m = new Money(startingX - 70, startingY - 150, panel);
+        int panelW = Panel.W;
+        int panelH = Panel.H;
+        c = new Character(50, panelH - 150, CustomColor.PINK);
+        m = new Money(panelW - 70, panelH - 150, panel);
     }
 
+    // Draws all blocks and characters onto the panel 
     public void draw(Graphics g) {
+
+        // Draw font
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
         g.drawString("Climb any challenge...", 350, 100);
 
-        // draw the characters
+        // Draw the characters
         m.draw(g);
         c.draw(g);
 
-        // draw the floor blocks
+        // Draw the floor blocks
         for (Block b : blocks) {
             b.draw(g);
         }
     }
 
+    // Allows player to double jump (rock climb) if they press the right/left and up arrow keys
+    @Override
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -73,6 +82,8 @@ public class Level3 extends Level {
         }
     }
 
+    // Specifies end level conditions
+    // If the player touches the money block, start Level 4
     @Override
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {

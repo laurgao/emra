@@ -1,4 +1,6 @@
-
+/* Level4 class introduces special feature of "air gliding". Player gains the ability to glide through the air over long distances. 
+ * Main message: Pink block is ready to take risks to make money.
+*/
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,28 +14,33 @@ public class Level4 extends Level {
     boolean isPressedRight;
     boolean isPressedUp;
 
+     // Constructor method, initializes all characters and blocks
     public Level4(Panel panel) {
         this.panel = panel;
         hasWon = false;
 
-        // starting x and y coordinates of main character
-        int startingX = Panel.W;
-        int startingY = Panel.H;
-        c = new Character(90, (int) (startingY * 0.35) - 30, CustomColor.PINK);
-        m = new Money(startingX - 120, (int) (startingY * 0.75) - 30, panel);
+        int panelW = Panel.W;
+        int panelH = Panel.H;
+        
+        // Initializes charcters 
+        c = new Character(90, (int) (panelH * 0.35) - 30, CustomColor.PINK);
+        m = new Money(panelW - 120, (int) (panelH * 0.75) - 30, panel);
 
         // Create blocks for the floor
-        createRectOfBlocks(7, 1, 0, (int) (startingY * 0.35));
-        createRectOfBlocks(7, 15, startingX - 210, (int) (startingY * 0.75));
+        createRectOfBlocks(7, 1, 0, (int) (panelH * 0.35));
+        createRectOfBlocks(7, 15, panelW - 210, (int) (panelH * 0.75));
     }
 
+    // Resets all character locations back to initial coordinates 
     void resetLevel() {
-        int startingX = Panel.W;
-        int startingY = Panel.H;
-        c = new Character(90, (int) (startingY * 0.35) - 30, CustomColor.PINK);
-        m = new Money(startingX - 120, (int) (startingY * 0.75) - 30, panel);
+        int panelW = Panel.W;
+        int panelH = Panel.H;
+        c = new Character(90, (int) (panelH * 0.35) - 30, CustomColor.PINK);
+        m = new Money(panelW - 120, (int) (panelH * 0.75) - 30, panel);
     }
 
+    // Allows player to air glide if right and up arrow keys are pressed. Updates booleans to true if right or up arrow key is pressed. 
+    @Override
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -55,6 +62,7 @@ public class Level4 extends Level {
         }
     }
 
+    // Updates booleans that check if right and up arrow keys are pressed to false. 
     public void keyReleased(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -68,21 +76,26 @@ public class Level4 extends Level {
         }
     }
 
+    // Draws all blocks and characters onto the panel 
     public void draw(Graphics g) {
+
+        // Draw font
         g.setColor(Color.BLACK);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
         g.drawString("Take any leaps of faith...", 450, 140);
 
-        // draw the characters
+        // Draw the characters
         m.draw(g);
         c.draw(g);
 
-        // draw the floor blocks
+        // Draw the floor blocks
         for (Block b : blocks) {
             b.draw(g);
         }
     }
 
+    // Sets the player's x and y velocities to constant numbers for air gliding effect. 
+    @Override
     public void move() {
         super.move();
 
@@ -92,6 +105,8 @@ public class Level4 extends Level {
         }
     }
 
+    // Specifies end level conditions
+    // If the player touches the money block, start Level 5
     @Override
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {

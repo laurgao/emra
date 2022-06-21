@@ -5,35 +5,42 @@
 import java.awt.*;
 
 public class Level2 extends Level {
+
     Character m; // Block representing money 
+
+    // Image for up arrow
+    private Image up;
+    Toolkit t = Toolkit.getDefaultToolkit();
 
     // Constructor method, initializes all characters and blocks
     public Level2(Panel panel) {
         this.panel = panel;
         hasWon = false;
 
-        // Starting x and y coordinates of main character
-        int startingX = Panel.W;
-        int startingY = Panel.H;
+        // Initializes image by accessing the file
+        up =  t.getImage("images/up.png");
+
+        int panelW = Panel.W;
+        int panelH = Panel.H;
 
         // Initialize characters
-        c = new Character(50, (int) (startingY * 0.4), CustomColor.PINK);
-        m = new Money(startingX - 60, startingY - 60, panel);
+        c = new Character(50, (int) (panelH * 0.4), CustomColor.PINK);
+        m = new Money(panelW - 60, panelH - 60, panel);
 
         // Create blocks for the floor
-        createRectOfBlocks(5, 15, 0, (int) (startingY * 0.4) + Block.S);
-        createRectOfBlocks(3, 1, (int) (startingX * 0.25), (int) (startingY * 0.35) + Block.S);
-        createRectOfBlocks(3, 1, (int) (startingX * 0.4), (int) (startingY * 0.25) + Block.S);
-        createRectOfBlocks(15, 1, (int) (startingX * 0.6), startingY);
-        createRectOfBlocks(5, 1, (int) (startingX * 0.90), startingY - 30);
+        createRectOfBlocks(5, 15, 0, (int) (panelH * 0.4) + Block.S);
+        createRectOfBlocks(3, 1, (int) (panelW * 0.25), (int) (panelH * 0.35) + Block.S);
+        createRectOfBlocks(3, 1, (int) (panelW * 0.4), (int) (panelH * 0.25) + Block.S);
+        createRectOfBlocks(15, 1, (int) (panelW * 0.6), panelH);
+        createRectOfBlocks(5, 1, (int) (panelW * 0.90), panelH - 30);
     }
 
     // Resets all character locations back to initial coordinates 
     void resetLevel() {
-        int startingX = Panel.W;
-        int startingY = Panel.H;
-        c = new Character(50, (int) (startingY * 0.4), CustomColor.PINK);
-        m = new Money(startingX - 60, startingY - 60, panel);
+        int panelW = Panel.W;
+        int panelH = Panel.H;
+        c = new Character(50, (int) (panelH * 0.4), CustomColor.PINK);
+        m = new Money(panelW - 60, panelH - 60, panel);
     }
 
     // Draws all blocks and characters onto the panel 
@@ -52,8 +59,11 @@ public class Level2 extends Level {
         for (Block b : blocks) {
             b.draw(g);
         }
-    }
 
+        // Draw up arrow
+        g.drawImage(up, 95, (int) (Panel.H * 0.4) + Block.S -75, panel);
+
+    }
     
     // Specifies end level conditions
     // If the player touches the money block, start Level 3
