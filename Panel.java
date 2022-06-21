@@ -24,6 +24,8 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     public static final int H = 630; // height of window
 
     public static boolean titlePageDone;
+    public AudioPlayer currentSound;
+    public static boolean firstTimeSound;
 
     private Level currentScreen; // current screen being displayed
     private Level nextLevel;
@@ -31,11 +33,23 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     private Thread gameThread;
     private float opacity; // sign dictates whether alpha is going down or up.
 
+    private boolean isMuted;
+
+    private Image muted;
+    private Image unmuted;
+    Toolkit t = Toolkit.getDefaultToolkit();
+
     public Panel() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playSound("background", true);
         opacity = 0.0f; // start with alpha at 0 and fade in.
 
         titlePageDone = false;
+        isMuted = false;
+        firstTimeSound = true;
+           
+    // Initializes images by accessing files
+        muted =  t.getImage("images/muted.png");
+        unmuted =  t.getImage("images/unmuted.png");
 
         currentScreen = new HomeScreen(this);
         nextLevel = currentScreen;
@@ -90,11 +104,23 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
 
     // call the draw methods in each class to update positions as things move
     public void draw(Graphics g) {
+
         // draw the background
         Color bgColor = new Color(250, 250, 249);
         g.setColor(bgColor);
         g.fillRect(0, 0, W, H);
 
+        // Draw the mute button
+        g.setColor(CustomColor.PINK);
+        g.fillRect(1000, 0, 80, 80);
+        
+        // Draw mute symbol
+        if(isMuted) {
+            g.drawImage(muted, 1015, 15, this);
+        } else if(!isMuted) {
+            g.drawImage(unmuted, 1015, 15, this);
+        }
+      
         currentScreen.draw(g);
     }
 
@@ -131,9 +157,11 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         }
     }
 
+    // Creates a new instance of an Audioplayer and plays sound file
     public void playSound(String audioFile, boolean continuous)
             throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioPlayer ac = new AudioPlayer();
+        currentSound = ac;
         ac.playSound(audioFile, continuous);
     }
 
@@ -155,8 +183,31 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
 
     }
 
+    // If mouse clicks the sound button, it toggles the mute function. If on HomeScreen and clicks start, will pass MouseEvent to HomeScreen. 
     @Override
     public void mouseClicked(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        if (mouseX < 1080 && mouseX > 1000 && mouseY < 80 && mouseY >0) {
+            if(isMuted) {
+                try {
+                    isMuted = false;
+                    playSound("background", true);
+                } catch (UnsupportedAudioFileException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (LineUnavailableException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            } else if(!isMuted){
+                isMuted = true;
+                currentSound.mute();
+            }
+        }
         if(!titlePageDone) {            
             currentScreen.mouseClicked(e);
         }        

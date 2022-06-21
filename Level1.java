@@ -95,8 +95,8 @@ public class Level1 extends Level {
         }
 
         // Draw arrow keys
-        g.drawImage(left, 215, (int)(panel.H*0.65) - 100, panel);
-        g.drawImage(right, 275, (int)(panel.H*0.65) - 100, panel);
+        g.drawImage(left, 215, (int)(Panel.H*0.65) - 100, panel);
+        g.drawImage(right, 275, (int)(Panel.H*0.65) - 100, panel);
     }
 
     // Specifies end level conditions
