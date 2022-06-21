@@ -15,6 +15,11 @@ public class Level1 extends Level {
     Character family4;
     private int[] camera; // camera represents the top left coords of the screen being displayed.
 
+    private Image right;
+    private Image left;
+    private Image up;
+    Toolkit t = Toolkit.getDefaultToolkit();
+
     // Constructor method, initializes all characters and blocks
     public Level1(Panel panel) {
         this.panel = panel;
@@ -22,6 +27,11 @@ public class Level1 extends Level {
 
         int startingX = Panel.W;
         int startingY = Panel.H;
+
+        // Initializes images by accessing files
+        right =  t.getImage("images/right.png");
+        left =  t.getImage("images/left.png");
+        up =  t.getImage("images/up.png");
 
         // Initialize character positions
         c = new Character(265, (int) (startingY * 0.65) - 30, CustomColor.PINK);
@@ -68,16 +78,16 @@ public class Level1 extends Level {
         createRectOfBlocks(5, 15, Panel.W, (int) (startingY * 0.65) + 4 * Block.S);
         createRectOfBlocks(3, 1, (int) (startingX * 1.25), (int) (startingY * 0.35) + 9 * Block.S);
         createRectOfBlocks(3, 1, (int) (startingX * 1.4), (int) (startingY * 0.25) + 9 * Block.S);
-        createRectOfBlocks(15, 1, (int) (startingX * 1.6), Panel.H + 199);
-        createRectOfBlocks(5, 1, (int) (startingX * 1.90), Panel.H + 199 - Block.S);
+        createRectOfBlocks(15, 1, (int) (startingX * 1.63), Panel.H + 199);
+        createRectOfBlocks(5, 1, (int) (startingX * 1.9), Panel.H + 199 - Block.S);
     }
 
     // Resets character location back to checkpoint coordinates.
     // This is so the player doesn't have to restart the level from the beginning
     // when they die, which can be annoying for the player.
     void resetLevel() {
-        c = new Character(1165, 499, CustomColor.PINK);
-        camera = new int[] { 620, 0 };
+        c = new Character(265, (int) (Panel.H * 0.65) - 30, CustomColor.PINK);
+        camera = new int[] { 0, 0 };
     }
 
     // Draws all blocks and characters onto the panel
@@ -96,10 +106,18 @@ public class Level1 extends Level {
         family4.draw(g, -camera[0], -camera[1]);
         m.draw(g, -camera[0], -camera[1]);
 
+        // Draw the arrows
+        g.drawImage(right, 280-camera[0], (int) (Panel.H * 0.65) - 110-camera[1], panel);
+        g.drawImage(left, 215-camera[0], (int) (Panel.H * 0.65) - 110-camera[1], panel);
+        g.drawImage(up, Panel.W + 5*30-20-camera[0], (int) (Panel.H * 0.65) + 4 * Block.S - 70-camera[1], panel);
+
+
         // Draw the floor blocks
         for (Block b : blocks) {
             b.draw(g, -camera[0], -camera[1]);
         }
+
+        HomeScreen.completed = true;
     }
 
     // 
@@ -110,6 +128,8 @@ public class Level1 extends Level {
         camera[0] = Math.min(Math.max(0, c.x - (Panel.W / 2 - c.height / 2)), Panel.W); // do not let camera x go left
                                                                                         // of 0 or right of the panel
                                                                                         // width.
+    
+        camera[1] = c.y-300;
         if (c.x > Panel.W) {
             // c.y here at the beginning is 499.
             camera[1] = 199;

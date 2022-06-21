@@ -141,6 +141,11 @@ public class Level9 extends Level {
         } else if(!Panel.isMuted) {
             g.drawImage(unmuted, 1015, 15, panel);
         }
+
+        // Draw font
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
+        g.drawString("I became delusional in my pursuit for grandeur", 100, 40);
     }
 
     @Override

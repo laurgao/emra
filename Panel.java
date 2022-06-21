@@ -41,7 +41,6 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     public Panel() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playSound("background", true);
         opacity = 1.0f; // start with full opacity.
-        // opacity = 0.0f; // start with alpha at 0 and fade in.
 
         isMuted = false;
         firstTimeSound = true;
@@ -51,7 +50,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         unmuted = t.getImage("images/unmuted.png");
         replay = t.getImage("images/replay.png");
 
-        currentScreen = new Level6(this);
+        currentScreen = new LoadingScreen(this);
         nextLevel = currentScreen;
 
         this.setPreferredSize(new Dimension(W, H));
@@ -117,16 +116,21 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         // Draw the mute button
         g.setColor(CustomColor.PINK);
         g.fillRect(1000, 0, 80, 80);
+
         // Draw the mute image
-        if (isMuted) {
-            g.drawImage(muted, 1015, 15, this);
-        } else if (!isMuted) {
-            g.drawImage(unmuted, 1015, 15, this);
+        if(LoadingScreen.loadingComplete) {
+            if (isMuted) {
+                g.drawImage(muted, 1015, 15, this);
+            } else if (!isMuted) {
+                g.drawImage(unmuted, 1015, 15, this);
+            }
         }
 
-        // Draw the replay button
-        g.fillRect(900, 0, 80, 80);
-        g.drawImage(replay, 913, 12, this);
+        if(HomeScreen.completed) {
+            // Draw the replay button
+            g.fillRect(900, 0, 80, 80);
+            g.drawImage(replay, 913, 12, this);
+        }
     }
 
     // call the move methods in other classes to update positions

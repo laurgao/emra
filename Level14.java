@@ -1,8 +1,14 @@
+/* Level14 class introduces the antigravity feature
+ * Main message: The pink block is desperate to the point of taking wild gambles. 
+*/
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Level14 extends Level {
+
+    // Initialize characters
     Character m;
     Character family1;
     Character family2;
@@ -34,6 +40,7 @@ public class Level14 extends Level {
     private ArrayList<Block> invisibleBlocks = new ArrayList<Block>();
     private boolean isGravityReversed = false;
 
+    // Constructor method, initializes all characters and blocks
     public Level14(Panel panel) {
         this.panel = panel;
         hasWon = false;
@@ -309,7 +316,8 @@ public class Level14 extends Level {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY && e.getY() < buttonY + buttonH) {
-            panel.nextLevel(new HomeScreen(panel));
+            panel.nextLevel(new LoadingScreen(panel));
+            HomeScreen.completed = false;
         }
     }
 

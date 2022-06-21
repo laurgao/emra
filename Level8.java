@@ -60,7 +60,7 @@ public class Level8 extends Level {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
         g.drawString("Reaching my goal was meant to hurt others.", 150, 150);
 
         // draw the characters

@@ -44,7 +44,7 @@ public class Level2 extends Level {
 
         // Draw font
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
         g.drawString("Climb any challenge...", 350, 100);
 
         // Draw the characters

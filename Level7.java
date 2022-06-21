@@ -128,17 +128,9 @@ public class Level7 extends Level {
     public void move() {
         checkCharacterXCollisions(c, family);
 
-        // c.move(Utils.extend(blocks, new ArrayList<Block>(Arrays.asList(family))));
-        // family.move(Utils.extend(blocks, new ArrayList<Block>(Arrays.asList(c))));
         c.move(blocks);
         family.move(blocks);
 
-        // checkYCollisions(c, blocks,
-        // Utils.extend(Utils.extend(blocks, ledges), new
-        // ArrayList<Block>(Arrays.asList(family))));
-        // checkYCollisions(family, blocks,
-        // Utils.extend(Utils.extend(blocks, ledges), new
-        // ArrayList<Block>(Arrays.asList(c))));
         checkYCollisions(c, family);
         checkYCollisions(family, c);
 
