@@ -304,7 +304,7 @@ public class Level14 extends Level {
         }
     }
 
-    // Empty method
+    // Left empty because this level cannot be won.
     @Override
     protected void checkWin() {
     }
