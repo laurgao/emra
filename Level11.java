@@ -22,10 +22,18 @@ public class Level11 extends Level {
     private ArrayList<Block> blackWall;
     private ArrayList<Block> blackPanel;
 
+    private Image muted;
+    private Image unmuted;
+    Toolkit t = Toolkit.getDefaultToolkit();
+
     // Constructor method, initializes all characters and blocks 
     public Level11(Panel panel) {
         this.panel = panel;
         hasWon = false;
+
+        // Initializes images by accessing files
+        muted =  t.getImage("images/muted.png");
+        unmuted =  t.getImage("images/unmuted.png");
 
         invisibleWall = new ArrayList<Block>();
         blackWall = new ArrayList<Block>();
@@ -147,6 +155,17 @@ public class Level11 extends Level {
         g.drawString("...just how much I had lost.", 320 - camera[0], 1250 - camera[1]);
         g.drawString("Perhaps my chase for wealth", 1300 - camera[0], 1250 - camera[1]);
         g.drawString("was the beginning of my tragedy.", 1400 - camera[0], 1300 - camera[1]);
+
+        // Draw the mute button
+        g.setColor(CustomColor.PINK);
+        g.fillRect(1000, 0, 80, 80);
+        
+        // Draw mute symbol
+        if(Panel.isMuted) {
+            g.drawImage(muted, 1015, 15, panel);
+        } else if(!Panel.isMuted) {
+            g.drawImage(unmuted, 1015, 15, panel);
+        }
 
     }
 

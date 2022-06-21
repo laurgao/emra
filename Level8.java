@@ -10,10 +10,17 @@ public class Level8 extends Level {
     private ArrayList<Fire> fires = new ArrayList<Fire>();
     private Panel panel;
     private boolean hasWon;
+    private Image muted;
+    private Image unmuted;
+    Toolkit t = Toolkit.getDefaultToolkit();
 
     public Level8(Panel panel) {
         this.panel = panel;
         hasWon = false;
+
+        // Initializes images by accessing files
+        muted =  t.getImage("images/muted.png");
+        unmuted =  t.getImage("images/unmuted.png");
 
         // starting x and y coordinates of main character
         int startingX = Panel.W / 10 + 5 * Block.S;
@@ -70,6 +77,17 @@ public class Level8 extends Level {
         // draw the floor blocks
         for (Block b : blocks) {
             b.draw(g);
+        }
+
+        // Draw the mute button
+        g.setColor(CustomColor.PINK);
+        g.fillRect(1000, 0, 80, 80);
+        
+        // Draw mute symbol
+        if(Panel.isMuted) {
+            g.drawImage(muted, 1015, 15, panel);
+        } else if(!Panel.isMuted) {
+            g.drawImage(unmuted, 1015, 15, panel);
         }
     }
 
