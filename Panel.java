@@ -38,6 +38,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
     private Image replay;
     Toolkit t = Toolkit.getDefaultToolkit();
 
+    // Initializes screen, and creates a new instance of the loading screen to be displayed. Basic game functions also initialized 
     public Panel() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playSound("background", true);
         opacity = 1.0f; // start with full opacity.
@@ -227,22 +228,26 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         currentScreen.mouseClicked(e);
     }
 
+    // Empty method
     @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    // Empty method
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
+    // Empty method
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
+    // Empty method
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub

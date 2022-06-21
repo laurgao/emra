@@ -1,3 +1,7 @@
+/* Level6 class uses camera pan feature. 
+ * Main message: The pink block has reached all their goals and is now a rich man/woman.
+*/
+
 import java.awt.Color;
 import java.awt.*;
 
@@ -5,6 +9,7 @@ public class Level6 extends Level {
     private Character m; // block representing money
     private int[] camera; // camera represents the top left coords of the screen being displayed.
 
+    // Constructor method, initializes all characters, blocks, and camera
     public Level6(Panel panel) {
         this.panel = panel;
         camera = new int[] { 0, 0 };
@@ -65,6 +70,7 @@ public class Level6 extends Level {
         m = new Money(cx + Block.S * 6, cy - 24 * Block.S, panel);
     }
 
+    // Draws characters, and text onto the screen 
     public void draw(Graphics g) {
 
         // draw the characters
@@ -91,6 +97,7 @@ public class Level6 extends Level {
         }
     }
 
+    // Checks for character's x and y collisions and updates camera position
     public void move() {
         super.move();
 

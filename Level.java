@@ -52,8 +52,8 @@ public abstract class Level {
     // Check if the player has won. If so, go to the next level.
     protected abstract void checkWin();
 
+    // if character falls off the screen, the player has died
     protected void checkDeath(Character c) {
-        // if character falls off the screen, the player has died
         if (c.y > Panel.H * 1.5) {
             c.die();
         }
@@ -94,6 +94,7 @@ public abstract class Level {
 
     }
 
+    // Checks if a character is above a block
     protected boolean characterIsAboveABlock(Character c, ArrayList<Block> blocks) {
         for (Block b : blocks) {
             if (c.x + c.width > b.x && c.x < b.x + b.width && c.height + c.y == b.y) {
@@ -103,16 +104,18 @@ public abstract class Level {
         return false;
     }
 
+    // Empty method
     public void keyPressed(KeyEvent e) {
         c.keyPressed(e);
     }
 
+    // Empty method
     public void keyReleased(KeyEvent e) {
         c.keyReleased(e);
     }
 
+    // Empty method
     public void mouseClicked(MouseEvent e) {
 
     }
-
 }

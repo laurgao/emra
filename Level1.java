@@ -1,4 +1,4 @@
-/* Level1 class introduces the main character, their family, and the left/right momvement keys.
+/* Level1 class introduces the main character, their family, and the left/right/up momvement keys. Also introduces camera feature
  * Main message: Pink block comes from a poor family (farmhouse).
 */
 
@@ -120,7 +120,7 @@ public class Level1 extends Level {
         HomeScreen.completed = true;
     }
 
-    //
+    // Updates camera position based on character location. Also checks character's x and y collisions
     @Override
     public void move() {
         super.move();

@@ -1,4 +1,4 @@
-/* Level3 class introduces special feature of "rock climbing". Player gains the ability to scale tall walls for this level. 
+/* Level2 class introduces special feature of "rock climbing". Player gains the ability to scale tall walls for this level. 
  * Main message: Pink block is undeterred by challenges to get money. 
 */
 

@@ -1,4 +1,4 @@
-/* Level4 class introduces special feature of "air gliding". Player gains the ability to glide through the air over long distances. 
+/* Level3 class introduces special feature of "air gliding". Player gains the ability to glide through the air over long distances. 
  * Main message: Pink block is ready to take risks to make money.
 */
 

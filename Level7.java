@@ -1,5 +1,8 @@
+/* Level7 class uses the invisible wall feature more. 
+ * Main message: The pink block is desperate to the point of taking wild gambles. 
+*/
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -8,6 +11,7 @@ public class Level7 extends Level {
     Character family;
     private ArrayList<Block> ledges = new ArrayList<Block>(); // ledges that are 1 way jumps.
 
+    // Constructor method, initializes all characters and blocks
     public Level7(Panel panel) {
         this.panel = panel;
         createRectOfBlocks(1, Panel.H / Block.S + 1, 0, 0);
@@ -21,17 +25,20 @@ public class Level7 extends Level {
         createRectOfBlocks(3, 1, Panel.W - 11 * Block.S, 330); // Ledge for money to stand on
     }
 
+    // Creates an x by y sized rectangle that is one way: you can jump through it but cannot fall through it 
     private void createLedge(int x, int y) {
         for (int i = 0; i < 6; i++)
             ledges.add(new Block(x + i * Block.S / 2, y, 15, Color.LIGHT_GRAY));
     }
 
+    // Resets character positions 
     @Override
     public void resetLevel() {
         c = new Character(12 * Block.S, 360, CustomColor.PINK);
         family = new Character(10 * Block.S, 360, Color.BLUE);
     }
 
+    // Draws characters and text
     @Override
     public void draw(Graphics g) {
         m.draw(g);
@@ -49,6 +56,7 @@ public class Level7 extends Level {
         g.drawString(str, Panel.W / 2 - m.stringWidth(str) / 2, 100);
     }
 
+    // Checks if character has touched money. If yes, the character has won and is moved to the next level.
     @Override
     protected void checkWin() {
         if (m.intersects(c) && !hasWon) {
@@ -57,8 +65,8 @@ public class Level7 extends Level {
         }
     }
 
+    // Specifies movement for when the character lands on a block or hits a block going up
     protected void checkYCollisions(Character c, Character other) {
-        // Check y collisions:
         ArrayList<Block> downwardBlocks = Utils.extend(blocks, ledges);
         ArrayList<Block> upwardBlocks = blocks;
         if (c.isFalling && c.yVelocity > 0) {
@@ -70,7 +78,6 @@ public class Level7 extends Level {
                     break;
                 }
             }
-
             if (willIntersectY(c, other)) {
                 c.isFalling = false;
                 c.y = other.y - c.height;
@@ -93,16 +100,21 @@ public class Level7 extends Level {
         }
     }
 
+    // Checks if a character is above another character
     private boolean characterIsAboveOtherCharacter(Character c, Character other) {
         return c.x + c.width > other.x && c.x < other.x + other.width && c.height + c.y == other.y;
     }
 
+    // Returns whether character will intersect rectangle after 1 more move()
+    // Results only according to yVelocity 
     private boolean willIntersectY(Character c, Character other) {
         return c.x + c.width > other.x && c.x < other.x + other.width
                 && c.y + c.yVelocity + c.height > other.y + other.yVelocity
                 && c.y + c.yVelocity < other.y + other.height + other.yVelocity;
     }
 
+    // Returns whether character will intersect another charcter after 1 more move()
+    // Results only according to xVelocity
     private void checkCharacterXCollisions(Character char1, Character char2) {
         boolean willIntersectX = char1.x + char1.xVelocity + char1.width > char2.x + char2.xVelocity
                 && char1.x + char1.xVelocity < char2.x + char2.width + char2.xVelocity
@@ -124,6 +136,7 @@ public class Level7 extends Level {
         }
     }
 
+    // Checks for x/y collisions with blocks and characters, checks win/death of pink block, checks if family characters have died
     @Override
     public void move() {
         checkCharacterXCollisions(c, family);
