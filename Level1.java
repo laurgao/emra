@@ -86,8 +86,8 @@ public class Level1 extends Level {
     // This is so the player doesn't have to restart the level from the beginning
     // when they die, which can be annoying for the player.
     void resetLevel() {
-        c = new Character(265, (int) (Panel.H * 0.65) - 30, CustomColor.PINK);
-        camera = new int[] { 0, 0 };
+        c = new Character(1165, 499, CustomColor.PINK);
+        camera = new int[] { 620, 199 };
     }
 
     // Draws all blocks and characters onto the panel
@@ -120,22 +120,37 @@ public class Level1 extends Level {
         HomeScreen.completed = true;
     }
 
-    // 
-    @Override 
+    //
+    @Override
     public void move() {
         super.move();
 
         camera[0] = Math.min(Math.max(0, c.x - (Panel.W / 2 - c.height / 2)), Panel.W); // do not let camera x go left
                                                                                         // of 0 or right of the panel
                                                                                         // width.
-    
-        camera[1] = c.y-300;
+        int idealPos;
         if (c.x > Panel.W) {
             // c.y here at the beginning is 499.
-            camera[1] = 199;
+            idealPos = 199;
+
+            if (camera[1] < idealPos) {
+                // if the character is jumping and camera is higher than if character was on the
+                // ground, slowly move the camera in position.
+                camera[1] += 3;
+            } else {
+                camera[1] = idealPos;
+            }
         } else {
-            camera[1] = c.y - 300;
+            idealPos = c.y - 300;
+            if (camera[1] > idealPos) {
+                // if the character is jumping and camera is lower than if character was on the
+                // ground, slowly move the camera in position.
+                camera[1] -= 3;
+            } else {
+                camera[1] = idealPos;
+            }
         }
+
     }
 
     // Specifies end level conditions
