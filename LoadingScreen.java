@@ -4,6 +4,8 @@ import java.awt.*;
 public class LoadingScreen extends Level {
     private long startTime;
 
+    public static boolean loadingComplete = false;
+
     public LoadingScreen(Panel panel) {
         this.panel = panel;
         startTime = System.currentTimeMillis();
@@ -19,12 +21,12 @@ public class LoadingScreen extends Level {
         int currWidth = Math.min((int) elapsedMs * width / length, width);
 
         // Draw black bg
-        g.setColor(Color.BLACK);
+        g.setColor(CustomColor.PINK);
         g.fillRect(0, 0, Panel.W, Panel.H);
 
-        // Draw text
-        // TODO: custom loading font (Emmma's space invaders?)
+        // Draw text        
         g.setColor(Color.WHITE);
+        g.setFont(new Font("Monospaced", Font.ITALIC, 40));
         g.drawString("Loading...", Panel.W / 2 - 50, Panel.H / 2 - 50);
 
         // Draw loading bar

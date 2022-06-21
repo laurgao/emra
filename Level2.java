@@ -1,4 +1,4 @@
-/* Level3 class introduces special feature of "rock climbing". Player gains the ability to scale tall walls for this level. 
+/* Level2 class introduces special feature of "rock climbing". Player gains the ability to scale tall walls for this level. 
  * Main message: Pink block is undeterred by challenges to get money. 
 */
 
@@ -44,7 +44,7 @@ public class Level2 extends Level {
 
         // Draw font
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
         g.drawString("Climb any challenge...", 350, 100);
 
         // Draw the characters

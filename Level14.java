@@ -1,8 +1,14 @@
+/* Level14 class introduces the antigravity feature
+ * Main message: If the pink block chooses family, they get money too. 
+*/
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Level14 extends Level {
+
+    // Initialize characters
     Character m;
     Character family1;
     Character family2;
@@ -34,6 +40,7 @@ public class Level14 extends Level {
     private ArrayList<Block> invisibleBlocks = new ArrayList<Block>();
     private boolean isGravityReversed = false;
 
+    // Constructor method, initializes all characters and blocks
     public Level14(Panel panel) {
         this.panel = panel;
         hasWon = false;
@@ -70,6 +77,7 @@ public class Level14 extends Level {
 
     }
 
+    // Alternate method to create rectangles that can be passed through
     protected void createRectOfGoThroughBlocks(int w, int h, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
@@ -78,6 +86,8 @@ public class Level14 extends Level {
         }
     }
 
+    // Alternate method to create rectangles that cannot be seen or travelled
+    // through
     protected void createRectOfInvisibleBlocks(int w, int h, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
@@ -86,6 +96,7 @@ public class Level14 extends Level {
         }
     }
 
+    // Resets character positions, strings, and alpha variables (for fade effect)
     @Override
     void resetLevel() {
         c = new Character(cx - (int) (Block.S * 7.5), cy - Block.S * 7 / 2, CustomColor.PINK);
@@ -104,11 +115,7 @@ public class Level14 extends Level {
         isGravityReversed = false;
     }
 
-    @Override
-    protected void checkWin() {
-
-    }
-
+    // Draws characters, background, and text
     @Override
     public void draw(Graphics g) {
         m.draw(g);
@@ -180,6 +187,8 @@ public class Level14 extends Level {
         g2d.dispose();
     }
 
+    // Allows character to move, has time function that makes text show up with time
+    // delays
     @Override
     public void move() {
         if (!textHasStarted && c.x > cx) {
@@ -245,6 +254,7 @@ public class Level14 extends Level {
         }
     }
 
+    // Checks if the character has collided with a block while moving up or down
     protected void checkYCollisionsReverse(Character c, ArrayList<Block> blocks) {
         // check collisions
         if (c.isFalling && c.yVelocity > 0) {
@@ -274,6 +284,7 @@ public class Level14 extends Level {
 
     }
 
+    // Checks if a character is a below a block
     protected boolean characterIsBelowABlock(Character c, ArrayList<Block> blocks) {
         for (Block b : blocks) {
             if (c.x + c.width > b.x && c.x < b.x + b.width && c.height == b.y + b.height) {
@@ -283,28 +294,19 @@ public class Level14 extends Level {
         return false;
     }
 
+    // If user clicks button to return to home screen, redirect them to the loading
+    // screen
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY && e.getY() < buttonY + buttonH) {
-            panel.nextLevel(new HomeScreen(panel));
+            panel.nextLevel(new LoadingScreen(panel));
+            HomeScreen.completed = false;
         }
     }
 
+    // Empty method
     @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            c.xVelocity = c.SPEED * -1;
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            c.xVelocity = c.SPEED;
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_UP && !c.isFalling) {
-            c.yVelocity = isGravityReversed ? c.G : -1 * c.G;
-            c.isFalling = true;
-        }
-
+    protected void checkWin() {
     }
 
 }

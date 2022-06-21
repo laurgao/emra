@@ -1,3 +1,7 @@
+/* Level5 class allows a player to move a block. New collision feature between characters.
+ * Main message: The pink block is resourceful and ready to use anything at hand to get money.
+*/
+
 import java.util.ArrayList;
 import java.awt.*;
 import java.util.Arrays;
@@ -8,6 +12,7 @@ public class Level5 extends Level {
     private boolean hasWon;
     private Panel panel;
 
+    // Constructor method, initializes all characters and blocks
     public Level5(Panel panel) {
         this.panel = panel;
         hasWon = false;
@@ -38,6 +43,7 @@ public class Level5 extends Level {
         stool = new Character(cx - (int) (Block.S * 4.5), cy - (int) (Block.S * 3.5), CustomColor.BROWN);
     }
 
+    // Draws characters, blocks, and text
     @Override
     public void draw(Graphics g) {
         // draw the characters
@@ -58,6 +64,7 @@ public class Level5 extends Level {
         g.drawString(str, Panel.W / 2 - metrics.stringWidth(str) / 2, Panel.H / 2 - metrics.getHeight() / 2);
     }
 
+    // Checks character's x and y collisions 
     @Override
     public void move() {
         ArrayList<Block> blocksAndStool = Utils.extend(blocks, new ArrayList<Block>(Arrays.asList(stool)));

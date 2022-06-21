@@ -1,3 +1,7 @@
+/* Level4 class introduces the fire feature. 
+ * Main message: The pink block is unafraid to venture forward even if there are visible threats (fire represents hardship). 
+*/
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -6,6 +10,7 @@ public class Level4 extends Level {
     private ArrayList<Fire> fires;
     private Character m;
 
+    // Constructor method, initializes all characters and blocks
     public Level4(Panel panel) {
         this.panel = panel;
         hasWon = false;
@@ -37,11 +42,13 @@ public class Level4 extends Level {
         m = new Money(34 * S, 8 * S, panel);
     }
 
+    // Resets character positions to starting positions 
     @Override
     void resetLevel() {
         c = new Character(S, 8 * S, CustomColor.PINK);
     }
 
+    // Draws characters, blocks, text, and fire
     @Override
     public void draw(Graphics g) {
         m.draw(g);
@@ -62,6 +69,7 @@ public class Level4 extends Level {
         g.drawString("hardship.", x + (w - metrics.stringWidth("hardship")) / 2, 280);
     }
 
+    // Checks if the player has touched fire. If yes, the player has died and the level is reset. 
     @Override
     protected void checkDeath(Character c) {
         super.checkDeath(c);
@@ -72,7 +80,7 @@ public class Level4 extends Level {
         }
     }
 
-     // Specifies end level conditions
+    // Specifies end level conditions
     // If the player touches the money block, start Level 5
     @Override
     protected void checkWin() {

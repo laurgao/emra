@@ -5,9 +5,12 @@ import java.awt.event.*;
 
 public class HomeScreen extends Level {
 
+    public static boolean completed = false;
+
     // Constructor method that intializes button (rectangle)
     public HomeScreen(Panel panel) {
         this.panel = panel;
+        // completed = false;
 
         createRectOfBlocks(6, 5, (int) (Panel.W / 2) - 90, (int) (Panel.H * 0.5), CustomColor.PINK);
     }
@@ -42,8 +45,10 @@ public class HomeScreen extends Level {
 
         // Adds text
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 60)); // TODO: find better font + standardize across all levels.
+        g.setFont(new Font("Monospaced", Font.ITALIC, 60)); 
         g.drawString("The Hedonic Paradox", (int) (Panel.W / 2) - 350, 200);
+
+        LoadingScreen.loadingComplete = true;
     }
 
     // Alternative method to create a rectangle
