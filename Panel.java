@@ -53,7 +53,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         replay = t.getImage("images/replay.png");
 
         // Initialize the game with the loading screen.
-        currentScreen = new LoadingScreen(this);
+        currentScreen = new Level14(this);
         nextLevel = currentScreen;
 
         this.setPreferredSize(new Dimension(W, H));
@@ -129,7 +129,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
             }
         }
 
-        if (HomeScreen.completed) {
+        if (HomeScreen.completed || LoadingScreen.loadingComplete) {
             // Draw the replay button
             g.fillRect(900, 0, 80, 80);
             g.drawImage(replay, 913, 12, this);
