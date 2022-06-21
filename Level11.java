@@ -22,18 +22,12 @@ public class Level11 extends Level {
     private ArrayList<Block> blackWall;
     private ArrayList<Block> blackPanel;
 
-    private Image muted;
-    private Image unmuted;
     Toolkit t = Toolkit.getDefaultToolkit();
 
     // Constructor method, initializes all characters and blocks
     public Level11(Panel panel) {
         this.panel = panel;
         hasWon = false;
-
-        // Initializes images by accessing files
-        muted = t.getImage("images/muted.png");
-        unmuted = t.getImage("images/unmuted.png");
 
         invisibleWall = new ArrayList<Block>();
         blackWall = new ArrayList<Block>();
