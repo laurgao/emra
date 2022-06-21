@@ -45,8 +45,8 @@ public class HomeScreen extends Level {
 
         // Adds text
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 60)); 
-        g.drawString("The Hedonic Paradox", (int) (Panel.W / 2) - 350, 200);
+        g.setFont(new Font("Monospaced", Font.ITALIC, 60));
+        Utils.drawStringCenter(g, "The Hedonic Paradox", 200);
 
         LoadingScreen.loadingComplete = true;
     }
