@@ -51,8 +51,15 @@ public class Level5 extends Level {
         }
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); // TODO: find better font + standardize across all levels.
-        g.drawString("Dodge any hardship.", 250, 250);
+        Font font = new Font("Monospaced", Font.ITALIC, 20); // TODO: find better font + standardize across all levels.
+        FontMetrics metrics = g.getFontMetrics(font);
+        g.setFont(font);
+
+        // Center the text on the block.
+        int w = 7 * Block.S;
+        int x = 240;
+        g.drawString("Dodge any", x + (w - metrics.stringWidth("Dodge any")) / 2, 250);
+        g.drawString("hardship.", x + (w - metrics.stringWidth("hardship")) / 2, 280);
     }
 
     @Override
