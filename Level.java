@@ -66,8 +66,9 @@ public abstract class Level {
         checkYCollisions(c, this.blocks);
     }
 
+    // check collisions between the character and blocks and prevents the characters
+    // from crashing into the blocks by moving it if a collision will happen.
     protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
-        // check collisions
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block while falling downwards:
             for (Block b : blocks) {
@@ -105,17 +106,22 @@ public abstract class Level {
         return false;
     }
 
-    // Empty method
+    // Called from panel when a key is pressed
+    // Passes it to character to adjust the character's velocity when an arrow key
+    // is pressed.
     public void keyPressed(KeyEvent e) {
         c.keyPressed(e);
     }
 
-    // Empty method
+    // Called from panel when a key is released
+    // Passes it to character to adjust the character's velocity when an arrow key
+    // is released.
     public void keyReleased(KeyEvent e) {
         c.keyReleased(e);
     }
 
-    // Empty method
+    // Empty method used as a template for individual levels to implement if they
+    // have buttons that require mouse event listening.
     public void mouseClicked(MouseEvent e) {
 
     }
