@@ -42,4 +42,10 @@ public class Utils {
         g.drawString(currLine, initialX + (width - metrics.stringWidth(currLine)) / 2, y);
         return y + lineHeight;
     }
+
+    // Draw text on the center of the screen
+    public static void drawStringCenter(Graphics g, String str, int xPos) {
+        FontMetrics m = g.getFontMetrics();
+        g.drawString(str, Panel.W / 2 - m.stringWidth(str) / 2, xPos);
+    }
 }

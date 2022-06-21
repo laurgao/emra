@@ -20,14 +20,15 @@ public class LoadingScreen extends Level {
 
         int currWidth = Math.min((int) elapsedMs * width / length, width);
 
-        // Draw black bg
+        // Draw pink bg
         g.setColor(CustomColor.PINK);
         g.fillRect(0, 0, Panel.W, Panel.H);
 
-        // Draw text        
+        // Draw text on the center of the screen
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 40));
-        g.drawString("Loading...", Panel.W / 2 - 50, Panel.H / 2 - 50);
+        Font loadingFont = new Font("Monospaced", Font.ITALIC, 40);
+        g.setFont(loadingFont);
+        Utils.drawStringCenter(g, "Loading...", Panel.H / 2 - 50);
 
         // Draw loading bar
         int wOuter = width + 10;
