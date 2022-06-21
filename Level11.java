@@ -8,14 +8,14 @@ import java.util.ArrayList;
 public class Level11 extends Level {
 
     public static final double G = 9.8; // gravity
-    private static final double fallingYAcceleration = G / 20; 
+    private static final double fallingYAcceleration = G / 20;
 
     // Blocks representing family members
     Character family1;
     Character family2;
     Character family3;
     Character family4;
-    Character m; // Block representing money 
+    Character m; // Block representing money
 
     private int[] camera; // camera represents the top left coords of the screen being displayed.
     private ArrayList<Block> invisibleWall;
@@ -26,14 +26,14 @@ public class Level11 extends Level {
     private Image unmuted;
     Toolkit t = Toolkit.getDefaultToolkit();
 
-    // Constructor method, initializes all characters and blocks 
+    // Constructor method, initializes all characters and blocks
     public Level11(Panel panel) {
         this.panel = panel;
         hasWon = false;
 
         // Initializes images by accessing files
-        muted =  t.getImage("images/muted.png");
-        unmuted =  t.getImage("images/unmuted.png");
+        muted = t.getImage("images/muted.png");
+        unmuted = t.getImage("images/unmuted.png");
 
         invisibleWall = new ArrayList<Block>();
         blackWall = new ArrayList<Block>();
@@ -43,7 +43,7 @@ public class Level11 extends Level {
         int panelH = Panel.H;
         int panelW = Panel.W;
 
-        // Initializes charcters 
+        // Initializes charcters
         c = new Character(panelW - 75, (int) (panelH * 0.65) + 90, CustomColor.PINK);
         m = new Money(1510, panelH + 739 + 90, panel);
         family1 = new Character(190, (int) (panelH * 0.65) - 30, Color.BLUE);
@@ -72,7 +72,8 @@ public class Level11 extends Level {
         createRectOfBlocks(35, 1, -600, (int) (panelH * 0.65) + 120);
         createRectOfBlocks(50, 1, 480, (int) (panelH * 0.65) + 120);
 
-        // Create blocks for the blackPanel (drawn before the character so the player can move on top of the black background)
+        // Create blocks for the blackPanel (drawn before the character so the player
+        // can move on top of the black background)
         createRectOfBlocks(blackPanel, 70, 70, 480, (int) (panelH * 0.65) + 120, Color.black);
         createRectOfBlocks(blackPanel, 1, 40, 450, panelH + 769, Color.BLACK);
         createRectOfBlocks(blackPanel, 30, 30, -450, panelH + 769, Color.black);
@@ -105,7 +106,7 @@ public class Level11 extends Level {
             invisibleWall.add(new Block(Panel.W, i * 30, Color.black));
         }
 
-        // Create pure black wall. Pink block cannot be seen but can pass through. 
+        // Create pure black wall. Pink block cannot be seen but can pass through.
         for (int i = 0; i < 33; i++) {
             blackWall.add(new Block(450, (int) (panelH * 0.65) + i * 30, Color.BLACK));
             blackWall.add(new Block(450, (panelH + 829 + 90) + i * 30, Color.BLACK));
@@ -125,7 +126,7 @@ public class Level11 extends Level {
         family4 = new Character(245, (int) (panelH * 0.65) - 15, 15, Color.GREEN);
     }
 
-    // Draws all blocks and characters onto the panel 
+    // Draws all blocks and characters onto the panel
     @Override
     public void draw(Graphics g) {
 
@@ -149,23 +150,12 @@ public class Level11 extends Level {
 
         // Add text
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Monospaced", Font.ITALIC, 20)); 
+        g.setFont(new Font("Monospaced", Font.ITALIC, 20));
         g.drawString("I also realized when I turned around...", 600 - camera[0], 300 - camera[1]);
         g.setColor(Color.WHITE);
         g.drawString("...just how much I had lost.", 320 - camera[0], 1250 - camera[1]);
         g.drawString("Perhaps my chase for wealth", 1300 - camera[0], 1250 - camera[1]);
         g.drawString("was the beginning of my tragedy.", 1400 - camera[0], 1300 - camera[1]);
-
-        // Draw the mute button
-        g.setColor(CustomColor.PINK);
-        g.fillRect(1000, 0, 80, 80);
-        
-        // Draw mute symbol
-        if(Panel.isMuted) {
-            g.drawImage(muted, 1015, 15, panel);
-        } else if(!Panel.isMuted) {
-            g.drawImage(unmuted, 1015, 15, panel);
-        }
 
     }
 
@@ -192,7 +182,8 @@ public class Level11 extends Level {
 
         checkYCollisions(c, blocks);
 
-        //Update camera based on character's current position so that it is always centered on the player
+        // Update camera based on character's current position so that it is always
+        // centered on the player
         camera[0] = c.x - (Panel.W / 2 - c.height / 2);
         camera[1] = c.y - 400;
 
@@ -206,7 +197,7 @@ public class Level11 extends Level {
         checkWin();
     }
 
-    // Checks if player has fallen off the map. If so, the player has died. 
+    // Checks if player has fallen off the map. If so, the player has died.
     @Override
     protected void checkDeath(Character c) {
         if (c.y > Panel.H * 2.5) {
@@ -214,16 +205,17 @@ public class Level11 extends Level {
         }
     }
 
-    // Alternative method to create a rectangle 
+    // Alternative method to create a rectangle
     // Can customize the array the blocks are added to and the colour of the blocks
-    protected void createRectOfBlocks(ArrayList<Block> blockArray, int w, int h, int startingX, int startingY, Color color) {
+    protected void createRectOfBlocks(ArrayList<Block> blockArray, int w, int h, int startingX, int startingY,
+            Color color) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 blockArray.add(new Block(startingX + i * Block.S, startingY + j * Block.S, color));
             }
         }
     }
-    
+
     // Specifies end level conditions
     // If the player touches the money block, start Level 12
     @Override

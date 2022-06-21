@@ -50,6 +50,7 @@ public abstract class Level {
     abstract void resetLevel();
 
     // Check if the player has won. If so, go to the next level.
+    // Called frequently from the move method.
     protected abstract void checkWin();
 
     protected void checkDeath(Character c) {

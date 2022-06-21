@@ -51,7 +51,7 @@ public class Panel extends JPanel implements Runnable, KeyListener, MouseListene
         unmuted = t.getImage("images/unmuted.png");
         replay = t.getImage("images/replay.png");
 
-        currentScreen = new Level6(this);
+        currentScreen = new Level9(this);
         nextLevel = currentScreen;
 
         this.setPreferredSize(new Dimension(W, H));

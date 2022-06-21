@@ -17,15 +17,16 @@ public class Block extends Rectangle {
     }
 
     // alternative constructor that allows size of block to be manipulated
-    public Block(int x, int y, int z, Color color) {
-        super(x, y, z, z);
-        this.color = color; 
+    public Block(int x, int y, int size, Color color) {
+        super(x, y, size, size);
+        this.color = color;
     }
 
-    // alternative constructor that allows dimensions (length and width) to be manipulated
-    public Block(int x, int y, int z1, int z2, Color color) {
-        super(x, y, z1, z2);
-        this.color = color; 
+    // alternative constructor that allows dimensions (width and height) to be
+    // manipulated
+    public Block(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height);
+        this.color = color;
     }
 
     // called frequently from the Panel class
@@ -35,7 +36,8 @@ public class Block extends Rectangle {
         g.fillRect(x, y, width, height);
     }
 
-    // adjusts size of block and is an overload veriant that allows the setting of camera.
+    // adjusts size of block and is an overload veriant that allows the setting of
+    // camera.
     public void draw(Graphics g, int newHeight, int offsetX, int offsetY) {
         g.setColor(color);
         g.fillRect(x + offsetX, y + offsetY, width, newHeight);
