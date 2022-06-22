@@ -112,7 +112,7 @@ public class Level12 extends LevelWithFire {
         checkDeath(c);
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 

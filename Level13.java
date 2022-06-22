@@ -57,35 +57,23 @@ public class Level13 extends LevelWithFire {
         g.drawString("I will jump blindly to regain what was lost.", 300, 100);
     }
 
-    // Checks for collisions in the y direction
+    // Custom move method to account for collisions with invisible obstacles
     @Override
-    protected void checkYCollisions(Character c, ArrayList<Block> blocks) {
+    public void move() {
+        ArrayList<Block> allBlocks = Utils.extend(blocks, invisibleObstacles);
 
-        if (c.isFalling && c.yVelocity > 0) {
-            // If the character collides with a block or ledge while falling downwards:
-            for (Block b : Utils.extend(blocks, invisibleObstacles)) {
-                if (c.willIntersectY(b) && c.y < b.y) {
-                    c.isFalling = false;
-                    c.y = b.y - c.height;
-                    break;
-                }
-            }
+        c.move(allBlocks);
 
-        } else if (c.isFalling && c.yVelocity < 0) {
-            // If character bumps into a block while going upwards
-            for (Block b : blocks) {
-                if (c.willIntersectY(b) && c.y > b.y) {
-                    c.yVelocity = 0;
-                    c.y = b.y + b.height;
-                    break;
-                }
-            }
+        checkYCollisions(c, allBlocks);
+
+        checkDeath(c);
+
+        // If main character dies before winning, reset the level
+        if (!c.isAlive() && !hasWon) {
+            resetLevel();
         }
 
-        // If the character is not above any block, it is falling
-        if (!characterIsAboveABlock(c, Utils.extend(blocks, invisibleObstacles))) {
-            c.isFalling = true;
-        }
+        checkWin();
     }
 
     // Overload variant that allows the specification of the colour of blocks and

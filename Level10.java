@@ -177,7 +177,7 @@ public class Level10 extends Level {
         camera[1] = c.y - 250;
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 

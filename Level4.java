@@ -62,7 +62,7 @@ public class Level4 extends LevelWithFire {
         int w = 7 * Block.S;
         int x = 240;
         g.drawString("Dodge any", x + (w - metrics.stringWidth("Dodge any")) / 2, 250);
-        g.drawString("hardship.", x + (w - metrics.stringWidth("hardship")) / 2, 280);
+        g.drawString("hardship...", x + (w - metrics.stringWidth("hardship...")) / 2, 280);
     }
 
     // Specifies end level conditions

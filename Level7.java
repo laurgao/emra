@@ -183,7 +183,7 @@ public class Level7 extends Level {
         checkDeath(family);
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 

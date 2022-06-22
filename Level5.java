@@ -59,7 +59,7 @@ public class Level5 extends Level {
         // draw the text
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.ITALIC, 20));
-        String str = "Use whatever is necessary";
+        String str = "Use whatever is necessary...";
         FontMetrics metrics = g.getFontMetrics();
         g.drawString(str, Panel.W / 2 - metrics.stringWidth(str) / 2, Panel.H / 2 - metrics.getHeight() / 2);
     }
@@ -74,7 +74,7 @@ public class Level5 extends Level {
         checkDeath(c);
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 

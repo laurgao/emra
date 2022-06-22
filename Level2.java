@@ -75,7 +75,7 @@ public class Level2 extends Level {
                 c.isFalling = true;
             }
 
-            else if (c.isFalling && c.willIntersectX) {
+            else if (c.isFalling && c.willIntersectX(blocks)) {
                 c.yVelocity = -9.8;
                 c.isFalling = true;
             }

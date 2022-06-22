@@ -97,7 +97,7 @@ public class Level8 extends LevelWithFire {
         checkDeath(family2);
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 

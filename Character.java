@@ -19,8 +19,6 @@ public class Character extends Block {
 
     protected boolean isAlive;
 
-    public boolean willIntersectX;
-
     // x and y are initial coordinates of character
     public Character(int x, int y, Color color) {
         super(x, y, color);
@@ -80,7 +78,7 @@ public class Character extends Block {
     public void move(ArrayList<Block> blocks) {
 
         // Moves in a way to stop when colliding with a block in the x direction.
-        willIntersectX = false;
+        boolean willIntersectX = false;
         for (Block b : blocks) {
             boolean isCollidingFromLeft = this.willIntersectX(b) && this.x < b.x && this.xVelocity > 0;
             boolean isCollidingFromRight = this.willIntersectX(b) && this.x > b.x && this.xVelocity < 0;
@@ -119,16 +117,12 @@ public class Character extends Block {
     // returns whether character will intersect any block in the argument arraylist
     // of blocks after 1 more move() (but only according to xVelocity)
     public boolean willIntersectX(ArrayList<Block> blocks) {
-        boolean willIntersectX = false;
         for (Block b : blocks) {
-            boolean isCollidingFromLeft = this.willIntersectX(b) && this.x < b.x && this.xVelocity > 0;
-            boolean isCollidingFromRight = this.willIntersectX(b) && this.x > b.x && this.xVelocity < 0;
-            if (isCollidingFromLeft || isCollidingFromRight) {
-                willIntersectX = true;
-                break;
+            if (this.willIntersectX(b)) {
+                return true;
             }
         }
-        return willIntersectX;
+        return false;
     }
 
     // returns whether character will intersect rectangle after 1 more move() (but

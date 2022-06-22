@@ -26,6 +26,7 @@ public class HomeScreen extends Level {
     }
 
     // Draws text and blocks
+    @Override
     public void draw(Graphics g) {
 
         // Draw button
@@ -64,8 +65,8 @@ public class HomeScreen extends Level {
     protected void checkWin() {
     }
 
-    // Left empty because HomeScreen doesn't need to move characters around the
-    // screen.
+    // This method is left empty because HomeScreen doesn't need to move characters
+    // around the screen, and is included to override the default behavior of Level.
     @Override
     public void move() {
     }
@@ -75,12 +76,14 @@ public class HomeScreen extends Level {
     void resetLevel() {
     }
 
-    // Left empty because HomeScreen doesn't need to listen for key events.
+    // Left empty because HomeScreen doesn't need to listen for key events. Included
+    // to override the default behavior of level.
     @Override
     public void keyPressed(KeyEvent e) {
     }
 
-    // Left empty because HomeScreen doesn't need to listen for key events.
+    // Left empty because HomeScreen doesn't need to listen for key events. Included
+    // to override the default behavior of level.
     @Override
     public void keyReleased(KeyEvent e) {
     }

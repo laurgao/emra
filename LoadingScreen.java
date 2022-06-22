@@ -11,6 +11,11 @@ public class LoadingScreen extends Level {
 
     @Override
     public void draw(Graphics g) {
+        // Reset these two variables so that the mute button and replay button don't get
+        // displayed once the loading screen starts getting drawn
+        panel.loadingCompleted = false;
+        panel.homeCompleted = false;
+
         long elapsedMs = System.currentTimeMillis() - startTime;
 
         int length = 5000; // number of ms we want the loading screen to last

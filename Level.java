@@ -41,8 +41,8 @@ public abstract class Level {
 
         checkDeath(c);
 
-        // If main character dies, reset the level
-        if (!c.isAlive()) {
+        // If main character dies before winning, reset the level
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 

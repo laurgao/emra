@@ -43,7 +43,7 @@ public class Level14 extends Level {
 
     private ArrayList<Block> goThroughBlocks;
     private ArrayList<Block> invisibleBlocks;
-    private boolean isGravityReversed = false;
+    private boolean isGravityReversed;
 
     // Constructor method, initializes all characters and blocks
     public Level14(Panel panel) {
@@ -209,8 +209,10 @@ public class Level14 extends Level {
             g2d.drawString(buttonStr, buttonX + (buttonW - buttonMetrics.stringWidth(buttonStr)) / 2, cy + 5);
 
         }
-        g2d.dispose();
 
+        // Reset alpha back to original for graphics that will be drawn after from the
+        // Panel class.
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
     }
 
     // Helper method that returns whether the main character intersects at least 1
@@ -227,7 +229,7 @@ public class Level14 extends Level {
             // If character crosses the imaginary vertical halfway line while chasing money,
             // the money teleports away and the sad ending is initiated.
             if (!textHasStarted && c.x > cx) {
-                str1 = "Thsi game was just a hedonic paradox.";
+                str1 = "This game was all just a hedonic paradox.";
                 m.x = 265 + 300;
                 m.y = 360 + 30 + Block.S;
                 startTime = System.currentTimeMillis();
@@ -294,7 +296,7 @@ public class Level14 extends Level {
         checkDeath(c);
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
         checkWin();
@@ -368,10 +370,9 @@ public class Level14 extends Level {
     // screen
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY && e.getY() < buttonY + buttonH) {
+        if (str4 != "" && e.getX() > buttonX && e.getX() < buttonX + buttonW && e.getY() > buttonY
+                && e.getY() < buttonY + buttonH) {
             panel.nextLevel(new LoadingScreen(panel));
-            panel.loadingCompleted = false;
-            panel.homeCompleted = false;
         }
     }
 

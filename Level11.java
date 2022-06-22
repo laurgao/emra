@@ -22,8 +22,6 @@ public class Level11 extends Level {
     private ArrayList<Block> blackWall;
     private ArrayList<Block> blackPanel;
 
-    Toolkit t = Toolkit.getDefaultToolkit();
-
     // Constructor method, initializes all characters and blocks
     public Level11(Panel panel) {
         this.panel = panel;
@@ -183,7 +181,7 @@ public class Level11 extends Level {
         camera[1] = c.y - 400;
 
         // If main character dies, reset the level
-        if (!c.isAlive()) {
+        if (!c.isAlive() && !hasWon) {
             resetLevel();
         }
 
