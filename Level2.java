@@ -38,6 +38,7 @@ public class Level2 extends Level {
     }
 
     // Draws all blocks and characters onto the panel
+    @Override
     public void draw(Graphics g) {
 
         // Draw font

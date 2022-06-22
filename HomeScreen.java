@@ -46,7 +46,7 @@ public class HomeScreen extends Level {
         g.setFont(new Font("Monospaced", Font.ITALIC, 60));
         Utils.drawStringCenter(g, "The Hedonic Paradox", 200);
 
-        panel.loadingCompleted=true;
+        panel.loadingCompleted = true;
     }
 
     // Alternative method to create a rectangle
@@ -64,7 +64,8 @@ public class HomeScreen extends Level {
     protected void checkWin() {
     }
 
-    // Empty method
+    // Left empty because HomeScreen doesn't need to move characters around the
+    // screen.
     @Override
     public void move() {
     }
@@ -74,12 +75,12 @@ public class HomeScreen extends Level {
     void resetLevel() {
     }
 
-    // Empty method
+    // Left empty because HomeScreen doesn't need to listen for key events.
     @Override
     public void keyPressed(KeyEvent e) {
     }
 
-    // Empty method
+    // Left empty because HomeScreen doesn't need to listen for key events.
     @Override
     public void keyReleased(KeyEvent e) {
     }

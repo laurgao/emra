@@ -31,6 +31,7 @@ public class Level3 extends Level {
     }
 
     // Resets all character locations back to initial coordinates
+    @Override
     void resetLevel() {
         int panelW = Panel.W;
         int panelH = Panel.H;
@@ -63,6 +64,7 @@ public class Level3 extends Level {
     }
 
     // Updates booleans that check if right and up arrow keys are pressed to false.
+    @Override
     public void keyReleased(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -77,6 +79,7 @@ public class Level3 extends Level {
     }
 
     // Draws all blocks and characters onto the panel
+    @Override
     public void draw(Graphics g) {
 
         // Draw font

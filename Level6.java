@@ -70,7 +70,8 @@ public class Level6 extends Level {
         m = new Money(cx + Block.S * 6, cy - 24 * Block.S, panel);
     }
 
-    // Draws characters, and text onto the screen 
+    // Draws characters, and text onto the screen
+    @Override
     public void draw(Graphics g) {
 
         // draw the characters
@@ -90,6 +91,7 @@ public class Level6 extends Level {
 
     // Specifies end level conditions
     // If the player touches the money block, start Level 7
+    @Override
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
             panel.nextLevel(new Level7(panel));
@@ -98,6 +100,7 @@ public class Level6 extends Level {
     }
 
     // Checks for character's x and y collisions and updates camera position
+    @Override
     public void move() {
         super.move();
 

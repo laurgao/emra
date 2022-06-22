@@ -108,6 +108,7 @@ public class Level11 extends Level {
     }
 
     // Reset characters to starting positions + reset camera position
+    @Override
     void resetLevel() {
         int panelH = Panel.H;
         int panelW = Panel.W;

@@ -54,7 +54,7 @@ public class Level14 extends Level {
     }
 
     // Alternate method to create rectangles that can be passed through
-    protected void createRectOfGoThroughBlocks(int w, int h, int startingX, int startingY) {
+    private void createRectOfGoThroughBlocks(int w, int h, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 goThroughBlocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, Color.DARK_GRAY));
@@ -64,7 +64,7 @@ public class Level14 extends Level {
 
     // Alternate method to create rectangles that cannot be seen or travelled
     // through
-    protected void createRectOfInvisibleBlocks(int w, int h, int startingX, int startingY) {
+    private void createRectOfInvisibleBlocks(int w, int h, int startingX, int startingY) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 invisibleBlocks.add(new Block(startingX + i * Block.S, startingY + j * Block.S, Color.DARK_GRAY));
@@ -253,9 +253,6 @@ public class Level14 extends Level {
                 str3 = "- Ecclesiastes 5:10";
             }
 
-            if (textHasStarted && System.currentTimeMillis() - startTime > 9000) {
-                str4 = "THE END";
-            }
         } else {
             // If the character chooses the other fate and goes for the family, initiate the
             // alternative ending's text.
@@ -273,10 +270,10 @@ public class Level14 extends Level {
             if (textHasStarted && System.currentTimeMillis() - startTime > 6000) {
                 str3 = "Now, I find myself both without the wealth I've worked for and without family. This game was just a hedonic paradox.";
             }
+        }
 
-            if (textHasStarted && System.currentTimeMillis() - startTime > 9000) {
-                str4 = "THE END";
-            }
+        if (textHasStarted && System.currentTimeMillis() - startTime > 9000) {
+            str4 = "THE END";
         }
 
         // Make gravity go reverse on touching the go through blocks
@@ -313,8 +310,9 @@ public class Level14 extends Level {
         }
     }
 
-    // Checks if the character has collided with a block while moving up or down
-    protected void checkYCollisionsReverse(Character c, ArrayList<Block> blocks) {
+    // Custom logic for checking if the character has collided with a block while
+    // moving up or down and adjusting its position, when gravity is reversed.
+    private void checkYCollisionsReverse(Character c, ArrayList<Block> blocks) {
         // check collisions
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block while falling downwards:
@@ -344,7 +342,7 @@ public class Level14 extends Level {
     }
 
     // Checks if a character is a below a block
-    protected boolean characterIsBelowABlock(Character c, ArrayList<Block> blocks) {
+    private boolean characterIsBelowABlock(Character c, ArrayList<Block> blocks) {
         for (Block b : blocks) {
             if (c.x + c.width > b.x && c.x < b.x + b.width && c.y == b.y + b.height) {
                 return true;

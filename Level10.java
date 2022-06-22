@@ -73,6 +73,7 @@ public class Level10 extends Level {
     }
 
     // Reset characters to starting positions + reset camera position
+    @Override
     void resetLevel() {
         camera = new int[] { 0, 0 };
         int cx = Panel.W / 2 - 125;
@@ -93,6 +94,7 @@ public class Level10 extends Level {
     }
 
     // Draws all blocks and characters onto the panel
+    @Override
     public void draw(Graphics g) {
 
         // Draw the characters
@@ -252,6 +254,7 @@ public class Level10 extends Level {
 
     // Specifies end level conditions
     // If the player touches the money block, start Level 11
+    @Override
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
             panel.nextLevel(new Level11(panel));

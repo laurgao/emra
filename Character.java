@@ -90,6 +90,7 @@ public class Character extends Block {
                 break;
             }
         }
+
         if (!willIntersectX) {
             this.x += this.xVelocity;
         }
@@ -113,6 +114,21 @@ public class Character extends Block {
         if (isAlive) {
             super.draw(g, newHeight, offsetX, offsetY);
         }
+    }
+
+    // returns whether character will intersect any block in the argument arraylist
+    // of blocks after 1 more move() (but only according to xVelocity)
+    public boolean willIntersectX(ArrayList<Block> blocks) {
+        boolean willIntersectX = false;
+        for (Block b : blocks) {
+            boolean isCollidingFromLeft = this.willIntersectX(b) && this.x < b.x && this.xVelocity > 0;
+            boolean isCollidingFromRight = this.willIntersectX(b) && this.x > b.x && this.xVelocity < 0;
+            if (isCollidingFromLeft || isCollidingFromRight) {
+                willIntersectX = true;
+                break;
+            }
+        }
+        return willIntersectX;
     }
 
     // returns whether character will intersect rectangle after 1 more move() (but

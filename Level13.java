@@ -101,6 +101,7 @@ public class Level13 extends LevelWithFire {
 
     // Specifies end level conditions
     // If the player touches the money block, start Level 14
+    @Override
     protected void checkWin() {
         if (c.x > Panel.W && !hasWon) {
             panel.nextLevel(new Level14(panel));

@@ -115,6 +115,7 @@ public class Level9 extends LevelWithFire {
     }
 
     // Checks if the character touches the money, if yes, move player to next level
+    @Override
     protected void checkWin() {
         if (c.intersects(m) && !hasWon) {
             panel.nextLevel(new Level10(panel));

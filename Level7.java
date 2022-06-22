@@ -72,6 +72,14 @@ public class Level7 extends Level {
     protected void checkYCollisions(Character c, Character other) {
         ArrayList<Block> downwardBlocks = Utils.extend(blocks, ledges);
         ArrayList<Block> upwardBlocks = blocks;
+
+        // if the character is not above any block or ledge or a non-falling other
+        // character, it is falling
+        if (!characterIsAboveABlock(c, downwardBlocks)
+                && !(characterIsAboveOtherCharacter(c, other) && !other.isFalling)) {
+            c.isFalling = true;
+        }
+
         if (c.isFalling && c.yVelocity > 0) {
             // If the character collides with a block or ledge while falling downwards:
             for (Block b : downwardBlocks) {
@@ -81,8 +89,17 @@ public class Level7 extends Level {
                     break;
                 }
             }
-            if (willIntersectY(c, other)) {
-                c.isFalling = false;
+            // If character will collide with the other character and is above the other
+            // character
+            if (willIntersectY(c, other) && c.y < other.y) {
+                if (other.isFalling) {
+                    // If the other character is falling, set c to fall at the same rate such that
+                    // they both fall together.
+                    c.yVelocity = other.yVelocity;
+                } else {
+                    // If the other character is stationary, make c stationary.
+                    c.isFalling = false;
+                }
                 c.y = other.y - c.height;
             }
         } else if (c.isFalling && c.yVelocity < 0) {
@@ -94,12 +111,6 @@ public class Level7 extends Level {
                     break;
                 }
             }
-        }
-
-        // if the character is not above any block or ledge, it is falling
-        if (!characterIsAboveABlock(c, downwardBlocks)
-                && !(characterIsAboveOtherCharacter(c, other) && !other.isFalling)) {
-            c.isFalling = true;
         }
     }
 
@@ -116,13 +127,30 @@ public class Level7 extends Level {
                 && c.y + c.yVelocity < other.y + other.height + other.yVelocity;
     }
 
-    // Returns whether character will intersect another charcter after 1 more move()
-    // Results only according to xVelocity
+    // Checks whether 2 characters will intersect each other after 1 more move()
+    // according to xVelocity and updates their positions to prevent collisions.
     private void checkCharacterXCollisions(Character char1, Character char2) {
-        boolean willIntersectX = char1.x + char1.xVelocity + char1.width > char2.x + char2.xVelocity
-                && char1.x + char1.xVelocity < char2.x + char2.width + char2.xVelocity
-                && char1.y + char1.height > char2.y
-                && char1.y < char2.y + char2.height;
+        boolean willIntersectX;
+
+        // If a character is not free moving, it means that it will update its position
+        // in the next call of the c.move() method in a manner differently from its
+        // xVelocity, because it is restrained by a block.
+        boolean char1IsFreeMoving = char1.xVelocity == 0 || char1.xVelocity != 0 && !char1.willIntersectX(blocks);
+        boolean char2IsFreeMoving = char2.xVelocity == 0 || char2.xVelocity != 0 && !char2.willIntersectX(blocks);
+
+        if (char1IsFreeMoving && char2IsFreeMoving) {
+            willIntersectX = char1.x + char1.xVelocity + char1.width > char2.x + char2.xVelocity
+                    && char1.x + char1.xVelocity < char2.x + char2.width + char2.xVelocity;
+        } else if (!char1IsFreeMoving) {
+            // disregard char1's xVelocity
+            willIntersectX = char1.x + char1.width > char2.x + char2.xVelocity
+                    && char1.x < char2.x + char2.width + char2.xVelocity;
+        } else {
+            // char 2 is not free moving, so disregard its xVelocity.
+            willIntersectX = char1.x + char1.xVelocity + char1.width > char2.x
+                    && char1.x + char1.xVelocity < char2.x + char2.width;
+        }
+        willIntersectX = char1.intersectsY(char2) && willIntersectX;
         if (willIntersectX) {
             char1.xVelocity = 0;
             char2.xVelocity = 0;

@@ -93,6 +93,7 @@ public class Level1 extends Level {
     }
 
     // Draws all blocks and characters onto the panel
+    @Override
     public void draw(Graphics g) {
         // Draw the font
         g.setColor(Color.BLACK);
