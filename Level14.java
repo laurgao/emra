@@ -51,9 +51,6 @@ public class Level14 extends Level {
         hasWon = false;
         resetLevel();
 
-        m = new Money(cx + (int) (Block.S * 6.5), cy - (int) (Block.S * 3.5), panel);
-        fire = new FireSprite(cx + (int) (Block.S * 6.5) - 10, cy - (int) (Block.S * 3.5) - 65, panel);
-
     }
 
     // Alternate method to create rectangles that can be passed through
@@ -102,6 +99,7 @@ public class Level14 extends Level {
         family2 = new Character(300 + offsetX, y + 30 + Block.S, Color.PINK);
         family3 = new Character(225 + offsetX, y + 30 + Block.S, 15, Color.GRAY);
         family4 = new Character(245 + offsetX, y + 30 + Block.S, 15, Color.GREEN);
+        m = new Money(cx + (int) (Block.S * 6.5), cy - (int) (Block.S * 3.5), panel);
 
         // Reset all blocks
         blocks = new ArrayList<Block>();
@@ -161,9 +159,14 @@ public class Level14 extends Level {
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, str1Alpha));
             y = Utils.drawStringWrap(g2d, str1, metrics, cx - 125, y + marginY, 250);
 
-            // Draw the fire sprite if the gravity is reversed.
+            // Draw the fire sprite to show that money is burning.
             if (isGravityReversed) {
                 fire.draw(g2d);
+            } else {
+                // If gravity is not reversed, the money is on the bottom of the blocks with the
+                // family, so the fire should be going upwards.
+                // Rotate the fire sprite by 180 degrees.
+                fire.draw(g2d, Math.PI);
             }
         }
 
@@ -237,6 +240,10 @@ public class Level14 extends Level {
                     blocks.add(new Block(b.x, b.y, Color.BLACK));
                 }
                 goThroughBlocks = new ArrayList<Block>();
+
+                // Initiate the fire sprite to be above the money.
+                fire = new FireSprite(m.x - 10, m.y - 65, panel);
+
             }
             if (textHasStarted && System.currentTimeMillis() - startTime > 3000) {
                 str2 = "He who loves money is never satisfied by money, and he who loves wealth is never satisfied by income.";
@@ -280,6 +287,9 @@ public class Level14 extends Level {
                 // Get rid of invisible blocks when gravity gets reversed to avoid behavior that
                 // appears glitchy.
                 invisibleBlocks = new ArrayList<Block>();
+
+                // Initiate the fire sprite to be above the money.
+                fire = new FireSprite(m.x - 10, m.y, panel);
             }
         }
 
