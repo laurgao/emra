@@ -2,7 +2,12 @@
 
 Parody of The Pretentious Game.
 
-Created in Java. To run locally: have Java installed and then run `runMe.bat`
+Created in Java. To run locally: have Java installed and then run
+
+```
+javac *.java
+java Main
+```
 
 ![](/screenshots/1.PNG)
 
