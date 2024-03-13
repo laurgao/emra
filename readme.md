@@ -2,7 +2,7 @@
 
 Parody of The Pretentious Game.
 
-Created in Java. To run locally: have Java installed and then run
+Created in Java by Laura and Emma. To run locally: clone this repo, have Java installed, and then run
 
 ```
 javac *.java
